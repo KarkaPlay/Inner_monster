@@ -4,10 +4,10 @@ using UnityEngine;
 public class NarrationLine : ScriptableObject
 {
     [SerializeField]
-    private NarratorCharacter m_Speaker; // NPC that is speaking
+    private NarrationCharacter m_Speaker;
     [SerializeField]
-    private string m_Text; // The text it speaks 
+    private string m_Text;
 
-    public NarratorCharacter Speaker => m_Speaker;
+    public NarrationCharacter Speaker => m_Speaker;
     public string Text => m_Text;
 }

@@ -9,7 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe71c5220ff84da4aa5ca9d5ce8f2dbf, type: 3}
-  m_Name: ElderGoat
+  m_Script: {fileID: 11500000, guid: 1bfde7ff9a0f22f4eb1eff08063dedbb, type: 3}
+  m_Name: Flow State_In Dialogue
   m_EditorClassIdentifier: 
-  m_CharacterName: Elder Goat
