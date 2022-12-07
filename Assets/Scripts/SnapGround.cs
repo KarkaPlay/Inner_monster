@@ -3,7 +3,7 @@ using UnityEngine;
 using System.Collections.Generic; // REDACTED!
 using System.Linq; // REDACTED! Don`t forget about namespaces
 
-public class SnapGround : MonoBehaviour // REDACTED! Class name and method name was the same
+public class SnapGround : MonoBehaviour // REDACTED! Class name and method name were the same
 {
     [MenuItem("Custom/Snap To Ground %g")]
     public static void Ground()
