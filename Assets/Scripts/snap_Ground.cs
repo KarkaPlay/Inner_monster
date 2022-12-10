@@ -1,5 +1,7 @@
 using UnityEditor;
 using UnityEngine;
+using System.Collections.Generic;
+using System.Linq;
 
 public class SnapToGround : MonoBehaviour
 {
@@ -19,7 +21,7 @@ public class SnapToGround : MonoBehaviour
             }
         }
     }
-public static void SnapToGround()
+public static void SnaptoGround()
     {
         //Looping through each of the selected Transforms.
         foreach(Transform t in Selection.transforms)
