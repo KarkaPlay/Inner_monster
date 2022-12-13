@@ -17,6 +17,8 @@ public class ElderMovement : MonoBehaviour
     public Button playerResponse;
     public Button playerResponse2;
 
+    public Transform player;
+    public Transform goat;
     public GameObject Gate;
 
     private void Awake() {
@@ -27,6 +29,7 @@ public class ElderMovement : MonoBehaviour
     }
 
     public void FixedUpdate(){
+        goat.LookAt(player);
         if (ExitTrigger.isEntered == false){
             switch (MonologueTime.time / 600){
             case -3: 
