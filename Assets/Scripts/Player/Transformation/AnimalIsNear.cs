@@ -22,8 +22,8 @@ public class AnimalIsNear : MonoBehaviour
     private void Update(){
         if (Input.GetButtonDown("TransformationBack")){
             if (readyToTransformBack){
-                transformationScript.Transform_back();
                 ParticleControllerScript.Begin(countOfParticles);
+                transformationScript.Transform_back();  
                 readyToTransformBack = false;
                 readyToTransform = true;
                 alreadyTransformed = false;
@@ -41,8 +41,8 @@ public class AnimalIsNear : MonoBehaviour
         if (other.CompareTag("Animal")){
             if (Input.GetButtonDown("Transformation")){
                 if (readyToTransform && alreadyTransformed == false){
-                    transformationScript.Start_transformation(other.gameObject);
                     ParticleControllerScript.Begin(countOfParticles);
+                    transformationScript.Start_transformation(other.gameObject);
                     readyToTransformBack = true;
                     readyToTransform = false;
                     alreadyTransformed = true;
