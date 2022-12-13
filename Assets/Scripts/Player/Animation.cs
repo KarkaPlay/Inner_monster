@@ -41,7 +41,7 @@ public class Animation : MonoBehaviour
         {
             _attack = 0; 
         }
-        go.SetInteger("Attack", _attack);
+        // go.SetInteger("Attack", _attack); Закомментил, ибо постоянно выдаёт "Parameter "Attack" doesn`t exist."
         go.SetInteger("jump", _jump);
         go.SetInteger("state", _state);
     }

@@ -1,15 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UI;
 using TMPro;
 
-// [CreateAssetMenu(fileName = "Elder Monologue Hardcode", menuName = "NPC Files Words/Elder Monologue Hardcode")]
 public class ElderMovement : MonoBehaviour
 {
-    public UnityEngine.AI.NavMeshAgent point;
-    
-
     public NPC npc;
 
     public GameObject dialogueUI;
@@ -20,42 +17,44 @@ public class ElderMovement : MonoBehaviour
     public Button playerResponse;
     public Button playerResponse2;
 
-
     public GameObject Gate;
-    public bool NotInterrupted;
 
     private void Awake() {
-        NotInterrupted = true;
+        ExitTrigger.isEntered = false;
         dialogueUI.SetActive(false);
         TurnOff(playerResponse, playerResponseQuote);
         TurnOff(playerResponse2, playerResponseQuote2);
     }
 
     public void FixedUpdate(){
-        if (NotInterrupted){
+        if (ExitTrigger.isEntered == false){
             switch (MonologueTime.time / 600){
+            case -3: 
+                TurnOff(playerResponse, playerResponseQuote);
+                TurnOff(playerResponse2, playerResponseQuote2);
+                npcDialogue.text = npc.dialogue[6];
+            return;
+            case -2:
+                npcDialogue.text = npc.dialogue[7];
+            return;
+            case -1:
+                MonologueTime.time = 1200;
+            return;
             case 1:
                 StartDialogue();
                 npcDialogue.text = npc.dialogue[0];
             return;
             case 2:
                 npcDialogue.text = npc.dialogue[1];
-                point.destination = (new Vector3(13.5f, -5.5f, 215.25f));
-                transform.LookAt(new Vector3(13.5f, 5.2f, 210));
             return;
             case 3:
                 npcDialogue.text = npc.dialogue[2];
-                point.destination = (new Vector3(5.25f, -5.5f, 215f));
-                transform.LookAt(new Vector3(1, -0.2f, 208));
             return;
             case 4:
                 npcDialogue.text = npc.dialogue[3];
-                point.destination = (new Vector3(-10, -6.5f, 228));
-                transform.LookAt(new Vector3(-16, -7.5f, 231));
             return;
             case 5:
                 npcDialogue.text = npc.dialogue[4];
-                point.destination = (new Vector3(-3.5f, -6, 237));
             return;
             case 6:
                 EndDialogue();
@@ -77,6 +76,11 @@ public class ElderMovement : MonoBehaviour
         dialogueUI.SetActive(false);
         playerResponse.interactable = false;
         playerResponse2.interactable = false;
+    }
+
+    public void GetResponse(){
+        ExitTrigger.isEntered = false;
+        MonologueTime.time = -2400;
     }
 
     public void TurnOff(Button button, TextMeshProUGUI text){
