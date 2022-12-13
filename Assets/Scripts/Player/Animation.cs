@@ -7,6 +7,7 @@ public class Animation : MonoBehaviour
     public Animator go;
     private int _state;
     private int _jump;
+    private int _attack;
     void Start()
     {
         go = GetComponent<Animator>();
@@ -30,6 +31,17 @@ public class Animation : MonoBehaviour
             else _jump = 1;
         }
         else _jump = 0;
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            _attack = 1;
+
+        }
+        else
+        {
+            _attack = 0; 
+        }
+        go.SetInteger("Attack", _attack);
         go.SetInteger("jump", _jump);
         go.SetInteger("state", _state);
     }
