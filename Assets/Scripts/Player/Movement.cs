@@ -8,7 +8,7 @@ public class Movement : MonoBehaviour
     private Rigidbody rb;
 
     [SerializeField] private float speedStart = 6f;
-    private float speed;
+    [SerializeField] private float speed;
     private float speedX, speedZ;
     [SerializeField] private float ctrlMod = 0.5f;
     [SerializeField] private float shiftMod = 1.5f;
@@ -116,8 +116,4 @@ public class Movement : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-
-    }
 }

@@ -1,9 +1,9 @@
 using UnityEditor;
 using UnityEngine;
-using System.Collections.Generic; // REDACTED!
-using System.Linq; // REDACTED! Don`t forget about namespaces
+using System.Collections.Generic;
+using System.Linq;
 
-public class SnapGround : MonoBehaviour // REDACTED! Class name and method name were the same
+public class SnapToGround : MonoBehaviour
 {
     [MenuItem("Custom/Snap To Ground %g")]
     public static void Ground()
@@ -21,7 +21,7 @@ public class SnapGround : MonoBehaviour // REDACTED! Class name and method name 
             }
         }
     }
-    public static void SnapToGround() 
+public static void SnaptoGround()
     {
         //Looping through each of the selected Transforms.
         foreach(Transform t in Selection.transforms)
