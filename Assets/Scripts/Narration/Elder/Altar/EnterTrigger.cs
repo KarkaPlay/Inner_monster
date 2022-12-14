@@ -10,7 +10,7 @@ public class EnterTrigger : MonoBehaviour
 
     void OnTriggerEnter(Collider other) { 
         if (other.gameObject.tag == "Player"){
-            SceneManager.LoadScene(Scene);;
+            SceneManager.LoadScene(Scene);
         }
     }
 }
