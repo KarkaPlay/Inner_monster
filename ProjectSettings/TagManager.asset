@@ -9,6 +9,7 @@ TagManager:
   - thought2
   - Character
   - Animal
+  - villager
   layers:
   - Default
   - TransparentFX
