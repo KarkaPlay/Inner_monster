@@ -108,8 +108,8 @@ NavMeshSettings:
     agentTypeID: 0
     agentRadius: 0.5
     agentHeight: 2
-    agentSlope: 45
-    agentClimb: 0.4
+    agentSlope: 47
+    agentClimb: 1
     ledgeDropHeight: 0
     maxJumpAcrossDistance: 0
     minRegionArea: 2
@@ -122,7 +122,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: 80e117a2cfc9b7a4a8e1fcd9784306c4, type: 2}
 --- !u!1 &3653313 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: cb52ea42afa54f6489ee53d8fbe4c63d, type: 3}
@@ -445,7 +445,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-18686
+  m_Name: pb_Mesh320776
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -647,9 +647,9 @@ MonoBehaviour:
   playerResponseQuote2: {fileID: 930773816}
   playerResponse: {fileID: 1448630450}
   playerResponse2: {fileID: 203463092}
-  player: {fileID: 0}
-  goat: {fileID: 56978173}
-  Gate: {fileID: 1953596402}
+  point: {fileID: 56978169}
+  ExitDoor: {fileID: 1953596402}
+  EnterDoor: {fileID: 661464126}
 --- !u!195 &56978169
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -701,11 +701,6 @@ SphereCollider:
 --- !u!95 &56978172 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 835938d311c50134db71ef40a29564c4, type: 3}
-  m_PrefabInstance: {fileID: 1527899666}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &56978173 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 835938d311c50134db71ef40a29564c4, type: 3}
   m_PrefabInstance: {fileID: 1527899666}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &67553401 stripped
@@ -1087,8 +1082,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 527, y: 0}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 471.2, y: 0}
+  m_SizeDelta: {x: 200, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &203463092
 MonoBehaviour:
@@ -1270,7 +1265,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-18676
+  m_Name: pb_Mesh320790
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -3814,8 +3809,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 2.8156}
+  m_SizeDelta: {x: 0, y: -5.6314}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &593457952
 MonoBehaviour:
@@ -3839,8 +3834,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Response1
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: b9dced2647d5e8a4a8df8369e204f0f1, type: 2}
+  m_sharedMaterial: {fileID: 4176444508697089529, guid: b9dced2647d5e8a4a8df8369e204f0f1, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3900,7 +3895,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 1.2556763, y: 58.861336, z: 0, w: 53.416412}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -4190,6 +4185,74 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3a6aeee663568094896b096c819ed543, type: 3}
+--- !u!1 &661464126
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 661464130}
+  - component: {fileID: 661464129}
+  - component: {fileID: 661464128}
+  - component: {fileID: 661464127}
+  m_Layer: 0
+  m_Name: EnterTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &661464127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 661464126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 438b58c9cb1f43d489bf7f60298c7b3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Scene: VillageMap
+--- !u!65 &661464128
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 661464126}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!33 &661464129
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 661464126}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &661464130
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 661464126}
+  m_LocalRotation: {x: -0, y: 0.19757278, z: 1.7763568e-15, w: 0.9802882}
+  m_LocalPosition: {x: 5.5344, y: 3.49, z: -1.2703}
+  m_LocalScale: {x: 13.019074, y: 7.4378204, z: 2.3253863}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1419527947}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 22.79, z: 0}
 --- !u!1001 &699414390
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8550,8 +8613,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Response2
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: b9dced2647d5e8a4a8df8369e204f0f1, type: 2}
+  m_sharedMaterial: {fileID: 4176444508697089529, guid: b9dced2647d5e8a4a8df8369e204f0f1, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -8736,8 +8799,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 304.7, y: -25.4556}
-  m_SizeDelta: {x: 461.5, y: 78.9111}
+  m_AnchoredPosition: {x: 296.93, y: -25.4556}
+  m_SizeDelta: {x: 477.04, y: 78.9111}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &989517936
 MonoBehaviour:
@@ -8761,8 +8824,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Text
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 6cb89b792e874ad4f9fa5f31a6922e1b, type: 2}
+  m_sharedMaterial: {fileID: -2424183853017047039, guid: 6cb89b792e874ad4f9fa5f31a6922e1b, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -8786,10 +8849,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20
+  m_fontSize: 59.1
   m_fontSizeBase: 20
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -8822,7 +8885,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 37.037415, y: 1.044281, z: 0.22784424, w: 0.03407669}
+  m_margin: {x: 1.2334747, y: 1.044281, z: 0.22784424, w: 0.03407669}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -12061,7 +12124,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-18716
+  m_Name: pb_Mesh320900
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -12348,7 +12411,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-18694
+  m_Name: pb_Mesh320552
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -12919,7 +12982,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-18746
+  m_Name: pb_Mesh320662
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -13121,7 +13184,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-18678
+  m_Name: pb_Mesh320696
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -19798,6 +19861,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1953596403}
+  - {fileID: 661464130}
   m_Father: {fileID: 0}
   m_RootOrder: 64
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -19974,8 +20038,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 232, y: 0}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 161.9, y: 0}
+  m_SizeDelta: {x: 200, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1448630450
 MonoBehaviour:
@@ -21207,8 +21271,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 174, y: 45}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 173.30774, y: 45}
+  m_SizeDelta: {x: 229.8021, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1659210670
 MonoBehaviour:
@@ -21232,8 +21296,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Name
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: b9dced2647d5e8a4a8df8369e204f0f1, type: 2}
+  m_sharedMaterial: {fileID: 4176444508697089529, guid: b9dced2647d5e8a4a8df8369e204f0f1, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -21257,10 +21321,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 27.7
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -21293,7 +21357,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -216.09499, w: 0}
+  m_margin: {x: 1.3658447, y: 0, z: -1.335453, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -28124,7 +28188,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh54886
+  m_Name: pb_Mesh321020
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -28913,7 +28977,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-18736
+  m_Name: pb_Mesh321162
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
