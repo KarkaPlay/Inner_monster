@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 public class MenuButton : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler
 {
     private RectTransform rectTransform;
+    public AudioSource audioSource;
     
     // Start is called before the first frame update
     void Start()
@@ -17,6 +18,7 @@ public class MenuButton : MonoBehaviour, IPointerExitHandler, IPointerEnterHandl
     public void OnPointerEnter(PointerEventData eventData)
     {
         StartCoroutine(ScaleUp());
+        audioSource.Play();
     }
 
     public void OnPointerExit(PointerEventData eventData)

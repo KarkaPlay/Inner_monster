@@ -11,13 +11,15 @@ public class Transformation : MonoBehaviour
     private Material[] myBodyMaterials = new Material[3];
     private Material[] myOtherPartsMaterials = new Material[4];
 
-
+    private AudioSource transformationAudio;
     private void Start(){
         int i = 0;
         foreach (string s in bodyPart){
             SaveCharacteristics(i, s);
                 i++;
         }
+
+        transformationAudio = GetComponent<AudioSource>();
     }
 
     private void SaveCharacteristics(int i, string bodyPart){
@@ -35,6 +37,10 @@ public class Transformation : MonoBehaviour
     
     public void Start_transformation(GameObject Target){
         Debug.Log("Loh");
+        
+        //Запускаем звук превращения
+        transformationAudio.Play();
+        
         //Запоминаем рендер цели
         /*SkinnedMeshRenderer otherBody = Target.transform.Find("Body").GetComponent<SkinnedMeshRenderer>();
         SkinnedMeshRenderer otherEyes = Target.transform.Find("Eyes").GetComponent<SkinnedMeshRenderer>();
@@ -64,6 +70,10 @@ public class Transformation : MonoBehaviour
 
     public void Transform_back(){
         Debug.Log("Hehe");
+        
+        //Запускаем звук превращения
+        transformationAudio.Play();
+        
         int i = 0;
         foreach (string s in bodyPart){
             //Изменяем наш меш
