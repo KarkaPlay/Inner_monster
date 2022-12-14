@@ -20,7 +20,7 @@ public class scene2move : MonoBehaviour
     public TextMeshProUGUI playerResponseQuote2;
     public Button playerResponse;
     public Button playerResponse2;
-  
+    public NavMeshAgent goat;
     private int k = 0;
     void Start()
     {
@@ -37,7 +37,15 @@ public class scene2move : MonoBehaviour
         {
             trig.contact = true;
         }
-        if (other.tag == "Player" && trig.n == 7)
+        if (other.tag == "Player" && trig.n == 8)
+        {
+            trig.contact = true;
+        }
+        if (other.tag == "Player" && trig.n == 9)
+        {
+            trig.contact = true;
+        }
+        if (other.tag == "Player" && trig.n == 10)
         {
             trig.contact = true;
         }
@@ -45,6 +53,7 @@ public class scene2move : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        Debug.Log(trig.n);
         switch (trig.n) {
             case 1:
         npcDialogue.text = npc.dialogue[0];
@@ -52,7 +61,8 @@ public class scene2move : MonoBehaviour
                 StartCoroutine(WaitN());
                 return;
             case 2:
-                transform.position = new Vector3(-55 , 2, 94);
+                // transform.position = new Vector3(-55 , 2, 94);
+                goat.destination = new Vector3(-66, 2, 92);
                 if (trig.contact == true) {
                     trig.n++; trig.contact = false;
                 }
@@ -71,7 +81,7 @@ public class scene2move : MonoBehaviour
                 trig.n++; trig.contact = false;
                 return;
             case 5:
-                transform.position = new Vector3(-111, 0, 80);
+                goat.destination = new Vector3(-111, 0, 80);
                 if (trig.contact == true)
                 {
                     trig.n++; trig.contact = false;
@@ -82,14 +92,33 @@ public class scene2move : MonoBehaviour
                 npcDialogue.text = npc.dialogue[3];
                 playerResponseQuote.text = npc.playerDialogue[3];
                 trig.n++;
+                trig.contact = false;
                 return;
             case 7:
-                StartCoroutine(Move()); 
+                StartCoroutine(Move());  break;
+            case 8:
                 if (trig.contact == true)
                 {
+                    dialogueUI.SetActive(true);
                     npcDialogue.text = npc.dialogue[4];
                     playerResponseQuote.text = npc.playerDialogue[4];
-                    trig.contact = false; trig.n++;
+                    trig.contact = false;
+                    trig.n++;
+                }return;
+            case 9:
+                goat.destination = new Vector3(-106, 2, 166);
+                if (trig.contact == true)
+                {
+                    trig.n++; trig.contact = false;
+                }
+              
+                return;
+            case 10:
+                if (trig.contact == true)
+                {
+                    dialogueUI.SetActive(true);
+                    npcDialogue.text = npc.dialogue[5];
+                    playerResponseQuote.text = npc.playerDialogue[5];
                 }
                 return;
         }
@@ -119,7 +148,8 @@ public class scene2move : MonoBehaviour
     public IEnumerator Move()
     {
         yield return new WaitForSeconds(5);
-        transform.position = new Vector3(-135, 0, 122) ;
+        goat.destination = new Vector3(-137, 0, 141) ;
+        trig.n = 8;
     }
 
 }
