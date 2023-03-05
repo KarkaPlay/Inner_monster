@@ -30,7 +30,7 @@ public class ElderMovement : MonoBehaviour
 
     public void FixedUpdate(){
         if (ExitTrigger.isEntered == false){
-            switch (MonologueTime.time / 600){
+            switch (MonologueTime.time / 300){
             case -3: 
                 TurnOff(playerResponse, playerResponseQuote);
                 TurnOff(playerResponse2, playerResponseQuote2);
@@ -40,7 +40,7 @@ public class ElderMovement : MonoBehaviour
                 npcDialogue.text = npc.dialogue[7];
             return;
             case -1:
-                MonologueTime.time = 1200;
+                MonologueTime.time = 600;
             return;
             case 1:
                 StartDialogue();
@@ -85,7 +85,7 @@ public class ElderMovement : MonoBehaviour
 
     public void GetResponse(){
         ExitTrigger.isEntered = false;
-        MonologueTime.time = -2400;
+        MonologueTime.time = -1200;
     }
 
     public void TurnOff(Button button, TextMeshProUGUI text){
