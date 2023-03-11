@@ -30,6 +30,7 @@ public class readFromTextf : MonoBehaviour
         {
             d = 0;
             ReadFromTheFile();
+            
     }
         if (react.tag == "thought2")
         {
