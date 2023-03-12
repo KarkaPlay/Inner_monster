@@ -6,8 +6,10 @@ using System.IO;
 using UnityEngine.UI;
 public class readFromTextf : MonoBehaviour
 
-
-{
+  
+{   public GameObject other;
+    public GameObject panel1;
+    public GameObject panel2;
     [SerializeField] Text txt_f, txt_s;
     string[] namesArray;
     string myFilePath, fileName;
@@ -28,17 +30,32 @@ public class readFromTextf : MonoBehaviour
     {
         if (react.tag == "thought")
         {
+            panel1.SetActive(true);
             d = 0;
             ReadFromTheFile();
-            
-    }
+            Destroy(react);
+            StartCoroutine(WaitN());
+        }
         if (react.tag == "thought2")
         {
+            panel2.SetActive(true);
             d = 1;
             ReadFromTheFile();
-     
+            Destroy(react);
+            StartCoroutine(WaitN());
         }
     }
+    //void OnTriggerExit(Collider react)
+    //{
+    //    if (react.tag == "thought")
+    //    {
+    //        panel1.SetActive(false);
+    //    }
+    //    if (react.tag == "thought2")
+    //    {
+    //        panel2.SetActive(false);
+    //    }
+    //}
 
     void DisplayFirst()
     {
@@ -63,13 +80,25 @@ public class readFromTextf : MonoBehaviour
         {
 DisplaySecond();
             n++;
-        }}
+        }
+        }else
+        {
+            other.SetActive(false);
+        }
+
         //
         //foreach (string line in namesArray)
         //  {
         //    print(namesArray[n]);
         //}
         //n++;
+    }
+
+      public IEnumerator WaitN()
+    { 
+        yield return new WaitForSeconds(5);
+        panel1.SetActive(false);
+        panel2.SetActive(false);
     }
 }
 

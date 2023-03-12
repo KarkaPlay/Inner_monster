@@ -10,6 +10,7 @@ TagManager:
   - Character
   - Animal
   - villager
+  - ui_thought
   layers:
   - Default
   - TransparentFX
