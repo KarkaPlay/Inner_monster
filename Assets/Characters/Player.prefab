@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 5078587533440321723}
   - component: {fileID: 5078587533440321720}
   - component: {fileID: 5078587533440321721}
+  - component: {fileID: 4481374163872498567}
   - component: {fileID: 5078587533440321718}
   m_Layer: 0
   m_Name: Player
@@ -160,6 +161,18 @@ MonoBehaviour:
   speed: 15
   gravity: -9
   turnSmothTime: 0.05
+--- !u!114 &4481374163872498567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5562249936378024564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eceea4a872a4b2f4ebcfc9717e82cd81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!135 &5078587533440321718
 SphereCollider:
   m_ObjectHideFlags: 0
