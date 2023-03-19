@@ -12,7 +12,8 @@ public class trig
 public class scene2move : MonoBehaviour
 {
     public NPC npc;
-
+    public GameObject player;
+    
     public GameObject dialogueUI;
     public TextMeshProUGUI npcName;
     public TextMeshProUGUI npcDialogue;
@@ -22,106 +23,106 @@ public class scene2move : MonoBehaviour
     public Button playerResponse2;
     public NavMeshAgent goat;
     private int k = 0;
+    
+    [SerializeField]private float distance = 0;
+    private bool needToWait = false;
+    
     void Start()
-    {
-  StartCoroutine(Wait());
-       
+    { 
+        StartCoroutine(Wait());
+        player = GameObject.FindGameObjectWithTag("Player");
     }
+
+    private void WaitForPlayer()
+    {
+        if (!needToWait) return;
+        distance = Vector3.Distance(transform.position, player.transform.position); 
+        
+        if (distance < 10) goat.speed = 3.5f;
+        else if (distance is < 20 and >= 10) goat.speed = 1.0f;
+        else goat.speed = 0;
+    }
+
     void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player"&& trig.n == 2)
-        {
-            trig.contact = true;
-        }
-        if (other.tag == "Player" && trig.n == 5)
-        {
-            trig.contact = true;
-        }
-        if (other.tag == "Player" && trig.n == 8)
-        {
-            trig.contact = true;
-        }
-        if (other.tag == "Player" && trig.n == 9)
-        {
-            trig.contact = true;
-        }
-        if (other.tag == "Player" && trig.n == 10)
-        {
+        var triggers = new List<int>() { 2, 5, 8, 9, 10 };
+        
+        if (other.CompareTag("Player") && triggers.Contains(trig.n)) 
+        { 
             trig.contact = true;
         }
     }
-    // Update is called once per frame
+    
     void FixedUpdate()
     {
+        WaitForPlayer();
+        
         Debug.Log(trig.n);
-        switch (trig.n) {
+        switch (trig.n) { 
             case 1:
-        npcDialogue.text = npc.dialogue[0];
-  playerResponseQuote.text = npc.playerDialogue[0];
+                SetDialogueText(0, false);
                 StartCoroutine(WaitN());
                 return;
             case 2:
                 // transform.position = new Vector3(-55 , 2, 94);
                 goat.destination = new Vector3(-66, 2, 92);
-                if (trig.contact == true) {
-                    trig.n++; trig.contact = false;
+                if (trig.contact)
+                { 
+                    trig.n++;
+                    trig.contact = false;
                 }
                 return;
             case 3:
                 trig.contact = false;
-             
-                if (k == 0) { dialogueUI.SetActive(true); k++; }
-                npcDialogue.text = npc.dialogue[1];
-                playerResponseQuote.text = npc.playerDialogue[1];   
+                if (k == 0)
+                {
+                    dialogueUI.SetActive(true); 
+                    k++;
+                }
+                SetDialogueText(1, false); 
                 return;
             case 4:
-                 dialogueUI.SetActive(true);
-                npcDialogue.text = npc.dialogue[2];
-                playerResponseQuote.text = npc.playerDialogue[2];
+                SetDialogueText(2);
                 trig.n++; trig.contact = false;
                 return;
             case 5:
                 goat.destination = new Vector3(-111, 0, 80);
-                if (trig.contact == true)
+                if (trig.contact)
                 {
                     trig.n++; trig.contact = false;
                 }
                 return;
             case 6:
-                dialogueUI.SetActive(true); 
-                npcDialogue.text = npc.dialogue[3];
-                playerResponseQuote.text = npc.playerDialogue[3];
-                trig.n++;
-                trig.contact = false;
+                SetDialogueText(3);
+                trig.n++; trig.contact = false;
                 return;
             case 7:
                 StartCoroutine(Move());  break;
             case 8:
-                if (trig.contact == true)
+                if (trig.contact)
                 {
-                    dialogueUI.SetActive(true);
-                    npcDialogue.text = npc.dialogue[4];
-                    playerResponseQuote.text = npc.playerDialogue[4];
-                    trig.contact = false;
-                    trig.n++;
-                }return;
+                    SetDialogueText(4);
+                    trig.contact = false; trig.n++;
+                }
+                return;
             case 9:
                 goat.destination = new Vector3(-106, 2, 166);
-                if (trig.contact == true)
+                if (trig.contact)
                 {
                     trig.n++; trig.contact = false;
                 }
-              
                 return;
             case 10:
-                if (trig.contact == true)
-                {
-                    dialogueUI.SetActive(true);
-                    npcDialogue.text = npc.dialogue[5];
-                    playerResponseQuote.text = npc.playerDialogue[5];
-                }
+                if (trig.contact) SetDialogueText(5);
                 return;
         }
+    }
+    private void SetDialogueText(int dialogueIndex, bool setUI = true)
+    {
+        if (setUI) dialogueUI.SetActive(true);
+        npcDialogue.text = npc.dialogue[dialogueIndex]; 
+        playerResponseQuote.text = npc.playerDialogue[dialogueIndex];
+        needToWait = true;
     }
     public void StartDialogue()
     {
@@ -131,7 +132,6 @@ public class scene2move : MonoBehaviour
     public void EndDialogue()
     {
         dialogueUI.SetActive(false);
-      
     }
     public IEnumerator Wait()
 {
@@ -139,7 +139,7 @@ public class scene2move : MonoBehaviour
         npcName.text = npc.Name;
         dialogueUI.SetActive(true);
         trig.n++;
-    }
+}
     public IEnumerator WaitN()
     { 
         yield return new WaitForSeconds(5);
