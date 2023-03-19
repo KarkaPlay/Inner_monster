@@ -32,7 +32,6 @@ public class DialogueMenuController : MonoBehaviour
 
     private void Awake(){
         gameObject.SetActive(false);
-        //m_Player = GameObject.FindGameObjectWithTag("Player");
         m_DialogueManager.OnDialogueStarted += OnDialogueStarted;
         m_DialogueManager.OnDialogueEnded += OnDialogueEnded;
         m_DialogueManager.OnResponse += OnResponse;
@@ -43,11 +42,10 @@ public class DialogueMenuController : MonoBehaviour
         m_Npc = InteractionFinder.m_NearbyInteractables[0];
         Trigger = m_Npc.Trigger;
         gameObject.SetActive(true);
+
         CurrentDialogue = dialogue;
-        CurrentMessage = dialogue.messages[m_Npc.TriggerCheck(Trigger)];
         m_NpcName.text = CurrentDialogue.npcName;
-        m_NpcDialogueText.text = CurrentMessage.text;
-        ResponseCheck();
+        DialogueContinue(CurrentDialogue, m_Npc.TriggerCheck(Trigger));
     }
     
     private void DialogueContinue(Dialogue dialogue, int ResponseInd){

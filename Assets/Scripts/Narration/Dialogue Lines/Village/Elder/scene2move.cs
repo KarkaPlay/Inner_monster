@@ -57,8 +57,7 @@ public class scene2move : MonoBehaviour
     {
         WaitForPlayer();
         
-        Debug.Log(trig.n);
-        switch (trig.n) { 
+        switch (trig.n) {
             case 1:
                 SetDialogueText(0, false);
                 StartCoroutine(WaitN());
