@@ -53,7 +53,7 @@ public class scene2move : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        Debug.Log(trig.n);
+        //Debug.Log(trig.n);
         switch (trig.n) {
             case 1:
         npcDialogue.text = npc.dialogue[0];

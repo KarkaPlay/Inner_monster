@@ -18,5 +18,5 @@ public abstract class Interactable : MonoBehaviour
     public abstract int TriggerCheck(int Trigger);
 
     // FOR NPCs ONLY //
-    public abstract void QuestCheck();
+    public abstract void QuestCheck(int Trigger);
 }
