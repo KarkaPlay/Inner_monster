@@ -4,20 +4,13 @@ using UnityEngine;
 
 public class Combat : MonoBehaviour
 {
-    public float hp = 100;
-    public float attack = 10;
-    public float attackRange = 1;
-    public float attackCooldown = 1;
-    public bool isAttacking = false;
+    [SerializeField] private float hp = 100;
+    [SerializeField] private float attack = 10;
+    [SerializeField] private float attackRange = 1;
+    [SerializeField] private float attackCooldown = 1;
+    [SerializeField] private bool isAttacking = false;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (!gameObject.CompareTag("Player")) return; // Мы управляем только игроком, потом удалить
         
@@ -28,14 +21,14 @@ public class Combat : MonoBehaviour
         }
     }
 
-    IEnumerator AttackCooldown()
+    private IEnumerator AttackCooldown()
     {
         isAttacking = true;
         yield return new WaitForSeconds(attackCooldown);
         isAttacking = false;
     }
-    
-    public void Attack()
+
+    private void Attack()
     {
         StartCoroutine(AttackCooldown());
         
@@ -64,8 +57,8 @@ public class Combat : MonoBehaviour
             Die();
         }
     }
-    
-    public void Die()
+
+    private void Die()
     {
         Destroy(gameObject);
     }

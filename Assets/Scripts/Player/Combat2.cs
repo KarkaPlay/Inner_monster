@@ -9,13 +9,7 @@ public class Combat2 : MonoBehaviour
     public bool isAttacking = false;
     public float attackCooldown = 1;
     public float attackRange = 3;
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-         
-    }
-    
+
     public void Attack()
     {
         StartCoroutine(AttackCooldown());

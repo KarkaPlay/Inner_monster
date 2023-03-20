@@ -1,17 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ParticleController : MonoBehaviour
 {
-    private ParticleSystem System;
+    private ParticleSystem _particleSystem;
     
-    private void Start(){
-        System = gameObject.GetComponent<ParticleSystem>();
-        System.Pause();
+    private void Start()
+    {
+        _particleSystem = gameObject.GetComponent<ParticleSystem>();
+        _particleSystem.Pause();
     }
 
-    public void Begin(int count){
-        System.Emit(count);
+    public void Begin(int count)
+    {
+        _particleSystem.Emit(count);
     }
 }

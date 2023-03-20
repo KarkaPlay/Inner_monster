@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class MoveCamera : MonoBehaviour
 {
-    public float smooth = 0.1f;//скорость сопровождения
-    public GameObject target;//объект сопровождения
+    public float smooth = 0.1f;
+    public GameObject target;
 
     void FixedUpdate()
     {

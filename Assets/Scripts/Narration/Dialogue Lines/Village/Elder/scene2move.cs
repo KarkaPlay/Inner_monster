@@ -24,7 +24,7 @@ public class scene2move : MonoBehaviour
     public NavMeshAgent goat;
     private int k = 0;
     
-    [SerializeField]private float distance = 0;
+    [SerializeField] private float distance = 0;
     private bool needToWait = false;
     
     void Start()

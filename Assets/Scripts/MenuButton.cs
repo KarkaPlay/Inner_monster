@@ -9,7 +9,6 @@ public class MenuButton : MonoBehaviour, IPointerExitHandler, IPointerEnterHandl
     private RectTransform rectTransform;
     public AudioSource audioSource;
     
-    // Start is called before the first frame update
     void Start()
     {
         rectTransform = GetComponent<RectTransform>();
