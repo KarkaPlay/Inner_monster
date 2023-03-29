@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public abstract class Interactable : MonoBehaviour
+public class Interactable : MonoBehaviour
 {
     // FOR ALL INTERACTABLES //
     [SerializeField]
@@ -15,8 +15,12 @@ public abstract class Interactable : MonoBehaviour
         m_OnInteraction.Invoke();
     }
 
-    public abstract int TriggerCheck(int Trigger);
+    public virtual int TriggerCheck(int Trigger){
+        return 0;
+    }
 
     // FOR NPCs ONLY //
-    public abstract void QuestCheck(int Trigger);
+    public virtual void QuestCheck(int Trigger){
+        
+    }
 }
