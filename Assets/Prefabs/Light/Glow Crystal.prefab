@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 5714980822776358638}
   - component: {fileID: 8710079679967406411}
   - component: {fileID: 6846768976574209409}
+  - component: {fileID: 9181377060386368180}
+  - component: {fileID: 994164158549545674}
   m_Layer: 0
   m_Name: Glow Crystal
   m_TagString: Untagged
@@ -29,8 +31,7 @@ Transform:
   m_LocalPosition: {x: -51.191, y: 2.935, z: 21.64}
   m_LocalScale: {x: 0.55806, y: 0.55806, z: 0.55806}
   m_ConstrainProportionsScale: 1
-  m_Children:
-  - {fileID: 5243608037613639721}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -84,46 +85,13 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &5243608037613639723
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5243608037613639721}
-  - component: {fileID: 5243608037613639722}
-  - component: {fileID: 5243608037613639720}
-  m_Layer: 0
-  m_Name: Light1 (5)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5243608037613639721
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5243608037613639723}
-  m_LocalRotation: {x: -0, y: 0.30050236, z: -0, w: 0.9537811}
-  m_LocalPosition: {x: 0.013, y: 1.8367203, z: 0.068}
-  m_LocalScale: {x: 1.7919221, y: 1.7919221, z: 1.7919221}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 5714980822776358638}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 34.976, z: 0}
---- !u!108 &5243608037613639722
+--- !u!108 &9181377060386368180
 Light:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5243608037613639723}
+  m_GameObject: {fileID: 4901148311281564756}
   m_Enabled: 1
   serializedVersion: 10
   m_Type: 2
@@ -179,13 +147,13 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!114 &5243608037613639720
+--- !u!114 &994164158549545674
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5243608037613639723}
+  m_GameObject: {fileID: 4901148311281564756}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
