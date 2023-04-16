@@ -86,7 +86,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: cb52ea42afa54f6489ee53d8fbe4c63d, type: 3}
       propertyPath: m_ScaleInLightmap
-      value: 0.33
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: cb52ea42afa54f6489ee53d8fbe4c63d, type: 3}
       propertyPath: m_Name
@@ -129,6 +129,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1324420379289301918}
     m_Modifications:
+    - target: {fileID: 1176656076316809915, guid: 8894b0efe44a09543abd9a5fc6e81d13, type: 3}
+      propertyPath: m_Range
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1176656076316809915, guid: 8894b0efe44a09543abd9a5fc6e81d13, type: 3}
+      propertyPath: m_Intensity
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 4628677556405567396, guid: 8894b0efe44a09543abd9a5fc6e81d13, type: 3}
       propertyPath: m_RootOrder
       value: 1
