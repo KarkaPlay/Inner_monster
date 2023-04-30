@@ -15,7 +15,7 @@ GameObject:
   m_Name: Barracks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1933957274395434382
@@ -145,6 +145,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -6437154304331914009, guid: 09326630687d5ab42b3fcc483f8dded6, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -6437154304331914009, guid: 09326630687d5ab42b3fcc483f8dded6, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -157,12 +161,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -2731748720707688929, guid: 09326630687d5ab42b3fcc483f8dded6, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -2731748720707688929, guid: 09326630687d5ab42b3fcc483f8dded6, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: -1886484534113255101, guid: 09326630687d5ab42b3fcc483f8dded6, type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -1526791649079783705, guid: 09326630687d5ab42b3fcc483f8dded6, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -1526791649079783705, guid: 09326630687d5ab42b3fcc483f8dded6, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -173,12 +185,24 @@ PrefabInstance:
       value: Convex_barracks
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 09326630687d5ab42b3fcc483f8dded6, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 09326630687d5ab42b3fcc483f8dded6, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 2645369413788698471, guid: 09326630687d5ab42b3fcc483f8dded6, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2645369413788698471, guid: 09326630687d5ab42b3fcc483f8dded6, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 6845710321411359285, guid: 09326630687d5ab42b3fcc483f8dded6, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6845710321411359285, guid: 09326630687d5ab42b3fcc483f8dded6, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -187,6 +211,10 @@ PrefabInstance:
     - target: {fileID: 7079654674432849756, guid: 09326630687d5ab42b3fcc483f8dded6, type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7442945002682191096, guid: 09326630687d5ab42b3fcc483f8dded6, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7442945002682191096, guid: 09326630687d5ab42b3fcc483f8dded6, type: 3}
       propertyPath: m_StaticEditorFlags

@@ -13,5 +13,6 @@ public class MonologueTime : MonoBehaviour
 
     public void FixedUpdate(){
         time++; 
+        Debug.Log("Time");
     }
 }

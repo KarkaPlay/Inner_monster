@@ -93,6 +93,10 @@ PrefabInstance:
       value: Column
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: cb52ea42afa54f6489ee53d8fbe4c63d, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: cb52ea42afa54f6489ee53d8fbe4c63d, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -184,6 +188,14 @@ PrefabInstance:
     - target: {fileID: 5437970218482672926, guid: 8894b0efe44a09543abd9a5fc6e81d13, type: 3}
       propertyPath: m_Name
       value: Crystal Batch
+      objectReference: {fileID: 0}
+    - target: {fileID: 5437970218482672926, guid: 8894b0efe44a09543abd9a5fc6e81d13, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5853453352154955512, guid: 8894b0efe44a09543abd9a5fc6e81d13, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8894b0efe44a09543abd9a5fc6e81d13, type: 3}

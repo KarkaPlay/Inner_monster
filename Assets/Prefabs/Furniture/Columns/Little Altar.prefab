@@ -16,7 +16,7 @@ GameObject:
   m_Name: Little Altar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1371989936936915587
@@ -166,6 +166,10 @@ PrefabInstance:
     - target: {fileID: 789904733819290577, guid: 8c79b871e39ca0b4b8db078431ab4fbd, type: 3}
       propertyPath: m_Name
       value: Glow Crystal 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 789904733819290577, guid: 8c79b871e39ca0b4b8db078431ab4fbd, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c79b871e39ca0b4b8db078431ab4fbd, type: 3}
