@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class InteractionFinder : MonoBehaviour
 {
+    [SerializeField]
     public static List<Interactable> m_NearbyInteractables = new List<Interactable>();
 
     public bool HasNearbyInteractables()

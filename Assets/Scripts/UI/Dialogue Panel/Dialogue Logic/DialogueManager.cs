@@ -6,6 +6,9 @@ public class DialogueManager : ScriptableObject{
     public delegate void DialogueCallback(Dialogue dialogue);
     public DialogueCallback OnDialogueStarted;
 
+    public delegate void MonologueCallback(Dialogue dialogue, Interactable Npc);
+    public MonologueCallback OnMonologueStarted;
+
     public delegate void TellingCallBack();
     public TellingCallBack OnDialogueEnded;
 
@@ -14,6 +17,10 @@ public class DialogueManager : ScriptableObject{
 
     public void StartDialogue (Dialogue dialogue){
         OnDialogueStarted.Invoke(dialogue);
+    }
+
+    public void StartMonologue (Dialogue dialogue, Interactable Npc){
+        OnMonologueStarted.Invoke(dialogue, Npc);
     }
 
     public void EndDialogue (){

@@ -33,6 +33,7 @@ public class DialogueMenuController : MonoBehaviour
     private void Awake(){
         gameObject.SetActive(false);
         m_DialogueManager.OnDialogueStarted += OnDialogueStarted;
+        m_DialogueManager.OnMonologueStarted += OnMonologueStarted;
         m_DialogueManager.OnDialogueEnded += OnDialogueEnded;
         m_DialogueManager.OnResponse += OnResponse;
     }
@@ -47,6 +48,19 @@ public class DialogueMenuController : MonoBehaviour
         m_NpcName.text = CurrentDialogue.npcName;
         DialogueContinue(CurrentDialogue, m_Npc.TriggerCheck(Trigger));
     }
+
+    // TEST //
+    private void OnMonologueStarted(Dialogue dialogue, Interactable Npc)
+    {
+        m_Npc = Npc;
+        Trigger = m_Npc.Trigger;
+        gameObject.SetActive(true);
+
+        CurrentDialogue = dialogue;
+        m_NpcName.text = CurrentDialogue.npcName;
+        DialogueContinue(CurrentDialogue, m_Npc.TriggerCheck(Trigger));
+    }
+    //
     
     private void DialogueContinue(Dialogue dialogue, int ResponseInd){
         m_NpcDialogueText.text = CurrentDialogue.messages[ResponseInd].text;
