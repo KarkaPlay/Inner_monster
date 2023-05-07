@@ -17,7 +17,7 @@ GameObject:
   m_Name: Glow Crystal 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 127
   m_IsActive: 1
 --- !u!4 &5674594828887889727

@@ -16,7 +16,7 @@ GameObject:
   m_Name: Goat Skull 3 Eyes With Handler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &4030888300102950545
@@ -154,6 +154,10 @@ PrefabInstance:
     - target: {fileID: 1059382439291925092, guid: 1e3d38f57cf934c438b7cb71d92a22ed, type: 3}
       propertyPath: m_Name
       value: Goat Skull Handler
+      objectReference: {fileID: 0}
+    - target: {fileID: 1059382439291925092, guid: 1e3d38f57cf934c438b7cb71d92a22ed, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1e3d38f57cf934c438b7cb71d92a22ed, type: 3}

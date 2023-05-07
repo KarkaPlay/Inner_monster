@@ -16,7 +16,7 @@ GameObject:
   m_Name: EnterTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 2147483647
   m_IsActive: 0
 --- !u!4 &8305572957838455589
@@ -86,7 +86,7 @@ GameObject:
   m_Name: AltarDoor2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &8305572958172893292
@@ -6621,7 +6621,7 @@ GameObject:
   m_Name: ExitTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &8305572958694380692
@@ -6690,7 +6690,7 @@ GameObject:
   m_Name: AltarDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &8305572958966535327
