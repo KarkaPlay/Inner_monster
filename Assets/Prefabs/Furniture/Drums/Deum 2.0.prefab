@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3420896725402130001}
   - component: {fileID: 3420896725402128813}
   m_Layer: 0
-  m_Name: Vase
+  m_Name: Deum 2.0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
