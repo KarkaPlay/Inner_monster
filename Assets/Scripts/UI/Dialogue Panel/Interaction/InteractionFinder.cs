@@ -13,7 +13,7 @@ public class InteractionFinder : MonoBehaviour
 
     private void Update()
     {
-        if (HasNearbyInteractables() && Input.GetKeyDown(KeyCode.E))
+        if (HasNearbyInteractables() && Input.GetButtonDown("Interact"))
         {
             //Ideally, we'd want to find the best possible interaction (ex: by distance & orientation).
             m_NearbyInteractables[0].DoInteraction();
