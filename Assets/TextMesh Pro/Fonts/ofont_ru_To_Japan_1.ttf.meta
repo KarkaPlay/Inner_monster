@@ -10,7 +10,8 @@ TrueTypeFontImporter:
   includeFontData: 1
   fontNames:
   - To Japan
-  fallbackFontReferences: []
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 15afe1da30301a64db0aa077bd3e5166, type: 3}
   customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1
