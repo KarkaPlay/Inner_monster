@@ -15,6 +15,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Drum Red
       objectReference: {fileID: 0}
+    - target: {fileID: 8274668109751734572, guid: c6f0c098966f13241836291b2322970d, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 8763536906478750614, guid: c6f0c098966f13241836291b2322970d, type: 3}
       propertyPath: m_RootOrder
       value: 0

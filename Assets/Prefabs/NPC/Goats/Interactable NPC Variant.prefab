@@ -7,9 +7,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5067648210200830788, guid: 9391fa346e8189f4a88416297e40db31, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8355151605083663823, guid: 9391fa346e8189f4a88416297e40db31, type: 3}
       propertyPath: m_Name
-      value: Interactable NPC
+      value: Interactable NPC Variant
       objectReference: {fileID: 0}
     - target: {fileID: 8698885966170666869, guid: 9391fa346e8189f4a88416297e40db31, type: 3}
       propertyPath: m_RootOrder
