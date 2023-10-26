@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
+[System.Serializable]
 public class Interactable : MonoBehaviour
 {
     // FOR ALL INTERACTABLES //
