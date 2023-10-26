@@ -11,6 +11,8 @@ TagManager:
   - Animal
   - villager
   - ui_thought
+  - CinemachineTarget
+  - ground
   layers:
   - Default
   - TransparentFX
