@@ -90,7 +90,7 @@ public class DialogueMenuController : MonoBehaviour
     private void ResponseCheck(){
         foreach (Response response in CurrentMessage.responses){
             DialogueResponseController newResponse = Instantiate(m_ResponseControllerPrefab, m_ResponsesBoxTransform);
-            newResponse.Resp = response;    
+            newResponse.Resp = response; 
         }
     }
 }
