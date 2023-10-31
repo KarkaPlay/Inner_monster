@@ -10,6 +10,7 @@ public class Combat : MonoBehaviour
 {
     [SerializeField] private float hp = 100;
     [SerializeField] private float healPerSec = 1;
+    [SerializeField] private float healCooldown = 2;//задержка перед исцелением
     [SerializeField] private float attack = 10;
     [SerializeField] private float attackRange = 1;
     [SerializeField] private float attackCooldown = 1;
@@ -18,6 +19,7 @@ public class Combat : MonoBehaviour
     [SerializeField] private bool EnemyGetHit = false;
     private float aggressivenessTimer = 0;
     private float enemyAttackCooldown = 0;
+    public float healCooldownTimer = 0;
 
     private TextMeshProUGUI HpText;
 
@@ -135,7 +137,8 @@ public class Combat : MonoBehaviour
     public void PlayerTakeDamage (float damage)
     {
         hp -= damage;
-     
+        healCooldownTimer = 0;
+
         if(hp <= 0)
         {
             //Die();
@@ -145,7 +148,14 @@ public class Combat : MonoBehaviour
 
     private void Healing ()
     {
-        if(hp < 100)
-            hp += healPerSec * Time.deltaTime;
+        if(healCooldownTimer >= healCooldown)
+        {
+            //healCooldownTimer = 0;
+            if(hp < 100)
+                hp += healPerSec * Time.deltaTime;
+        }
+        else
+            healCooldownTimer += Time.deltaTime;
+
     }
 }
