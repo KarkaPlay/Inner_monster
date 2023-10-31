@@ -13,6 +13,7 @@ TagManager:
   - ui_thought
   - CinemachineTarget
   - ground
+  - Enemy
   layers:
   - Default
   - TransparentFX

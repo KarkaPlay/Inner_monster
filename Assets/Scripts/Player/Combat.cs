@@ -1,65 +1,151 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
+using TMPro;
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Combat : MonoBehaviour
 {
     [SerializeField] private float hp = 100;
+    [SerializeField] private float healPerSec = 1;
     [SerializeField] private float attack = 10;
     [SerializeField] private float attackRange = 1;
     [SerializeField] private float attackCooldown = 1;
+    [SerializeField] private float aggressivenessCooldown = 5; // время сколько враг будет злиться(наносить урон) на игрока, обновляется когда враг получет урон
     [SerializeField] private bool isAttacking = false;
+    [SerializeField] private bool EnemyGetHit = false;
+    private float aggressivenessTimer = 0;
+    private float enemyAttackCooldown = 0;
 
-    private void Update()
+    private TextMeshProUGUI HpText;
+
+    private void Start ()
     {
-        if (!gameObject.CompareTag("Player")) return; // Мы управляем только игроком, потом удалить
-        
-        if (Input.GetKeyDown(KeyCode.F) && !isAttacking)
+        HpText = GameObject.Find("HP").GetComponent<TextMeshProUGUI>();
+    }
+
+    private void Update ()
+    {
+        //if (!gameObject.CompareTag("Player")) return; // Мы управляем только игроком, потом удалить
+
+        if(gameObject.CompareTag("Player"))
         {
-            Debug.Log("Attack");
-            Attack();
+            if(Input.GetKeyDown(KeyCode.F) && !isAttacking)
+                AttackEnemies();
+
+            HpText.SetText("Здоровье: " + (Mathf.Round(hp * 10) / 10).ToString() + "/100");
+
+            Healing();
+        }
+
+        if(gameObject.CompareTag("Enemy") && EnemyGetHit)
+        {
+
+            if(aggressivenessTimer >= aggressivenessCooldown)
+            {
+                EnemyGetHit = false;
+                aggressivenessTimer = 0;
+            }
+            else
+            {
+                AttackPlayer();
+                aggressivenessTimer += Time.deltaTime;
+            }
         }
     }
 
-    private IEnumerator AttackCooldown()
+    private IEnumerator PlayerAttackCooldown ()
     {
         isAttacking = true;
         yield return new WaitForSeconds(attackCooldown);
         isAttacking = false;
     }
 
-    private void Attack()
+    private void AttackEnemies ()
     {
-        StartCoroutine(AttackCooldown());
-        
+        StartCoroutine(PlayerAttackCooldown());
+
         // Все коллайдеры в радиусе атаки
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, attackRange);
-        
+
         // Если тег Character то наносим урон
-        foreach (Collider hitCollider in hitColliders)
+        foreach(Collider hitCollider in hitColliders)
         {
-            if (hitCollider.gameObject.CompareTag("Character"))
+            if(hitCollider.gameObject.CompareTag("Enemy"))
             {
                 // Должны брать хп из другого скрипта
                 Combat enemyCombat = hitCollider.gameObject.GetComponent<Combat>();
-                
-                enemyCombat.TakeDamage(attack);
+
+                enemyCombat.EnemyTakeDamage(attack);
             }
         }
     }
-    
-    public void TakeDamage(float damage)
+
+    public void EnemyTakeDamage (float damage)
     {
         hp -= damage;
-        
-        if (hp <= 0)
+        EnemyGetHit = true;
+        aggressivenessTimer = 0;
+        Debug.Log("ХП врага= " + hp);
+
+        if(hp <= 0)
         {
             Die();
         }
     }
 
-    private void Die()
+    private void Die ()
     {
         Destroy(gameObject);
+    }
+
+    /*private IEnumerator EnemyAttackCooldown ()
+    {
+        yield return new WaitForSeconds(attackCooldown);
+    }*/
+
+    public void AttackPlayer ()
+    {
+        //StartCoroutine(EnemyAttackCooldown());
+        if(enemyAttackCooldown >= attackCooldown)
+        {
+            enemyAttackCooldown = 0;
+
+            // Все коллайдеры в радиусе атаки
+            Collider[] hitColliders = Physics.OverlapSphere(transform.position, attackRange);
+
+            // Если тег Character то наносим урон
+            foreach(Collider hitCollider in hitColliders)
+            {
+                if(hitCollider.gameObject.CompareTag("Player"))
+                {
+                    // Должны брать хп из другого скрипта
+                    Combat player = hitCollider.gameObject.GetComponent<Combat>();
+
+                    player.PlayerTakeDamage(attack);
+                }
+            }
+        }
+        else
+            enemyAttackCooldown += Time.deltaTime;
+    }
+
+    public void PlayerTakeDamage (float damage)
+    {
+        hp -= damage;
+     
+        if(hp <= 0)
+        {
+            //Die();
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+    }
+
+    private void Healing ()
+    {
+        if(hp < 100)
+            hp += healPerSec * Time.deltaTime;
     }
 }
