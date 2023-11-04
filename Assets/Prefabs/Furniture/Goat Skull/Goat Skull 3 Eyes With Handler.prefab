@@ -1,0 +1,168 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4376169674046063659
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4030888300102950545}
+  - component: {fileID: 26823789537202484}
+  - component: {fileID: 2863087947995276798}
+  - component: {fileID: 3493156071226003549}
+  m_Layer: 0
+  m_Name: Goat Skull 3 Eyes With Handler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!4 &4030888300102950545
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4376169674046063659}
+  m_LocalRotation: {x: 0.044702582, y: -0.3116979, z: -0.134742, w: 0.93951625}
+  m_LocalPosition: {x: 39.805, y: 8.000996, z: 12.278}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4030888299613909891}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: -36.708, z: -16.323}
+--- !u!33 &26823789537202484
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4376169674046063659}
+  m_Mesh: {fileID: 993013896079411179, guid: 9c15acd5cecb96b4e84529c57e12f920, type: 3}
+--- !u!23 &2863087947995276798
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4376169674046063659}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: -4402469891805092345, guid: 9c15acd5cecb96b4e84529c57e12f920, type: 3}
+  - {fileID: -2648078934298631970, guid: 9c15acd5cecb96b4e84529c57e12f920, type: 3}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 0.7
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &3493156071226003549
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4376169674046063659}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 993013896079411179, guid: 9c15acd5cecb96b4e84529c57e12f920, type: 3}
+--- !u!1001 &3605388336027114333
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 4030888300102950545}
+    m_Modifications:
+    - target: {fileID: 430232421761837278, guid: 1e3d38f57cf934c438b7cb71d92a22ed, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 430232421761837278, guid: 1e3d38f57cf934c438b7cb71d92a22ed, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 6.0587616
+      objectReference: {fileID: 0}
+    - target: {fileID: 430232421761837278, guid: 1e3d38f57cf934c438b7cb71d92a22ed, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -5.7712297
+      objectReference: {fileID: 0}
+    - target: {fileID: 430232421761837278, guid: 1e3d38f57cf934c438b7cb71d92a22ed, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.1821545
+      objectReference: {fileID: 0}
+    - target: {fileID: 430232421761837278, guid: 1e3d38f57cf934c438b7cb71d92a22ed, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.70847607
+      objectReference: {fileID: 0}
+    - target: {fileID: 430232421761837278, guid: 1e3d38f57cf934c438b7cb71d92a22ed, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.09914501
+      objectReference: {fileID: 0}
+    - target: {fileID: 430232421761837278, guid: 1e3d38f57cf934c438b7cb71d92a22ed, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.69130886
+      objectReference: {fileID: 0}
+    - target: {fileID: 430232421761837278, guid: 1e3d38f57cf934c438b7cb71d92a22ed, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.10160707
+      objectReference: {fileID: 0}
+    - target: {fileID: 430232421761837278, guid: 1e3d38f57cf934c438b7cb71d92a22ed, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 430232421761837278, guid: 1e3d38f57cf934c438b7cb71d92a22ed, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 430232421761837278, guid: 1e3d38f57cf934c438b7cb71d92a22ed, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1059382439291925092, guid: 1e3d38f57cf934c438b7cb71d92a22ed, type: 3}
+      propertyPath: m_Name
+      value: Goat Skull Handler
+      objectReference: {fileID: 0}
+    - target: {fileID: 1059382439291925092, guid: 1e3d38f57cf934c438b7cb71d92a22ed, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1e3d38f57cf934c438b7cb71d92a22ed, type: 3}
+--- !u!4 &4030888299613909891 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 430232421761837278, guid: 1e3d38f57cf934c438b7cb71d92a22ed, type: 3}
+  m_PrefabInstance: {fileID: 3605388336027114333}
+  m_PrefabAsset: {fileID: 0}
