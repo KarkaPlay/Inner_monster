@@ -1,0 +1,158 @@
+{
+	"Categories": [
+		{
+			"Name": "locations",
+			"Files": [
+				{
+					"Name": "Mountines",
+					"LongText": [
+						{
+							"ParagraphID": 0,
+							"Text": "gori bolshie",
+							"ShortText": {
+								"Text": "oni visokie",
+								"Points": [
+									"100 km"
+								]
+							}
+						},
+						{
+							"ParagraphID": 1,
+							"Text": "tam slojno hodit",
+							"ShortText": {
+								"Text": "nado visoko prigat",
+								"Points": [
+								]
+							}
+						}
+					]
+				},
+				{
+					"Name": "Fields",
+					"LongText": [
+						{
+							"ParagraphID": 3,
+							"Text": "trava zdes zelyonaya",
+							"ShortText": {
+								"Text": "zdes rastut rastenya: ",
+								"Points": [
+									"romashki, ",
+									"roses"
+								]
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"Name": "Characters",
+			"Files": [
+				{
+					"Name": "Ancient",
+					"LongText": [
+						{
+							"ParagraphID": 4,
+							"Text": "U nego est deti",
+							"ShortText": {
+								"Text": "u nego dvoe detei: ",
+								"Points": [
+									"rebyonok 1",
+									"rebyonok 2"
+								]
+							}
+						},
+						{
+							"ParagraphID": 5,
+							"Text": "on ne pyot moloko",
+							"ShortText": {
+								"Text": "alergiya na: ",
+								"Points": [
+									"moloko"
+								]
+							}
+						}
+					]
+				}
+			]
+		},
+        {
+			"Name": "Ingridients",
+			"Files": [
+				{
+					"Name": "romashka",
+					"LongText": [
+						{
+							"ParagraphID": 6,
+							"Text": "ona vkusno pahnet",
+							"ShortText": {
+								"Text": "mojno podarit: ",
+								"Points": [
+									"korove"
+								]
+							}
+						},
+                        {
+							"ParagraphID": 7,
+							"Text": "nahoditsa v polyah",
+							"ShortText": {
+								"Text": "mojno naiti v:",
+								"Points": [
+									"polyah"
+								]
+							}
+						}
+					]
+				},
+				{
+					"Name": "clever",
+					"LongText": [
+						{
+							"ParagraphID": 8,
+							"Text": "prinosit udachu",
+							"ShortText": {
+								"Text": "mojno naiti v:",
+								"Points": [
+									"polyah",
+									"gorah"
+								]
+							}
+						}
+					]
+				}
+			]
+		},
+        {
+			"Name": "Mysteries",
+			"Files": [
+				{
+					"Name": "portal",
+					"LongText": [
+						{
+							"ParagraphID": 9,
+							"Text": "drevniy portal, davno zabroshenniy",
+							"ShortText": {
+								"Text": "nado bi sprosit pro portal:",
+								"Points": [
+									"stareishnu",
+									"kuznetsa"
+								]
+							}
+						},
+						{
+							"ParagraphID": 10,
+							"Text": "stareishina chto-to pro nego znaet",
+							"ShortText": {
+								"Text": "nado bi sprosit pro portal:",
+								"Points": [
+									"stareishnu",
+									"kuznetsa"
+								]
+							}
+						}
+					]
+				}
+			]
+		}
+	]
+}
