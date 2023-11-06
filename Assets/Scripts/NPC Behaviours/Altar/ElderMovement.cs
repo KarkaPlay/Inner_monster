@@ -28,6 +28,7 @@ public class ElderMovement : MonoBehaviour
         TurnOff(playerResponse2, playerResponseQuote2);
     }
 
+
     public void FixedUpdate(){
         if (ExitTrigger.isEntered == false){
             switch (MonologueTime.time / 300){
