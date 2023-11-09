@@ -6,7 +6,7 @@ public class MiniMapCamera : MonoBehaviour
 {
     public GameObject player;
 
-    public float distance = 30;
+    private float distance = 30;
     void Start ()
     {
         player = GameObject.FindWithTag("Player");
