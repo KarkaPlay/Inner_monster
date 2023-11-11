@@ -22,7 +22,7 @@ public class Diary : MonoBehaviour
     private bool visible = false;                                                   //⢞⣿⣿⣷⣝⣷⣝⠦⡀⠀⠀⠀⠀⠀⠀⠀⡀⢀⠀⠀⠀⠀⠀⠛⣿⠈
     private List<GameObject> pagesOfDiary = new List<GameObject>();                 //⣦⡑⠛⣟⢿⡿⣿⣷⣝⢧⡀⠀⠀⣶⣸⡇⣿⢸⣧⠀⠀⠀⠀⢸⡿⡆
     private int currentPageIndex = -1;                                              //⣿⣿⣷⣮⣭⣍⡛⠻⢿⣷⠿⣶⣶⣬⣬⣁⣉⣀⣀⣁⡤⢴⣺⣾⣽⡇
-    private List<JsonHandler.Paragraph> pinnedParagraphs = new List<JsonHandler.Paragraph>();
+    public List<JsonHandler.Paragraph> pinnedParagraphs = new List<JsonHandler.Paragraph>();
     public GameObject pins;
     private List<GameObject> allParagraphs = new List<GameObject>();
     public GameObject paragraphPrefab, paragraphParent;
@@ -41,8 +41,47 @@ public class Diary : MonoBehaviour
         firstText = pins.transform.Find("firstOnPage").GetComponent<TextMeshProUGUI>();
         secondText = pins.transform.Find("secondOnPage").GetComponent<TextMeshProUGUI>();
         thirdText = pins.transform.Find("thirdOnPage").GetComponent<TextMeshProUGUI>();
+
+        pins.transform.Find("ArrowLeft").GetComponent<Button>().onClick.AddListener(() =>
+        {
+            page_left();
+        });
+
+        pins.transform.Find("ArrowRight").GetComponent<Button>().onClick.AddListener(() =>
+        {
+            page_right();
+        });
     }
 
+
+    private void page_left()
+    {
+        if (currentPage == 0) //dodge negative list index, set index to last page
+        {
+            currentPage = pinnedParagraphs.Count - 1 - (pinnedParagraphs.Count - 1) % 3;
+        }
+        else
+        {
+            currentPage -= 3;
+        }
+
+        show_pin_page();
+    }
+
+
+    private void page_right()
+    {
+        if (pinnedParagraphs.Count < currentPage + 4) //dodge list index out of range, set index to 0
+        {
+            currentPage = 0;
+        }
+        else
+        {
+            currentPage += 3;
+        }
+
+        show_pin_page();
+    }
 
     //executed when a category button is pressed, needs to be attached to buttons
     public void OnCategorySelected()
@@ -109,42 +148,16 @@ public class Diary : MonoBehaviour
 
         int tmp_inex = pinnedParagraphs.FindIndex(paragraph => paragraph.ParagraphID == paragraph_to_pin.ParagraphID); //index of paragraph_to_pin within pinnedParagraphs
 
+        //Debug.Log("Index: " + tmp_inex.ToString());
+
         if(tmp_inex != -1) //if index != -1 then paragraph_to_pin already exists in pinnedParagraphs, and should be removed
         {
             pinnedParagraphs.RemoveAt(tmp_inex); //so we remove it
-            show_pin_page(); //shit doesn't work idk...
             return; //return to prevent function from executing further
         }
 
         pinnedParagraphs.Add(paragraph_to_pin);
 
-        pins.transform.Find("ArrowLeft").GetComponent<Button>().onClick.AddListener(() =>
-        {
-            if (currentPage == 0) //dodge negative list index, set index to last page
-            {
-                currentPage = pinnedParagraphs.Count - 1 - (pinnedParagraphs.Count - 1) % 3;
-            }
-            else
-            {
-                currentPage -= 3;
-            }
-
-            show_pin_page();
-        });
-
-        pins.transform.Find("ArrowRight").GetComponent<Button>().onClick.AddListener(() =>
-        {
-            if (pinnedParagraphs.Count < currentPage + 4) //dodge list index out of range, set index to 0
-            {
-                currentPage = 0;
-            }
-            else
-            {
-                currentPage += 3;
-            }
-
-            show_pin_page();
-        });
     }
 
     //diplays 3 shortTexts of pinnedParagraphs
@@ -152,24 +165,23 @@ public class Diary : MonoBehaviour
     {
         if (pinnedParagraphs.Count != 0)
         {
-            firstText.text = JsonHandler.construct_shortText(pinnedParagraphs[currentPage]);
-            if (pinnedParagraphs.Count > currentPage + 1)
-            {
-                secondText.text = JsonHandler.construct_shortText(pinnedParagraphs[currentPage + 1]);
-            }
-            else
-            {
-                secondText.text = "";
-            }
+            if (pinnedParagraphs.Count <= currentPage) {page_left();return;} //if texts from this page were removed, we turn page to the left
 
-            if (pinnedParagraphs.Count > currentPage + 2)
-            {
-                thirdText.text = JsonHandler.construct_shortText(pinnedParagraphs[currentPage + 2]);
-            }
-            else
-            {
-                thirdText.text = "";
-            }
+            firstText.text = (pinnedParagraphs.Count > currentPage)
+                ? // гугли "тернарный условный оператор", если не понятно, зачем вопросики
+                JsonHandler.construct_shortText(pinnedParagraphs[currentPage]) : "";
+
+            secondText.text = (pinnedParagraphs.Count > currentPage + 1)
+                ?
+                JsonHandler.construct_shortText(pinnedParagraphs[currentPage + 1]) : "";
+
+            thirdText.text = (pinnedParagraphs.Count > currentPage + 2)
+                ?
+                JsonHandler.construct_shortText(pinnedParagraphs[currentPage + 2]) : "";
+        }
+        else
+        {
+            firstText.text = "";
         }
     }
 
@@ -194,6 +206,7 @@ public class Diary : MonoBehaviour
             paragraphObject.transform.Find("pinParagraph").GetComponent<Button>().onClick.AddListener(() =>
             {
                 pinNote(0);
+                show_pin_page();
             });
             paragraphObject.transform.Find("pinParagraph").GetComponent<FileData>().paragraghs = new List<JsonHandler.Paragraph>(); //add file data to paragraph
             paragraphObject.transform.Find("pinParagraph").GetComponent<FileData>().paragraghs.Add(fileData[i]); //add single element to list, so we call it on button. slojno obyasnit ya hz
