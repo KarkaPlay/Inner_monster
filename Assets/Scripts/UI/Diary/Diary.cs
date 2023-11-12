@@ -219,6 +219,11 @@ public class Diary : MonoBehaviour
             visible = !visible;
             diaryActive();
         }
+
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            pins.SetActive(!pins.activeSelf);
+        }
     }
 
 }
