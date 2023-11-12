@@ -278,6 +278,7 @@ get_file() - вернёт номер файла по его названию и 
 (например:
     CategoryNumber = get_category("Characters");
     FileNumber = get_file(CategoryNumber, "Kuznets");
+    
     diary.Categories[CategoryNumber].Files[FileNumber]; - объект типа file
 )
 
@@ -286,15 +287,19 @@ get_paragraph() - вернёт номер параграфа по НОМЕРУ �
     CategoryNumber = get_category("Characters");
     FileNumber = get_file(CategoryNumber, "Stareyshina");
     ParagraphNumber = get_paragraph(CategoryNumber, FileNumber, ID);
+
     diary.Categories[CategoryNumber].Files[FileNumber].LongText[ParagraphNumber].Text = new_text; - изменить текс параграфа на new_text
-    или
+        ИЛИ
     diary.Categories[CategoryNumber].Files[FileNumber].LongText.RemoveAt(ParagraphNumber); - удалить параграф из файла
 )
 
 ShortText - переменная внутри параграфа, хранит Text - основной текст и Points - дополнения
 diary.Categories[CategoryNumber].Files[FileNumber].LongText[ParagraphNumber].ShortText.Text = new_text; - изменить текст подсказки
+--------------------------------------------------------------------------------------------------------
+чё ещё есть:
 
+construct_shortText() - создаст строку подсказки со всеми дополнениями
 
-
+paragraph_id_exists() - вернёт true, если параграф с таким id есть в дневнике
 
 */

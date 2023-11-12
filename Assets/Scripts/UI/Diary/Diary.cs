@@ -37,7 +37,7 @@ public class Diary : MonoBehaviour
     {
         diary = GetComponent<JsonHandler>().load_diary(); //load diary via JsonHandler
         diaryWindow.SetActive(false);
-        
+
 
         pins.transform.Find("ArrowLeft").GetComponent<Button>().onClick.AddListener(() =>
         {
@@ -177,7 +177,9 @@ public class Diary : MonoBehaviour
         }
         else
         {
-            firstText.GetComponent<TextMeshProUGUI>().text = "";
+            firstText.transform.Find("textFromDiary").GetComponent<TextMeshProUGUI>().text = "";
+            secondText.transform.Find("textFromDiary").GetComponent<TextMeshProUGUI>().text = "";
+            thirdText.transform.Find("textFromDiary").GetComponent<TextMeshProUGUI>().text = "";
         }
     }
 
