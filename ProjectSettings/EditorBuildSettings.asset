@@ -8,13 +8,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Altar.unity
     guid: bda77e3eb6a3a414c8359c545c6e02ec
-  - enabled: 0
-    path: Assets/Scenes/MainMenu.unity
-    guid: b815c8d23821cba42866594aeabbffca
   - enabled: 1
     path: Assets/Scenes/VillageMap.unity
     guid: 9257bb891ee76464883e26fa957c6f7c
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/end.unity
     guid: 1621872c296c40749b4dc3b993a2bf0b
+  - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: b815c8d23821cba42866594aeabbffca
   m_configObjects: {}
