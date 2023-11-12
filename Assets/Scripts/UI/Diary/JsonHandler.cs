@@ -54,7 +54,10 @@ public class JsonHandler : MonoBehaviour
     {
         int CategoryNumber = get_category(CategoryName);
 
-        if (CategoryNumber == -1){return null;}
+        if (CategoryNumber == -1)
+        {
+            return null;
+        }
 
         file new_file = new file();
         new_file.Name = name;
@@ -135,9 +138,13 @@ public class JsonHandler : MonoBehaviour
 
         int CategoryNumber = get_category(CategoryName);
 
-        if (CategoryNumber == -1){return null;}
+        if (CategoryNumber == -1)
+        {
+            return null;
+        }
 
-        for (int f = 0; f < diary.Categories[CategoryNumber].Files.Count; f++) {
+        for (int f = 0; f < diary.Categories[CategoryNumber].Files.Count; f++)
+        {
             files.Add(diary.Categories[CategoryNumber].Files[f]);
         }
 
@@ -154,6 +161,7 @@ public class JsonHandler : MonoBehaviour
                 return c;
             }
         }
+
         return -1;
     }
 
@@ -167,18 +175,23 @@ public class JsonHandler : MonoBehaviour
                 return f;
             }
         }
+
         return -1;
     }
 
     //returns indxe of paragraph from file from category by its ID / returns -1 if was not found
     public int get_paragraph(int CategoryNumber, int FileNumber, int ParagraphID)
     {
-        for (int paragraph = 0; paragraph < diary.Categories[CategoryNumber].Files[FileNumber].LongText.Count; paragraph++) {
+        for (int paragraph = 0;
+             paragraph < diary.Categories[CategoryNumber].Files[FileNumber].LongText.Count;
+             paragraph++)
+        {
             if (diary.Categories[CategoryNumber].Files[FileNumber].LongText[paragraph].ParagraphID == ParagraphID)
             {
                 return paragraph;
             }
         }
+
         return -1;
     }
 
@@ -206,9 +219,16 @@ public class JsonHandler : MonoBehaviour
     public static string construct_shortText(Paragraph InParagraph)
     {
         string text = InParagraph.ShortText.Text;
-        for (int s = 0; s < InParagraph.ShortText.Points.Count; s++) {
+        for (int s = 0; s < InParagraph.ShortText.Points.Count; s++)
+        {
             text += InParagraph.ShortText.Points[s];
         }
+
+        if (text.Length > 15)
+        {
+            return text.Substring(0, 15) + "...";
+        }
+
         return text;
     }
 

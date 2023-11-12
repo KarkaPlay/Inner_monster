@@ -29,18 +29,15 @@ public class Diary : MonoBehaviour
 
     private int currentPage = 0;
 
-    private TextMeshProUGUI firstText;
-    private TextMeshProUGUI secondText;
-    private TextMeshProUGUI thirdText;
+    public GameObject firstText;
+    public GameObject secondText;
+    public GameObject thirdText;
 
     private void Start()
     {
         diary = GetComponent<JsonHandler>().load_diary(); //load diary via JsonHandler
         diaryWindow.SetActive(false);
-
-        firstText = pins.transform.Find("firstOnPage").GetComponent<TextMeshProUGUI>();
-        secondText = pins.transform.Find("secondOnPage").GetComponent<TextMeshProUGUI>();
-        thirdText = pins.transform.Find("thirdOnPage").GetComponent<TextMeshProUGUI>();
+        
 
         pins.transform.Find("ArrowLeft").GetComponent<Button>().onClick.AddListener(() =>
         {
@@ -143,8 +140,7 @@ public class Diary : MonoBehaviour
     //called when we try to pin a note
     private void pinNote(int paragraphIndex)
     {
-        JsonHandler.Paragraph paragraph_to_pin = EventSystem.current.currentSelectedGameObject
-            .GetComponent<FileData>().paragraghs[paragraphIndex];
+        JsonHandler.Paragraph paragraph_to_pin = EventSystem.current.currentSelectedGameObject.GetComponent<FileData>().paragraghs[paragraphIndex];
 
         int tmp_inex = pinnedParagraphs.FindIndex(paragraph => paragraph.ParagraphID == paragraph_to_pin.ParagraphID); //index of paragraph_to_pin within pinnedParagraphs
 
@@ -167,21 +163,21 @@ public class Diary : MonoBehaviour
         {
             if (pinnedParagraphs.Count <= currentPage) {page_left();return;} //if texts from this page were removed, we turn page to the left
 
-            firstText.text = (pinnedParagraphs.Count > currentPage)
+            firstText.transform.Find("textFromDiary").GetComponent<TextMeshProUGUI>().text = (pinnedParagraphs.Count > currentPage)
                 ? // гугли "тернарный условный оператор", если не понятно, зачем вопросики
-                JsonHandler.construct_shortText(pinnedParagraphs[currentPage]) : "";
+                 JsonHandler.construct_shortText(pinnedParagraphs[currentPage]) : "";
 
-            secondText.text = (pinnedParagraphs.Count > currentPage + 1)
+            secondText.transform.Find("textFromDiary").GetComponent<TextMeshProUGUI>().text = (pinnedParagraphs.Count > currentPage + 1)
                 ?
                 JsonHandler.construct_shortText(pinnedParagraphs[currentPage + 1]) : "";
 
-            thirdText.text = (pinnedParagraphs.Count > currentPage + 2)
+            thirdText.transform.Find("textFromDiary").GetComponent<TextMeshProUGUI>().text = (pinnedParagraphs.Count > currentPage + 2)
                 ?
                 JsonHandler.construct_shortText(pinnedParagraphs[currentPage + 2]) : "";
         }
         else
         {
-            firstText.text = "";
+            firstText.GetComponent<TextMeshProUGUI>().text = "";
         }
     }
 
