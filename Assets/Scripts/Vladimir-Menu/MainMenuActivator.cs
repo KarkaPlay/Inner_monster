@@ -41,11 +41,20 @@ public class MainMenuActivator : MonoBehaviour
 
     public void GoToMenu()
     {
+#if UNITY_EDITOR
         SceneManager.LoadScene(Scene);
+#endif
     }
 
     public void GoToDesktop()
     {
+    #if UNITY_EDITOR
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                Time.timeScale =1f;
+    #endif
+    #if UNITY_STANDALONE_WIN
         Application.Quit();
+    #endif
+
     }
 }
