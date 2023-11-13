@@ -36,14 +36,17 @@ public class QuestManager : MonoBehaviour
         }
     }
 
-    // ћетоды дл€ доступа и управлени€ квестами
-    // ...
-
-    // ѕример метода дл€ получени€ квеста по названию
     public Quest GetQuestByTitle(string title)
     {
         return quests.Find(quest => quest.Title.Equals(title));
     }
+
+    public Quest GetQuestById(QuestIDs questId)
+    {
+        return quests.Find(quest => quest.QuestId.Equals(questId));
+    }
+
+
 
     void Update()
     {

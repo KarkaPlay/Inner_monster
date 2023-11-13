@@ -17,13 +17,15 @@ public class Quest
 {
     public string Title { get; set; }
     public string Description { get; set; }
+    public QuestIDs QuestId { get; set; }
     public QuestStatus Status { get; private set; }
     public List<IQuestCondition> Conditions { get; private set; }
 
-    public Quest(string title, string description)
+    public Quest(string title, string description, QuestIDs questId)
     {
         Title = title;
         Description = description;
+        QuestId = questId;
         Status = QuestStatus.NotStarted;
         Conditions = new List<IQuestCondition>();
         Debug.Log($"Квест создан: {Title} - {Description}");
@@ -63,6 +65,12 @@ public class Quest
     {
         Conditions.Add(condition);
         Debug.Log($"Условие добавлено к квесту '{Title}': {condition.Description}");
+    }
+
+    public void RemoveCondition(IQuestCondition condition)
+    {
+        Conditions.Remove(condition);
+        Debug.Log($"Условие удалено из квеста '{Title}': {condition.Description}");
     }
 
 }
