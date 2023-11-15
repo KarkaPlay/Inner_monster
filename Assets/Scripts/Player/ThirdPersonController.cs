@@ -99,11 +99,11 @@ namespace StarterAssets
 
         // Sprint Bar
         public bool useSprintBar = true;
-        public bool hideBarWhenFull = true;
-        public Image sprintBarBG;
-        public Image sprintBar;
-        public float sprintBarWidthPercent = .3f;
-        public float sprintBarHeightPercent = .015f;
+        //public bool hideBarWhenFull = true;
+        //public Image sprintBarBG;
+        public Image StaminaImage;
+        //public float sprintBarWidthPercent = .3f;
+        //public float sprintBarHeightPercent = .015f;
 
         // Internal Variables
         public CanvasGroup sprintBarCG;
@@ -210,7 +210,8 @@ namespace StarterAssets
             {
                 crosshairObject.gameObject.SetActive(false);
             }
-            #region Sprint Bar
+            
+            /*#region Sprint Bar
 
             //sprintBarCG = GameObject.Find("SprintBar").GetComponent<CanvasGroup>();
 
@@ -225,7 +226,7 @@ namespace StarterAssets
                 sprintBarWidth = screenWidth * sprintBarWidthPercent;
                 sprintBarHeight = screenHeight * sprintBarHeightPercent;
 
-                sprintBarBG.rectTransform.sizeDelta = new Vector3(sprintBarWidth, sprintBarHeight, 0f);
+                //sprintBarBG.rectTransform.sizeDelta = new Vector3(sprintBarWidth, sprintBarHeight, 0f);
                 sprintBar.rectTransform.sizeDelta = new Vector3(sprintBarWidth - 2, sprintBarHeight - 2, 0f);
 
                 if(hideBarWhenFull)
@@ -239,7 +240,7 @@ namespace StarterAssets
                 sprintBar.gameObject.SetActive(false);
             }
 
-            #endregion
+            #endregion*/
         }
 
         private void Update ()
@@ -293,8 +294,7 @@ namespace StarterAssets
                 // Handles sprintBar 
                 if(useSprintBar && !unlimitedSprint)
                 {
-                    float sprintRemainingPercent = sprintRemaining / sprintDuration;
-                    sprintBar.transform.localScale = new Vector3(sprintRemainingPercent, 1f, 1f);
+                    StaminaImage.fillAmount = sprintRemaining / sprintDuration;
                 }
             }
 
@@ -361,20 +361,20 @@ namespace StarterAssets
                 isSprinting = true;
                 targetSpeed = SprintSpeed;
 
-                if(hideBarWhenFull && !unlimitedSprint)
+                /*if(hideBarWhenFull && !unlimitedSprint)
                 {
                     sprintBarCG.alpha += 5 * Time.deltaTime;
-                }
+                }*/
             }
             else
             {
                 isSprinting = false;
                 targetSpeed = MoveSpeed;
 
-                if(hideBarWhenFull && sprintRemaining == sprintDuration)
+                /*if(hideBarWhenFull && sprintRemaining == sprintDuration)
                 {
                     sprintBarCG.alpha -= 3 * Time.deltaTime;
-                }
+                }*/
             }
 
             // a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
