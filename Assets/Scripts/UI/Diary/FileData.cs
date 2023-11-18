@@ -6,4 +6,5 @@ public class FileData : MonoBehaviour
 {
 
     public List<JsonHandler.Paragraph> paragraghs;
+    public string name;
 }

@@ -12,26 +12,28 @@ using Input = UnityEngine.Input;
 
 public class Diary : MonoBehaviour
 {
-    public GameObject diaryWindow;                                                  //⢿⣿⣿⣿⣭⠹⠛⠛⠛⢿⣿⣿⣿⣿⡿⣿⠷⠶⠿⢻⣿⣛⣦⣙⠻⣿     some
-    public JsonHandler.Diary diary;                                                 //⣿⣿⢿⣿⠏⠀⠀⡀⠀⠈⣿⢛⣽⣜⠯⣽⠀⠀⠀⠀⠙⢿⣷⣻⡀⢿      variables
-    public GameObject NameCard;                                                     //⠐⠛⢿⣾⣖⣤⡀⠀⢀⡰⠿⢷⣶⣿⡇⠻⣖⣒⣒⣶⣿⣿⡟⢙⣶⣮
+    public JsonHandler.Diary diary;
+
+    //presets
+    public GameObject diaryWindow;
+    public GameObject NameCard;
+    public GameObject pins;
+    public GameObject paragraphPrefab, paragraphParent;
+    public GameObject NamesList;                                                    //⢿⣿⣿⣿⣭⠹⠛⠛⠛⢿⣿⣿⣿⣿⡿⣿⠷⠶⠿⢻⣿⣛⣦⣙⠻⣿     some
+                                                                                    //⣿⣿⢿⣿⠏⠀⠀⡀⠀⠈⣿⢛⣽⣜⠯⣽⠀⠀⠀⠀⠙⢿⣷⣻⡀⢿      variables
+    //Diary related                                                                 //⠐⠛⢿⣾⣖⣤⡀⠀⢀⡰⠿⢷⣶⣿⡇⠻⣖⣒⣒⣶⣿⣿⡟⢙⣶⣮
     private string category;                                                        //⣤⠀⠀⠛⠻⠗⠿⠿⣯⡆⣿⣛⣿⡿⠿⠮⡶⠼⠟⠙⠊⠁⠀⠸⢣⣿
     private List<GameObject> allFiles = new List<GameObject>();                     //⣿⣷⡀⠀⠀⠀⠀⠠⠭⣍⡉⢩⣥⡤⠥⣤⡶⣒⠀⠀⠀⠀⠀⢰⣿⣿
-                                                                                    //⣿⣿⡽⡄⠀⠀⠀⢿⣿⣆⣿⣧⢡⣾⣿⡇⣾⣿⡇⠀⠀⠀⠀⣿⡇⠃
-    public GameObject NamesList;                                                    //⣿⣿⣷⣻⣆⢄⠀⠈⠉⠉⠛⠛⠘⠛⠛⠛⠙⠛⠁⠀⠀⠀⠀⣿⡇⢸
-    private bool visible = false;                                                   //⢞⣿⣿⣷⣝⣷⣝⠦⡀⠀⠀⠀⠀⠀⠀⠀⡀⢀⠀⠀⠀⠀⠀⠛⣿⠈
-    private List<GameObject> pagesOfDiary = new List<GameObject>();                 //⣦⡑⠛⣟⢿⡿⣿⣷⣝⢧⡀⠀⠀⣶⣸⡇⣿⢸⣧⠀⠀⠀⠀⢸⡿⡆
-    private int currentPageIndex = -1;                                              //⣿⣿⣷⣮⣭⣍⡛⠻⢿⣷⠿⣶⣶⣬⣬⣁⣉⣀⣀⣁⡤⢴⣺⣾⣽⡇
-    public List<JsonHandler.Paragraph> pinnedParagraphs = new List<JsonHandler.Paragraph>();
-    public GameObject pins;
-    private List<GameObject> allParagraphs = new List<GameObject>();
-    public GameObject paragraphPrefab, paragraphParent;
+    private bool visible = false;                                                   //⣿⣿⡽⡄⠀⠀⠀⢿⣿⣆⣿⣧⢡⣾⣿⡇⣾⣿⡇⠀⠀⠀⠀⣿⡇⠃
+    private List<GameObject> pagesOfDiary = new List<GameObject>();                 //⣿⣿⣷⣻⣆⢄⠀⠈⠉⠉⠛⠛⠘⠛⠛⠛⠙⠛⠁⠀⠀⠀⠀⣿⡇⢸
+    private List<GameObject> allParagraphs = new List<GameObject>();                //⢞⣿⣿⣷⣝⣷⣝⠦⡀⠀⠀⠀⠀⠀⠀⠀⡀⢀⠀⠀⠀⠀⠀⠛⣿⠈
+                                                                                    //⣦⡑⠛⣟⢿⡿⣿⣷⣝⢧⡀⠀⠀⣶⣸⡇⣿⢸⣧⠀⠀⠀⠀⢸⡿⡆
+                                                                                    //⣿⣿⣷⣮⣭⣍⡛⠻⢿⣷⠿⣶⣶⣬⣬⣁⣉⣀⣀⣁⡤⢴⣺⣾⣽⡇
+    //pins related
+    private string currentPageKey;
+    private List<GameObject> DisplayedPins = new List<GameObject>();
+    private Dictionary<string, List<JsonHandler.Paragraph>> pinnedParagraphs;
 
-    private int currentPage = 0;
-
-    public GameObject firstText;
-    public GameObject secondText;
-    public GameObject thirdText;
 
     private void Start()
     {
@@ -53,14 +55,6 @@ public class Diary : MonoBehaviour
 
     private void page_left()
     {
-        if (currentPage == 0) //dodge negative list index, set index to last page
-        {
-            currentPage = pinnedParagraphs.Count - 1 - (pinnedParagraphs.Count - 1) % 3;
-        }
-        else
-        {
-            currentPage -= 3;
-        }
 
         show_pin_page();
     }
@@ -68,14 +62,6 @@ public class Diary : MonoBehaviour
 
     private void page_right()
     {
-        if (pinnedParagraphs.Count < currentPage + 4) //dodge list index out of range, set index to 0
-        {
-            currentPage = 0;
-        }
-        else
-        {
-            currentPage += 3;
-        }
 
         show_pin_page();
     }
@@ -102,16 +88,19 @@ public class Diary : MonoBehaviour
             //fill pin component data and add listeners
             tmp.transform.Find("Avatar").GetComponent<Button>().onClick.AddListener(() => { showFullText(); });
             tmp.transform.Find("Avatar").GetComponent<FileData>().paragraghs = newParagraph;
+            tmp.transform.Find("Avatar").GetComponent<FileData>().name = draw[i].Name;
+
             tmp.transform.Find("PinBtn").GetComponent<Button>().onClick.AddListener(() =>
             {
                 for (int j = 0; j < EventSystem.current.currentSelectedGameObject.GetComponent<FileData>().paragraghs.Count; j++)
                 {
                     //pin all paragraphs of file
-                    pinNote(j);
+                    pinNote(j, EventSystem.current.currentSelectedGameObject.GetComponent<FileData>().name);
                 }
                 show_pin_page();
             });
             tmp.transform.Find("PinBtn").GetComponent<FileData>().paragraghs = newParagraph;
+            tmp.transform.Find("PinBtn").GetComponent<FileData>().name = draw[i].Name;
 
             TextMeshProUGUI text = tmp.transform.Find("Name").GetComponent<TextMeshProUGUI>();
 
@@ -138,49 +127,36 @@ public class Diary : MonoBehaviour
     }
 
     //called when we try to pin a note
-    private void pinNote(int paragraphIndex)
+    private void pinNote(int paragraphIndex, string fileName)
     {
         JsonHandler.Paragraph paragraph_to_pin = EventSystem.current.currentSelectedGameObject.GetComponent<FileData>().paragraghs[paragraphIndex];
 
-        int tmp_inex = pinnedParagraphs.FindIndex(paragraph => paragraph.ParagraphID == paragraph_to_pin.ParagraphID); //index of paragraph_to_pin within pinnedParagraphs
+        if (!pinnedParagraphs.ContainsKey(fileName))//is there a file with this name in pinnedParagraphs
+        {
+            List<JsonHandler.Paragraph> new_list = new List<JsonHandler.Paragraph>() {paragraph_to_pin};
+            pinnedParagraphs.Add(fileName, new_list);
+            return;
+        }
+        //is there a paragraph within this files pins
+        int tmp_inex = pinnedParagraphs[fileName].FindIndex(paragraph => paragraph.ParagraphID == paragraph_to_pin.ParagraphID); //index of paragraph_to_pin within pinnedParagraphs
 
         //Debug.Log("Index: " + tmp_inex.ToString());
 
         if(tmp_inex != -1) //if index != -1 then paragraph_to_pin already exists in pinnedParagraphs, and should be removed
         {
-            pinnedParagraphs.RemoveAt(tmp_inex); //so we remove it
+            pinnedParagraphs[fileName].RemoveAt(tmp_inex); //so we remove it
+            if (pinnedParagraphs[fileName].Count == 0) {pinnedParagraphs.Remove(fileName);} //if there are no more paragraphs with this fileName pinned, remove fileName
             return; //return to prevent function from executing further
         }
 
-        pinnedParagraphs.Add(paragraph_to_pin);
+        pinnedParagraphs[fileName].Add(paragraph_to_pin);
 
     }
 
-    //diplays 3 shortTexts of pinnedParagraphs
+    //diplays pinned paragraphs of related file
     void show_pin_page()
     {
-        if (pinnedParagraphs.Count != 0)
-        {
-            if (pinnedParagraphs.Count <= currentPage) {page_left();return;} //if texts from this page were removed, we turn page to the left
 
-            firstText.transform.Find("textFromDiary").GetComponent<TextMeshProUGUI>().text = (pinnedParagraphs.Count > currentPage)
-                ? // гугли "тернарный условный оператор", если не понятно, зачем вопросики
-                 JsonHandler.construct_shortText(pinnedParagraphs[currentPage]) : "";
-
-            secondText.transform.Find("textFromDiary").GetComponent<TextMeshProUGUI>().text = (pinnedParagraphs.Count > currentPage + 1)
-                ?
-                JsonHandler.construct_shortText(pinnedParagraphs[currentPage + 1]) : "";
-
-            thirdText.transform.Find("textFromDiary").GetComponent<TextMeshProUGUI>().text = (pinnedParagraphs.Count > currentPage + 2)
-                ?
-                JsonHandler.construct_shortText(pinnedParagraphs[currentPage + 2]) : "";
-        }
-        else
-        {
-            firstText.transform.Find("textFromDiary").GetComponent<TextMeshProUGUI>().text = "";
-            secondText.transform.Find("textFromDiary").GetComponent<TextMeshProUGUI>().text = "";
-            thirdText.transform.Find("textFromDiary").GetComponent<TextMeshProUGUI>().text = "";
-        }
     }
 
 
@@ -203,7 +179,7 @@ public class Diary : MonoBehaviour
             paragraphObject.GetComponent<TextMeshProUGUI>().text = fileData[i].Text; //set new paragraph text
             paragraphObject.transform.Find("pinParagraph").GetComponent<Button>().onClick.AddListener(() =>
             {
-                pinNote(0);
+                pinNote(0, EventSystem.current.currentSelectedGameObject.GetComponent<FileData>().name);
                 show_pin_page();
             });
             paragraphObject.transform.Find("pinParagraph").GetComponent<FileData>().paragraghs = new List<JsonHandler.Paragraph>(); //add file data to paragraph
