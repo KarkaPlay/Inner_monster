@@ -30,9 +30,10 @@ public class Diary : MonoBehaviour
                                                                                     //⣦⡑⠛⣟⢿⡿⣿⣷⣝⢧⡀⠀⠀⣶⣸⡇⣿⢸⣧⠀⠀⠀⠀⢸⡿⡆
                                                                                     //⣿⣿⣷⣮⣭⣍⡛⠻⢿⣷⠿⣶⣶⣬⣬⣁⣉⣀⣀⣁⡤⢴⣺⣾⣽⡇
     //pins related
-    private string currentPageKey;
+    private int currentKeyIndex = 0;
     private List<GameObject> DisplayedPins = new List<GameObject>();
     private Dictionary<string, List<JsonHandler.Paragraph>> pinnedParagraphs;
+    private List<String> pinnedFiles = new List<String>();
 
 
     private void Start()
@@ -55,14 +56,16 @@ public class Diary : MonoBehaviour
 
     private void page_left()
     {
-
+        if (currentKeyIndex == 0){return;}//if on first page, pass
+        currentKeyIndex--;
         show_pin_page();
     }
 
 
     private void page_right()
     {
-
+        if (currentKeyIndex == pinnedFiles.Count-1){return;}//if on last page, pass
+        currentKeyIndex++;
         show_pin_page();
     }
 
@@ -133,8 +136,9 @@ public class Diary : MonoBehaviour
 
         if (!pinnedParagraphs.ContainsKey(fileName))//is there a file with this name in pinnedParagraphs
         {
-            List<JsonHandler.Paragraph> new_list = new List<JsonHandler.Paragraph>() {paragraph_to_pin};
+            List<JsonHandler.Paragraph> new_list = new List<JsonHandler.Paragraph>() {paragraph_to_pin};//create new list with one paragraph in it
             pinnedParagraphs.Add(fileName, new_list);
+            pinnedFiles = new List<String>(pinnedParagraphs.Keys); //modify pinnedFiles
             return;
         }
         //is there a paragraph within this files pins
@@ -145,7 +149,12 @@ public class Diary : MonoBehaviour
         if(tmp_inex != -1) //if index != -1 then paragraph_to_pin already exists in pinnedParagraphs, and should be removed
         {
             pinnedParagraphs[fileName].RemoveAt(tmp_inex); //so we remove it
-            if (pinnedParagraphs[fileName].Count == 0) {pinnedParagraphs.Remove(fileName);} //if there are no more paragraphs with this fileName pinned, remove fileName
+            if (pinnedParagraphs[fileName].Count == 0)
+            {
+                pinnedParagraphs.Remove(fileName); //if there are no more paragraphs with this fileName pinned, remove fileName
+                currentKeyIndex = Math.Max(0, currentKeyIndex - 1); //decrement currentKeyIndex without going below 0
+            }
+            pinnedFiles = new List<String>(pinnedParagraphs.Keys);//modify pinnedFiles
             return; //return to prevent function from executing further
         }
 
@@ -156,7 +165,23 @@ public class Diary : MonoBehaviour
     //diplays pinned paragraphs of related file
     void show_pin_page()
     {
+        int length = DisplayedPins.Count;
+        for (int i = 0; i < length; i++) //delete old texts
+        {
+            Destroy(DisplayedPins[0].gameObject);
+            DisplayedPins.RemoveAt(0);
+        }
 
+        if (pinnedFiles.Count == 0){return;} //if nothing is pinned, pass
+
+        List<JsonHandler.Paragraph> paragraghs = pinnedParagraphs[pinnedFiles[currentKeyIndex]];
+
+        for (int p = 0; p < paragraghs.Count; p++)
+        {
+            //GameObject tmp = Instantiate();
+            //tmp.GetComponent<text>.text = JsonHandler.construct_shortText(paragraphs[p]);
+            //DisplayedPins.Add(tmp);
+        }
     }
 
 
