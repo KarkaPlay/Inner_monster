@@ -15,6 +15,8 @@ public class Diary : MonoBehaviour
     public JsonHandler.Diary diary;
 
     //presets
+    public GameObject ShortTextsList;
+    public GameObject itemInShortText;
     public GameObject diaryWindow;
     public GameObject NameCard;
     public GameObject pins;
@@ -30,10 +32,10 @@ public class Diary : MonoBehaviour
                                                                                     //⣦⡑⠛⣟⢿⡿⣿⣷⣝⢧⡀⠀⠀⣶⣸⡇⣿⢸⣧⠀⠀⠀⠀⢸⡿⡆
                                                                                     //⣿⣿⣷⣮⣭⣍⡛⠻⢿⣷⠿⣶⣶⣬⣬⣁⣉⣀⣀⣁⡤⢴⣺⣾⣽⡇
     //pins related
-    private int currentKeyIndex = 0;
-    private List<GameObject> DisplayedPins = new List<GameObject>();
-    private Dictionary<string, List<JsonHandler.Paragraph>> pinnedParagraphs;
-    private List<String> pinnedFiles = new List<String>();
+    public int currentKeyIndex = 0;
+    public List<GameObject> DisplayedPins = new List<GameObject>();
+    public Dictionary<string, List<JsonHandler.Paragraph>> pinnedParagraphs = new Dictionary<string, List<JsonHandler.Paragraph>>();
+    public List<String> pinnedFiles = new List<String>();
 
 
     private void Start()
@@ -132,8 +134,9 @@ public class Diary : MonoBehaviour
     //called when we try to pin a note
     private void pinNote(int paragraphIndex, string fileName)
     {
+        Debug.Log(paragraphIndex + " " + fileName);
         JsonHandler.Paragraph paragraph_to_pin = EventSystem.current.currentSelectedGameObject.GetComponent<FileData>().paragraghs[paragraphIndex];
-
+        
         if (!pinnedParagraphs.ContainsKey(fileName))//is there a file with this name in pinnedParagraphs
         {
             List<JsonHandler.Paragraph> new_list = new List<JsonHandler.Paragraph>() {paragraph_to_pin};//create new list with one paragraph in it
@@ -174,13 +177,13 @@ public class Diary : MonoBehaviour
 
         if (pinnedFiles.Count == 0){return;} //if nothing is pinned, pass
 
-        List<JsonHandler.Paragraph> paragraghs = pinnedParagraphs[pinnedFiles[currentKeyIndex]];
-
-        for (int p = 0; p < paragraghs.Count; p++)
+        List<JsonHandler.Paragraph> paragraphs = pinnedParagraphs[pinnedFiles[currentKeyIndex]];
+        
+        for (int p = 0; p < paragraphs.Count; p++)
         {
-            //GameObject tmp = Instantiate();
-            //tmp.GetComponent<text>.text = JsonHandler.construct_shortText(paragraphs[p]);
-            //DisplayedPins.Add(tmp);
+            GameObject tmp = Instantiate(itemInShortText, ShortTextsList.transform);
+            tmp.transform.Find("textFromDiary").GetComponent<TextMeshProUGUI>().text = JsonHandler.construct_shortText(paragraphs[p]);
+            DisplayedPins.Add(tmp);
         }
     }
 
