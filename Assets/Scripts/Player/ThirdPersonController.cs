@@ -116,7 +116,6 @@ namespace StarterAssets
 
         #endregion
 
-
         // cinemachine
         private float _cinemachineTargetYaw;
         private float _cinemachineTargetPitch;
@@ -153,6 +152,9 @@ namespace StarterAssets
 
         private bool _hasAnimator;
 
+        private GameObject map;
+        private bool isMapOpen = false;
+
         private bool IsCurrentDeviceMouse
         {
             get
@@ -183,6 +185,9 @@ namespace StarterAssets
 
         private void Start ()
         {
+            map = GameObject.FindGameObjectWithTag("Map"); 
+            map.SetActive(false);
+
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
 
             _hasAnimator = TryGetComponent(out _animator); _hasAnimator = false;
@@ -249,56 +254,18 @@ namespace StarterAssets
             JumpAndGravity();
             GroundedCheck();
             Move();
+            Sprint();
+            CheckOtherKeyPressed();
+        }
 
-            #region Sprint
-
-            if(enableSprint)
+        private void CheckOtherKeyPressed ()
+        {
+            if(_input.map)
             {
-                if(isSprinting)
-                {
-                    //_mainCamera.fieldOfView = Mathf.Lerp(_mainCamera.fieldOfView, sprintFOV, sprintFOVStepTime * Time.deltaTime);
-
-                    // Drain sprint remaining while sprinting
-                    if(!unlimitedSprint)
-                    {
-                        sprintRemaining -= 1 * Time.deltaTime;
-                        if(sprintRemaining <= 0)
-                        {
-                            isSprinting = false;
-                            isSprintCooldown = true;
-                        }
-                    }
-                }
-                else
-                {
-                    // Regain sprint while not sprinting
-                    sprintRemaining = Mathf.Clamp(sprintRemaining += 1 * Time.deltaTime, 0, sprintDuration);
-                }
-
-                // Handles sprint cooldown 
-                // When sprint remaining == 0 stops sprint ability until hitting cooldown
-                if(isSprintCooldown)
-                {
-                    sprintCooldown -= 1 * Time.deltaTime;
-                    if(sprintCooldown <= 0)
-                    {
-                        isSprintCooldown = false;
-                    }
-                }
-                else
-                {
-                    sprintCooldown = sprintCooldownReset;
-                }
-
-                // Handles sprintBar 
-                if(useSprintBar && !unlimitedSprint)
-                {
-                    float sprintRemainingPercent = sprintRemaining / sprintDuration;
-                    sprintBar.transform.localScale = new Vector3(sprintRemainingPercent, 1f, 1f);
-                }
+                isMapOpen = !isMapOpen;
+                map.SetActive(isMapOpen);
+                _input.map = false;
             }
-
-            #endregion
         }
 
         private void LateUpdate ()
@@ -349,6 +316,55 @@ namespace StarterAssets
             // Cinemachine will follow this target
             CinemachineCameraTarget.transform.rotation = Quaternion.Euler(_cinemachineTargetPitch + CameraAngleOverride,
                 _cinemachineTargetYaw, 0.0f);
+        }
+
+        private void Sprint ()
+        {
+            if(enableSprint)
+            {
+                if(isSprinting)
+                {
+                    //_mainCamera.fieldOfView = Mathf.Lerp(_mainCamera.fieldOfView, sprintFOV, sprintFOVStepTime * Time.deltaTime);
+
+                    // Drain sprint remaining while sprinting
+                    if(!unlimitedSprint)
+                    {
+                        sprintRemaining -= 1 * Time.deltaTime;
+                        if(sprintRemaining <= 0)
+                        {
+                            isSprinting = false;
+                            isSprintCooldown = true;
+                        }
+                    }
+                }
+                else
+                {
+                    // Regain sprint while not sprinting
+                    sprintRemaining = Mathf.Clamp(sprintRemaining += 1 * Time.deltaTime, 0, sprintDuration);
+                }
+
+                // Handles sprint cooldown 
+                // When sprint remaining == 0 stops sprint ability until hitting cooldown
+                if(isSprintCooldown)
+                {
+                    sprintCooldown -= 1 * Time.deltaTime;
+                    if(sprintCooldown <= 0)
+                    {
+                        isSprintCooldown = false;
+                    }
+                }
+                else
+                {
+                    sprintCooldown = sprintCooldownReset;
+                }
+
+                // Handles sprintBar 
+                if(useSprintBar && !unlimitedSprint)
+                {
+                    float sprintRemainingPercent = sprintRemaining / sprintDuration;
+                    sprintBar.transform.localScale = new Vector3(sprintRemainingPercent, 1f, 1f);
+                }
+            }
         }
 
         private void Move ()
