@@ -1,4 +1,4 @@
-using UnityEngine;
+п»їusing UnityEngine;
 #if ENABLE_INPUT_SYSTEM 
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -76,7 +76,7 @@ namespace StarterAssets
         [Tooltip("For locking the camera position on all axis")]
         public bool LockCameraPosition = false;
 
-        //спринт у камеры
+        //пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         public bool crosshair = true;
         public Sprite crosshairImage;
         public Color crosshairColor = Color.white;
@@ -153,6 +153,10 @@ namespace StarterAssets
 
         private bool _hasAnimator;
 
+        //map
+        private GameObject map;
+        private bool isMapOpen = false;
+
         private bool IsCurrentDeviceMouse
         {
             get
@@ -183,6 +187,9 @@ namespace StarterAssets
 
         private void Start ()
         {
+            map = GameObject.FindGameObjectWithTag("Map");
+            map.SetActive(false);
+
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
 
             _hasAnimator = TryGetComponent(out _animator); _hasAnimator = false;
@@ -201,7 +208,7 @@ namespace StarterAssets
             _fallTimeoutDelta = FallTimeout;
 
             //sprint
-            if(crosshair)
+            /*  if(crosshair)
             {
                 crosshairObject.sprite = crosshairImage;
                 crosshairObject.color = crosshairColor;
@@ -209,8 +216,8 @@ namespace StarterAssets
             else
             {
                 crosshairObject.gameObject.SetActive(false);
-            }
-            
+            }*/
+
             /*#region Sprint Bar
 
             //sprintBarCG = GameObject.Find("SprintBar").GetComponent<CanvasGroup>();
@@ -250,9 +257,27 @@ namespace StarterAssets
             JumpAndGravity();
             GroundedCheck();
             Move();
+            Sprint();
+            CheckOtherKeyPressed();
+            
+        }
 
-            #region Sprint
+        private void CheckOtherKeyPressed ()
+        {
+            if(_input.map)
+            {
+                isMapOpen = !isMapOpen;
+                Cursor.lockState = isMapOpen ? CursorLockMode.None : CursorLockMode.Locked;
+                Cursor.visible = isMapOpen;
+                Time.timeScale = isMapOpen ? 0 : 1;
+                LockCameraPosition = isMapOpen;
+                map.SetActive(isMapOpen);
+                _input.map = false;
+            }
+        }
 
+        private void Sprint ()
+        {
             if(enableSprint)
             {
                 if(isSprinting)
@@ -297,8 +322,6 @@ namespace StarterAssets
                     StaminaImage.fillAmount = sprintRemaining / sprintDuration;
                 }
             }
-
-            #endregion
         }
 
         private void LateUpdate ()
