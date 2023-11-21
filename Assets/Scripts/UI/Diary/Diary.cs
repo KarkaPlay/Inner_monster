@@ -32,10 +32,10 @@ public class Diary : MonoBehaviour
                                                                                     //⣦⡑⠛⣟⢿⡿⣿⣷⣝⢧⡀⠀⠀⣶⣸⡇⣿⢸⣧⠀⠀⠀⠀⢸⡿⡆
                                                                                     //⣿⣿⣷⣮⣭⣍⡛⠻⢿⣷⠿⣶⣶⣬⣬⣁⣉⣀⣀⣁⡤⢴⣺⣾⣽⡇
     //pins related
-    public int currentKeyIndex = 0;
-    public List<GameObject> DisplayedPins = new List<GameObject>();
-    public Dictionary<string, List<JsonHandler.Paragraph>> pinnedParagraphs = new Dictionary<string, List<JsonHandler.Paragraph>>();
-    public List<String> pinnedFiles = new List<String>();
+    private int currentKeyIndex = 0;
+    private List<GameObject> DisplayedPins = new List<GameObject>();
+    private Dictionary<string, List<JsonHandler.Paragraph>> pinnedParagraphs = new Dictionary<string, List<JsonHandler.Paragraph>>();
+    private List<String> pinnedFiles = new List<String>();
 
 
     private void Start()
@@ -136,7 +136,7 @@ public class Diary : MonoBehaviour
     {
         Debug.Log(paragraphIndex + " " + fileName);
         JsonHandler.Paragraph paragraph_to_pin = EventSystem.current.currentSelectedGameObject.GetComponent<FileData>().paragraghs[paragraphIndex];
-        
+
         if (!pinnedParagraphs.ContainsKey(fileName))//is there a file with this name in pinnedParagraphs
         {
             List<JsonHandler.Paragraph> new_list = new List<JsonHandler.Paragraph>() {paragraph_to_pin};//create new list with one paragraph in it
@@ -178,7 +178,7 @@ public class Diary : MonoBehaviour
         if (pinnedFiles.Count == 0){return;} //if nothing is pinned, pass
 
         List<JsonHandler.Paragraph> paragraphs = pinnedParagraphs[pinnedFiles[currentKeyIndex]];
-        
+
         for (int p = 0; p < paragraphs.Count; p++)
         {
             GameObject tmp = Instantiate(itemInShortText, ShortTextsList.transform);
@@ -212,6 +212,7 @@ public class Diary : MonoBehaviour
             });
             paragraphObject.transform.Find("pinParagraph").GetComponent<FileData>().paragraghs = new List<JsonHandler.Paragraph>(); //add file data to paragraph
             paragraphObject.transform.Find("pinParagraph").GetComponent<FileData>().paragraghs.Add(fileData[i]); //add single element to list, so we call it on button. slojno obyasnit ya hz
+            paragraphObject.transform.Find("pinParagraph").GetComponent<FileData>().name = EventSystem.current.currentSelectedGameObject.GetComponent<FileData>().name;// мне стыдно
         }
     }
 
