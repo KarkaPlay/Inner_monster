@@ -1,7 +1,6 @@
 using UnityEngine;
 #if ENABLE_INPUT_SYSTEM 
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.UI;
 #endif
 
@@ -264,9 +263,6 @@ namespace StarterAssets
             if(_input.map)
             {
                 isMapOpen = !isMapOpen;
-                Cursor.lockState = isMapOpen ? CursorLockMode.None : CursorLockMode.Locked;
-                Cursor.visible = isMapOpen;
-                LockCameraPosition = isMapOpen;
                 map.SetActive(isMapOpen);
                 _input.map = false;
             }
