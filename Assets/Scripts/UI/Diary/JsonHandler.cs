@@ -49,8 +49,25 @@ public class JsonHandler : MonoBehaviour
 
     public static Diary diary = new Diary();
 
+    //singleton setup
+    public static JsonHandler instance {get; private set;}
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(this.gameObject);
+            return;
+        }
+
+        Destroy(this.gameObject);
+    }
+
+
+
     //add new file to category / returns null if category was not found
-    public Diary add_file(string name, string CategoryName)
+    public static Diary add_file(string name, string CategoryName)
     {
         int CategoryNumber = get_category(CategoryName);
 
@@ -69,7 +86,7 @@ public class JsonHandler : MonoBehaviour
     }
 
     //add a new paragraph to file in category / returns null if category or file don't exist
-    public Diary add_paragraph(string text, int ID, shortText s_text, string CategoryName, string FileName)
+    public static Diary add_paragraph(string text, int ID, shortText s_text, string CategoryName, string FileName)
     {
         Paragraph new_paragraph = new Paragraph();
         new_paragraph.ParagraphID = ID;
@@ -91,7 +108,7 @@ public class JsonHandler : MonoBehaviour
     }
 
     //remove a paragraph by id / returns null if paragraph was not found
-    public Diary remove_paragraph(int ID)
+    public static Diary remove_paragraph(int ID)
     {
         for (int c = 0; c < diary.Categories.Count; c++)
         {
@@ -114,7 +131,7 @@ public class JsonHandler : MonoBehaviour
     }
 
     //add point to shortText to file in category / returns null if category or file don't exist
-    public Diary add_short_text_point(string point, string CategoryName, string FileName, int ParagraphID)
+    public static Diary add_short_text_point(string point, string CategoryName, string FileName, int ParagraphID)
     {
         int CategoryNumber = get_category(CategoryName);
         int FileNumber = get_file(CategoryNumber, FileName);
@@ -166,7 +183,7 @@ public class JsonHandler : MonoBehaviour
     }
 
     //returns index of file from category by its name / returns -1 if was not found
-    public int get_file(int CategoryNumber, string FileName)
+    public static int get_file(int CategoryNumber, string FileName)
     {
         for (int f = 0; f < diary.Categories[CategoryNumber].Files.Count; f++)
         {
@@ -180,7 +197,7 @@ public class JsonHandler : MonoBehaviour
     }
 
     //returns indxe of paragraph from file from category by its ID / returns -1 if was not found
-    public int get_paragraph(int CategoryNumber, int FileNumber, int ParagraphID)
+    public static int get_paragraph(int CategoryNumber, int FileNumber, int ParagraphID)
     {
         for (int paragraph = 0;
              paragraph < diary.Categories[CategoryNumber].Files[FileNumber].LongText.Count;
@@ -240,7 +257,7 @@ public class JsonHandler : MonoBehaviour
     }
 
     //save diary to json file
-    public void save_diary()
+    public static void save_diary()
     {
         string strOutput = JsonUtility.ToJson(diary, true);
         string path = Application.dataPath + "/Scripts/UI/Diary.json";
@@ -278,7 +295,7 @@ get_file() - вернёт номер файла по его названию и 
 (например:
     CategoryNumber = get_category("Characters");
     FileNumber = get_file(CategoryNumber, "Kuznets");
-    
+
     diary.Categories[CategoryNumber].Files[FileNumber]; - объект типа file
 )
 

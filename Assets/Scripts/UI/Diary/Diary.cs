@@ -40,7 +40,7 @@ public class Diary : MonoBehaviour
 
     private void Start()
     {
-        diary = GetComponent<JsonHandler>().load_diary(); //load diary via JsonHandler
+        diary = JsonHandler.instance.load_diary(); //load diary via JsonHandler
         diaryWindow.SetActive(false);
 
 
