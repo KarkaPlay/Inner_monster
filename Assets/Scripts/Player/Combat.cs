@@ -41,6 +41,12 @@ public class Combat : MonoBehaviour
     private KeyCode[] moveKeys = { KeyCode.W, KeyCode.UpArrow, KeyCode.A, KeyCode.LeftArrow, KeyCode.S, KeyCode.DownArrow, KeyCode.D, KeyCode.RightArrow };
     private bool isHidden = true;
 
+    private int lastAttackType = 0, attackTypesCount = 3; // для серии атак
+    private float lastAttackTime = 0, attackSeriesTheshold = 3f;
+    private float holdTime = 0f;
+    private float powerAttackThreshold = 1f;
+    private bool isPowerAttack = false;
+
     //private TextMeshProUGUI HpText;
     private TextMeshPro EnemyHpText;
     private void Start()
@@ -58,7 +64,9 @@ public class Combat : MonoBehaviour
         {
             shield = transform.Find("Goat_Armature").Find("Spine").Find("Leg.L").Find("Shield").gameObject;
         }
+
         shieldTimeout = Time.time;
+        lastAttackTime = Time.time - attackSeriesTheshold;
 
         lastKeyPressTime = new float[moveKeys.Length];
     }
@@ -84,10 +92,10 @@ public class Combat : MonoBehaviour
         return false;
     }
 
-    private IEnumerator PlayerAttackCooldown ()
+    private IEnumerator PlayerAttackCooldown (float bonusTime=0f)
     {
         isAttacking = true;
-        yield return new WaitForSeconds(attackCooldown);
+        yield return new WaitForSeconds(attackCooldown + bonusTime);
         isAttacking = false;
     }
 
@@ -185,15 +193,26 @@ public class Combat : MonoBehaviour
 
     private void AttackEnemies ()
     {
-        StartCoroutine(PlayerAttackCooldown());
+        StartCoroutine(PlayerAttackCooldown(isPowerAttack?1f:0f));
         GameObject[] enemies = GetNearbyEnemies();
         if (enemies.Length == 0) return;
-        if (!ReduceStamina(normalAttackPrice)) return;
-        SwordAnimation();
+        if (!ReduceStamina(isPowerAttack? strongAttackPrice : normalAttackPrice)) return;
+
+        float curDamage = attack * (isPowerAttack ? 2 : 1);
+        if (lastAttackTime + attackSeriesTheshold > Time.time)
+        {
+            lastAttackType = (lastAttackType + 1) % attackTypesCount;
+        }
+        else { lastAttackType = 0; }
+
+        lastAttackTime = Time.time;
+
+
+        SwordAnimation(lastAttackType);
         foreach (GameObject enemy in enemies)
         {
             Combat enemyCombat = enemy.GetComponent<Combat>();
-            enemyCombat.EnemyTakeDamage(attack);
+            enemyCombat.EnemyTakeDamage(curDamage);
         }
     }
 
@@ -206,11 +225,26 @@ public class Combat : MonoBehaviour
         else EnemyHpText.color = Color.red;
     }
 
-    private IEnumerator RotateObject(GameObject target)
+    private IEnumerator RotateObject(GameObject target, int attackType = 0)
     {
         isAnimActive = true;
+        Vector3 newOffset;
+        switch (attackType)
+        {
+            case 0:
+                newOffset = new Vector3(55, 0, 0);
+                break;
+            case 1:
+                newOffset = new Vector3(0, 40, 0);
+                break;
+            case 2:
+                newOffset = new Vector3(80, 80, 0);
+                break;
+            default:
+                yield break;
+        }
         Quaternion localStartRotation = target.transform.localRotation; // Сохраняем начальную локальную ориентацию
-        Quaternion localEndRotation = Quaternion.Euler(55, 0, 0) * localStartRotation; // Вычисляем конечную локальную ориентацию
+        Quaternion localEndRotation = Quaternion.Euler(newOffset) * localStartRotation; // Вычисляем конечную локальную ориентацию
 
         float duration = 0.3f;
         float time = 0;
@@ -237,11 +271,51 @@ public class Combat : MonoBehaviour
         isAnimActive = false;
     }
 
-    public void SwordAnimation()
+    IEnumerator ScaleAndMove(GameObject obj, float scaleFactor, Vector3 offset, float duration)
+    {
+        Vector3 originalScale = obj.transform.localScale;
+        Vector3 targetScale = originalScale * scaleFactor;
+
+        Vector3 originalPosition = obj.transform.localPosition;
+        Vector3 targetPosition = originalPosition + offset;
+
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            obj.transform.localScale = Vector3.Lerp(originalScale, targetScale, elapsed / duration);
+            obj.transform.localPosition = Vector3.Lerp(originalPosition, targetPosition, elapsed / duration);
+
+            elapsed += Time.deltaTime;
+
+            yield return null;
+        }
+
+        // Ensure that the final values are exactly as specified to avoid precision issues
+        obj.transform.localScale = targetScale;
+        obj.transform.localPosition = targetPosition;
+    }
+
+    IEnumerator PowerAttack(GameObject obj, float scaleFactor, Vector3 offset, float duration)
+    {
+        yield return ScaleAndMove(obj ,scaleFactor, offset, duration);
+        yield return StartCoroutine(RotateObject(weapon, 2));
+        yield return ScaleAndMove(obj, 1/scaleFactor, offset, duration);
+    }
+
+    public void SwordAnimation(int attackType = 0)
     {
         if (!isAnimActive)
         {
-            StartCoroutine(RotateObject(weapon));
+            if (!isPowerAttack)
+            {
+                StartCoroutine(RotateObject(weapon, attackType));
+            }
+            else
+            {
+                StartCoroutine(PowerAttack(weapon, 2, new Vector3(0, 0, 0), 0.2f));
+                isPowerAttack = false;
+            }
         }
     }
 
@@ -407,16 +481,26 @@ public class Combat : MonoBehaviour
 
         if (gameObject.CompareTag("Player"))
         {
-            if (!isAttacking)
+
+            if (Input.GetMouseButtonDown(0))
             {
-                if (Input.GetMouseButtonDown(0))
+                holdTime = Time.time;
+            }
+            else if (Input.GetMouseButton(0))
+            {
+                if (Time.time - holdTime > powerAttackThreshold)
                 {
-                    AttackEnemies();
+                    isPowerAttack = true;
                 }
-                else if (Input.GetKeyDown(KeyCode.F))
-                {
-                    TryAbsorbEnemy();
-                }
+            }
+            else if (Input.GetMouseButtonUp(0)&& !isAttacking)
+            {
+                AttackEnemies();
+                holdTime = Time.time + (powerAttackThreshold*5);
+            }
+            else if (Input.GetKeyDown(KeyCode.F) && !isAttacking)
+            {
+                TryAbsorbEnemy();
             }
 
             if (Input.GetMouseButtonDown(1))
