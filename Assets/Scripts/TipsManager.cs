@@ -23,10 +23,10 @@ public class TipsManager : MonoBehaviour
      {
          Tips.SetActive(false);
      }*/
-
-    private void Start()
+    
+    public void Start()
     {
-        //Tips = GetComponent<GameObject>();
+        Time.timeScale = 1f;
     }
     private void OnEnable()
     {
