@@ -9,20 +9,34 @@ using UnityEngine.UI;
 
 public class Combat : MonoBehaviour
 {
+    [Header("Main stats")]
     [SerializeField] private float MaxHp = 100;
-    [SerializeField] private float MaxSt = 100f;
+    [SerializeField] private float MaxSt = 100f; // стамина ака выносливость
+    [SerializeField] private float attackValue = 10;
+    [SerializeField] private float attackRange = 1;
+    public bool defaultAggressive = false;
+
+    [Header("Cooldowns")]
     [SerializeField] private float healPerSec = 1;
     [SerializeField] private float stRegenPerSec = 1;
     [SerializeField] private float healCooldown = 2;//задержка перед исцелением
-    [SerializeField] private float attack = 10;
-    [SerializeField] private float attackRange = 1;
     [SerializeField] private float attackCooldown = 1;
     [SerializeField] private float aggressivenessCooldown = 5; // время сколько враг будет злиться(наносить урон) на игрока, обновляется когда враг получет урон
-    [SerializeField] private bool isAttacking = false;
+
+    [Header("Stamina price")]
+    [SerializeField] private float normalAttackPrice = 5f;
+    [SerializeField] private float strongAttackPrice = 15f;
+    [SerializeField] private float tryAbsorbPrice = 50f;
+    [SerializeField] private float shieldPrice = 5f;
+    [SerializeField] private float powerJumpPrice = 10f;
+
+    [Header("Other")]
     [SerializeField] private GameObject absorbeParticle;
+    [SerializeField] private Image HpImage;
+    [SerializeField] private Image StImage;
 
-    [SerializeField] private float normalAttackPrice = 5f, strongAttackPrice = 15f, tryAbsorbPrice = 50f, shieldPrice = 5f, powerJumpPrice = 10f;
 
+    [HideInInspector] public bool EnemyGetHit = false;
     private float CurHp;
     private float CurSt;
     private float aggressivenessTimer = 0;
@@ -30,30 +44,25 @@ public class Combat : MonoBehaviour
     private GameObject weapon;
     private GameObject shield;
     private bool isAnimActive = false;
-    public float healCooldownTimer = 0;
     private bool isShieldActive = false;
     private float shieldTimeout = 0f;
-    public Image HpImage;
-    public Image StImage;
-    public bool EnemyGetHit = false;
-    public bool defaultAggressive = false;
     private float[] lastKeyPressTime;
+    private float healCooldownTimer = 0;
     private KeyCode[] moveKeys = { KeyCode.W, KeyCode.UpArrow, KeyCode.A, KeyCode.LeftArrow, KeyCode.S, KeyCode.DownArrow, KeyCode.D, KeyCode.RightArrow };
     private bool isHidden = true;
-
     private int lastAttackType = 0, attackTypesCount = 3; // для серии атак
     private float lastAttackTime = 0, attackSeriesTheshold = 3f;
     private float holdTime = 0f;
     private float powerAttackThreshold = 1f;
     private bool isPowerAttack = false;
-
-    //private TextMeshProUGUI HpText;
+    private bool isAttacking = false;
     private TextMeshPro EnemyHpText;
+
+
     private void Start()
     {
         CurHp = MaxHp;
         CurSt = MaxSt;
-       // HpText = GameObject.Find("HP").GetComponent<TextMeshProUGUI>();
         if (gameObject.CompareTag("Enemy"))
         {
             EnemyHpText = transform.Find("Quad").Find("HealthBar").GetComponent<TextMeshPro>();
@@ -132,7 +141,6 @@ public class Combat : MonoBehaviour
     {
         float angleOne = GetForwardAngle(observer);
         float angleTwo = GetForwardAngle(target);
-       // Debug.Log(Mathf.Abs(angleOne - angleTwo));
         if (Mathf.Abs(angleOne - angleTwo)<60f)
         {
             return true;
@@ -198,7 +206,7 @@ public class Combat : MonoBehaviour
         if (enemies.Length == 0) return;
         if (!ReduceStamina(isPowerAttack? strongAttackPrice : normalAttackPrice)) return;
 
-        float curDamage = attack * (isPowerAttack ? 2 : 1);
+        float curDamage = attackValue * (isPowerAttack ? 2 : 1);
         if (lastAttackTime + attackSeriesTheshold > Time.time)
         {
             lastAttackType = (lastAttackType + 1) % attackTypesCount;
@@ -216,7 +224,7 @@ public class Combat : MonoBehaviour
         }
     }
 
-    public void EnemySetHealthBar(float damage)
+    public void EnemySetHealthBar()
     {
         EnemyHpText.SetText((Mathf.Round(CurHp * 10) / 10).ToString() + "/100");
         float hpPercent = CurHp / MaxHp;
@@ -291,7 +299,6 @@ public class Combat : MonoBehaviour
             yield return null;
         }
 
-        // Ensure that the final values are exactly as specified to avoid precision issues
         obj.transform.localScale = targetScale;
         obj.transform.localPosition = targetPosition;
     }
@@ -323,8 +330,7 @@ public class Combat : MonoBehaviour
     {
         CurHp -= damage;
         AggrActivate();
-        //  Debug.Log("ХП врага= " + CurHp);
-        EnemySetHealthBar(damage);
+        EnemySetHealthBar();
         if (CurHp <= 0)
         {
             Die();
@@ -335,11 +341,6 @@ public class Combat : MonoBehaviour
     {
         Destroy(gameObject);
     }
-
-    /*private IEnumerator EnemyAttackCooldown ()
-    {
-        yield return new WaitForSeconds(attackCooldown);
-    }*/
 
     public IEnumerator AttackPlayer ()
     {
@@ -362,7 +363,7 @@ public class Combat : MonoBehaviour
                     Combat player = hitCollider.gameObject.GetComponent<Combat>();
                     if (!player.isShieldActive)
                     {
-                        player.PlayerTakeDamage(attack);
+                        player.PlayerTakeDamage(attackValue);
                     }
                 }
             }
@@ -387,7 +388,6 @@ public class Combat : MonoBehaviour
     {
         if(healCooldownTimer >= healCooldown)
         {
-            //healCooldownTimer = 0;
             if(CurHp < MaxHp)
                 CurHp += healPerSec * Time.deltaTime;
         }
