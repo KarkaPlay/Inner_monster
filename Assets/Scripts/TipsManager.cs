@@ -17,12 +17,12 @@ public class TipsManager : MonoBehaviour
      {
          messageText.text = message;
          Tips.SetActive(true);
-     }
+     }*/
 
      public void Hide()
      {
-         Tips.SetActive(false);
-     }*/
+         tips.SetActive(false);
+     }
     
     public void Start()
     {
