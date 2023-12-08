@@ -1988,6 +1988,7 @@ GameObject:
   - component: {fileID: 3339571294760234255}
   - component: {fileID: 9165423168865895270}
   - component: {fileID: 5560116881150796668}
+  - component: {fileID: 85168681610914477}
   m_Layer: 0
   m_Name: Non Interactable NPC
   m_TagString: villager
@@ -2069,6 +2070,18 @@ NavMeshAgent:
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &85168681610914477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8355151605083663823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 411fa4005df056241bbadd9884996f58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9008050132931511104
 GameObject:
   m_ObjectHideFlags: 0
