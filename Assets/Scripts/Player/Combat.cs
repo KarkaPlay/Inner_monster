@@ -5,10 +5,12 @@ using TMPro;
 using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Combat : MonoBehaviour
 {
     [SerializeField] private float hp = 100;
+    private float MaxHp = 100;
     [SerializeField] private float healPerSec = 1;
     [SerializeField] private float healCooldown = 2;//задержка перед исцелением
     [SerializeField] private float attack = 10;
@@ -21,11 +23,12 @@ public class Combat : MonoBehaviour
     private float enemyAttackCooldown = 0;
     public float healCooldownTimer = 0;
 
-    private TextMeshProUGUI HpText;
+   // private TextMeshProUGUI HpText;
+    public Image HpImage;
 
     private void Start ()
     {
-        HpText = GameObject.Find("HP").GetComponent<TextMeshProUGUI>();
+       // HpText = GameObject.Find("HP").GetComponent<TextMeshProUGUI>();
     }
 
     private void Update ()
@@ -37,7 +40,8 @@ public class Combat : MonoBehaviour
             if(Input.GetKeyDown(KeyCode.F) && !isAttacking)
                 AttackEnemies();
 
-            HpText.SetText("Здоровье: " + (Mathf.Round(hp * 10) / 10).ToString() + "/100");
+            //HpText.SetText("Здоровье: " + (Mathf.Round(hp * 10) / 10).ToString() + "/100");
+            HpImage.fillAmount = (Mathf.Round(hp * 10) / 10) / MaxHp;
 
             Healing();
         }
