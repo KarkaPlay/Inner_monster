@@ -7,7 +7,7 @@ public class MapButtons : MonoBehaviour
     private GameObject localMapImage;
     private GameObject globalMapImage;
 
-    private void Start ()
+    private void Awake ()
     {
         localMapImage = GameObject.Find("LocalMapImage");
         globalMapImage = GameObject.Find("GlobalMapImage");

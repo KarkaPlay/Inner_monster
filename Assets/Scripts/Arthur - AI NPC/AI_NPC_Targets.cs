@@ -16,13 +16,7 @@ public class AI_NPC_Targets : MonoBehaviour
     private void Awake()
     {
         GetTargetsFromParent();
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        Instance = this;    
-        
+        Instance = this;  
     }
     
     private void GetTargetsFromParent()
