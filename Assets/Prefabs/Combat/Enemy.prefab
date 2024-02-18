@@ -370,22 +370,26 @@ MonoBehaviour:
   MaxHp: 100
   MaxSt: 100
   attackValue: 10
-  attackRange: 1
+  attackRange: 2
   defaultAggressive: 0
+  isHidden: 1
   healPerSec: 1
   stRegenPerSec: 1
   healCooldown: 2
   attackCooldown: 1
-  aggressivenessCooldown: 5
+  aggressivenessCooldown: 999
+  aggrMinDuration: 3
   normalAttackPrice: 5
   strongAttackPrice: 15
   tryAbsorbPrice: 50
   shieldPrice: 5
   powerJumpPrice: 10
+  runSecondPrice: 5
+  jumpPrice: 5
   absorbeParticle: {fileID: 0}
   HpImage: {fileID: 0}
   StImage: {fileID: 0}
-  EnemyGetHit: 0
+  IsAgressive: 0
 --- !u!114 &786768945
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -401,6 +405,7 @@ MonoBehaviour:
   minDistance: 2
   visionAngle: 45
   visionRange: 20
+  aggrDeactivateTreshold: 3
 --- !u!4 &9050207788585709052 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4971977363310191495, guid: 9391fa346e8189f4a88416297e40db31, type: 3}

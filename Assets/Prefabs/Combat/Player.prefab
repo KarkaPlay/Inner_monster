@@ -313,7 +313,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 426.50003, y: 273}
+  m_AnchoredPosition: {x: 426.50003, y: 141}
   m_SizeDelta: {x: 217.3, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3710999010205018599
@@ -1388,6 +1388,7 @@ MonoBehaviour:
   attackValue: 10
   attackRange: 3
   defaultAggressive: 0
+  isHidden: 1
   healPerSec: 1
   stRegenPerSec: 1
   healCooldown: 2
@@ -1399,6 +1400,8 @@ MonoBehaviour:
   tryAbsorbPrice: 50
   shieldPrice: 5
   powerJumpPrice: 10
+  runSecondPrice: 5
+  jumpPrice: 5
   absorbeParticle: {fileID: 3808158943867570321, guid: e349db34cb503a442af79ca99f723fea, type: 3}
   HpImage: {fileID: 0}
   StImage: {fileID: 0}
@@ -1531,6 +1534,7 @@ MonoBehaviour:
   sprintBarWidthPercent: 0.3
   sprintBarHeightPercent: 0.015
   sprintBarCG: {fileID: 3710999009787585148}
+  _verticalVelocity: 0
   _jumpTimeoutDelta: 0
   _fallTimeoutDelta: 0
 --- !u!114 &3710999011153718827
