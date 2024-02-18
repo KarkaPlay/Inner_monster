@@ -11,7 +11,10 @@ public class AI_NPC : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        agent.destination = AI_NPC_Targets.Instance.GetRandomTarget().position;
+        if (AI_NPC_Targets.Instance)
+        {
+            agent.destination = AI_NPC_Targets.Instance.GetRandomTarget().position;
+        }
     }
 
     // Update is called once per frame
