@@ -102,14 +102,37 @@ public class EnemyMovement : MonoBehaviour
 
     void HauntPlayer()
     {
+        Vector3 directionToPlayer = (player.position - transform.position).normalized;
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
-        if (distanceToPlayer > minDistance)
+        float bufferZone = 1f; // Буферная зона для предотвращения колебаний
+
+
+        Vector3 playerForward = player.forward;
+        float angleBetweenPlayerAndNPC = Vector3.Angle(-playerForward, directionToPlayer);
+        if (angleBetweenPlayerAndNPC > 90f) // Игрок стоит спиной к NPC
         {
+            distanceToPlayer += 1.5f; 
+        }
+
+        // Проверяем, находится ли NPC внутри буферной зоны
+        if (distanceToPlayer > minDistance + bufferZone)
+        {
+            // Если игрок дальше минимальной дистанции плюс буфер, преследуем его
             agent.SetDestination(player.position);
+        }
+        else if (distanceToPlayer < minDistance - bufferZone)
+        {
+            // Если игрок слишком близко, отступаем назад
+            Vector3 directionFromPlayer = (transform.position - player.position).normalized;
+            Vector3 retreatPosition = transform.position + directionFromPlayer * bufferZone; // Расчет позиции для отступления
+            agent.SetDestination(retreatPosition);
         }
         else
         {
+            // Останавливаем NPC, если он находится внутри буферной зоны
             agent.ResetPath();
         }
+        Quaternion lookRotation = Quaternion.LookRotation(directionToPlayer);
+        transform.rotation = Quaternion.Euler(0f, lookRotation.eulerAngles.y, 0f);
     }
 }
