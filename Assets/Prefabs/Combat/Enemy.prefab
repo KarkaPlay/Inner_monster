@@ -286,6 +286,10 @@ PrefabInstance:
       propertyPath: m_text
       value: "\u0412\u0420\u0410\u0413"
       objectReference: {fileID: 0}
+    - target: {fileID: 5560116881150796668, guid: 9391fa346e8189f4a88416297e40db31, type: 3}
+      propertyPath: m_Speed
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 8355151605083663823, guid: 9391fa346e8189f4a88416297e40db31, type: 3}
       propertyPath: m_Name
       value: Enemy
@@ -370,7 +374,7 @@ MonoBehaviour:
   MaxHp: 100
   MaxSt: 100
   attackValue: 10
-  attackRange: 2
+  attackRange: 3.2
   defaultAggressive: 0
   isHidden: 1
   healPerSec: 1
@@ -402,7 +406,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40864a4054a713e4f8eb8f261105f14f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minDistance: 2
+  minDistance: 3
   visionAngle: 45
   visionRange: 20
   aggrDeactivateTreshold: 3

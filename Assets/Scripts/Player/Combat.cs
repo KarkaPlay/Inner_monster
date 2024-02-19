@@ -131,11 +131,22 @@ public class Combat : MonoBehaviour
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, attackRange);
         List<GameObject> result = new List<GameObject>();
 
+        // Желаемый угол обзора
+        float fieldOfViewDegrees = 90f; // Угол обзора 90 градусов
+
         foreach (Collider hitCollider in hitColliders)
         {
             if (hitCollider.gameObject.CompareTag("Enemy"))
             {
-                result.Add(hitCollider.gameObject);
+                Vector3 directionToTarget = (hitCollider.transform.position - transform.position).normalized;
+                // Угол между направлением взгляда игрока и направлением на цель
+                float angleToTarget = Vector3.Angle(transform.forward, directionToTarget);
+
+                // Проверяем, находится ли враг в поле зрения
+                if (angleToTarget < fieldOfViewDegrees / 2)
+                {
+                    result.Add(hitCollider.gameObject);
+                }
             }
         }
         return result.ToArray();
