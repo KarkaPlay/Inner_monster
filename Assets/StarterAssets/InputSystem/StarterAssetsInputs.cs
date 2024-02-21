@@ -13,6 +13,7 @@ namespace StarterAssets
         public bool jump;
         public bool sprint;
         public bool map;
+        public bool esc;
 
         [Header("Movement Settings")]
         public bool analogMovement;
@@ -44,9 +45,15 @@ namespace StarterAssets
         {
             SprintInput(value.isPressed);
         }
+
         public void OnMap (InputValue value)
         {
             MapInput(value.isPressed);
+        }
+
+        public void OnEsc (InputValue value)
+        {
+            EscInput(value.isPressed);
         }
 #endif
 
@@ -74,6 +81,11 @@ namespace StarterAssets
         public void MapInput (bool newMapState)
         {
             map = newMapState;
+        }
+
+        public void EscInput (bool newEscState)
+        {
+            esc = newEscState;
         }
 
         private void OnApplicationFocus (bool hasFocus)

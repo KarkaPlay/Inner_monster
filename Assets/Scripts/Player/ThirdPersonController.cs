@@ -267,7 +267,8 @@ namespace StarterAssets
 
         private void CheckOtherKeyPressed ()
         {
-            if(_input.map)
+            //Debug.Log(isMapOpen);
+            if(_input.map || (_input.esc && isMapOpen))
             {
                 isMapOpen = !isMapOpen;
                 Cursor.lockState = isMapOpen ? CursorLockMode.None : CursorLockMode.Locked;
@@ -277,6 +278,7 @@ namespace StarterAssets
                 map.SetActive(isMapOpen);
                 _input.map = false;
             }
+            _input.esc = false;
         }
 
         private void Sprint ()
@@ -467,7 +469,7 @@ namespace StarterAssets
 
         private void JumpAndGravity ()
         {
-            if(Grounded)
+            if(Grounded && _input.map==false)
             {
                 // reset the fall timeout timer
                 _fallTimeoutDelta = FallTimeout;
