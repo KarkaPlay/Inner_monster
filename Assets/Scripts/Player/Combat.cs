@@ -15,13 +15,15 @@ public class Combat : MonoBehaviour
     [SerializeField] private float attackValue = 10;
     [SerializeField] private float attackRange = 1;
     public bool defaultAggressive = false;
+    public bool isHidden = true; // влияет на возможность схавать нпс
 
     [Header("Cooldowns")]
     [SerializeField] private float healPerSec = 1;
     [SerializeField] private float stRegenPerSec = 1;
     [SerializeField] private float healCooldown = 2;//задержка перед исцелением
     [SerializeField] private float attackCooldown = 1;
-    [SerializeField] private float aggressivenessCooldown = 5; // время сколько враг будет злиться(наносить урон) на игрока, обновляется когда враг получет урон
+    [SerializeField] private float aggressivenessCooldown = 999; // время сколько враг будет злиться(наносить урон) на игрока, обновляется когда враг получет урон
+    [SerializeField] private float aggrMinDuration = 3; // минимальное время, через которое нпс может потерять игрока из вида и сбросить агр
 
     [Header("Stamina price")]
     [SerializeField] private float normalAttackPrice = 5f;
@@ -29,6 +31,8 @@ public class Combat : MonoBehaviour
     [SerializeField] private float tryAbsorbPrice = 50f;
     [SerializeField] private float shieldPrice = 5f;
     [SerializeField] private float powerJumpPrice = 10f;
+    public float runSecondPrice = 5f;
+    public float jumpPrice = 5f;
 
     [Header("Other")]
     [SerializeField] private GameObject absorbeParticle;
@@ -36,7 +40,7 @@ public class Combat : MonoBehaviour
     [SerializeField] private Image StImage;
 
 
-    [HideInInspector] public bool EnemyGetHit = false;
+    [HideInInspector] public bool IsAgressive = false;
     private float CurHp;
     private float CurSt;
     private float aggressivenessTimer = 0;
@@ -49,7 +53,6 @@ public class Combat : MonoBehaviour
     private float[] lastKeyPressTime;
     private float healCooldownTimer = 0;
     private KeyCode[] moveKeys = { KeyCode.W, KeyCode.UpArrow, KeyCode.A, KeyCode.LeftArrow, KeyCode.S, KeyCode.DownArrow, KeyCode.D, KeyCode.RightArrow };
-    private bool isHidden = true;
     private int lastAttackType = 0, attackTypesCount = 3; // для серии атак
     private float lastAttackTime = 0, attackSeriesTheshold = 3f;
     private float holdTime = 0f;
@@ -57,6 +60,7 @@ public class Combat : MonoBehaviour
     private bool isPowerAttack = false;
     private bool isAttacking = false;
     private TextMeshPro EnemyHpText;
+    private StarterAssets.TmpThirdPersonController playerController;
 
 
     private void Start()
@@ -78,20 +82,33 @@ public class Combat : MonoBehaviour
         lastAttackTime = Time.time - attackSeriesTheshold;
 
         lastKeyPressTime = new float[moveKeys.Length];
+        playerController = GetComponent<StarterAssets.TmpThirdPersonController>();
     }
 
     IEnumerator ShieldActivate()
     {
-        if((shieldTimeout+1f)>Time.time) yield break;
-        if (!ReduceStamina(shieldPrice)) yield break;
-        shield.transform.localRotation =  Quaternion.Euler(90, -180f, 180);
+        shield.transform.localRotation = Quaternion.Euler(90, -180f, 180);
         isShieldActive = true;
-        yield return new WaitForSeconds(.5f);
-        shield.transform.localRotation = Quaternion.Euler(90, -90f, 180);
-        isShieldActive = false;
+        // Цикл работает пока игрок удерживает ПКМ
+        while (Input.GetMouseButton(1))
+        {
+            if (!ReduceStamina(shieldPrice * Time.deltaTime)) // Постепенное уменьшение стамины
+            {
+                StartCoroutine(ShieldDeactivate());
+                yield break;
+            }
+            yield return null;
+        }
     }
 
-    private bool ReduceStamina(float value)
+    IEnumerator ShieldDeactivate()
+    {
+        shield.transform.localRotation = Quaternion.Euler(90, -90f, 180);
+        isShieldActive = false;
+        yield return null; // Это можно опустить, если дальнейшие действия не требуют задержки
+    }
+
+    public bool ReduceStamina(float value)
     {
         if ((CurSt - value) >= 0)
         {
@@ -114,11 +131,22 @@ public class Combat : MonoBehaviour
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, attackRange);
         List<GameObject> result = new List<GameObject>();
 
+        // Желаемый угол обзора
+        float fieldOfViewDegrees = 90f; // Угол обзора 90 градусов
+
         foreach (Collider hitCollider in hitColliders)
         {
             if (hitCollider.gameObject.CompareTag("Enemy"))
             {
-                result.Add(hitCollider.gameObject);
+                Vector3 directionToTarget = (hitCollider.transform.position - transform.position).normalized;
+                // Угол между направлением взгляда игрока и направлением на цель
+                float angleToTarget = Vector3.Angle(transform.forward, directionToTarget);
+
+                // Проверяем, находится ли враг в поле зрения
+                if (angleToTarget < fieldOfViewDegrees / 2)
+                {
+                    result.Add(hitCollider.gameObject);
+                }
             }
         }
         return result.ToArray();
@@ -169,10 +197,21 @@ public class Combat : MonoBehaviour
         Destroy(target);
     }
 
+    private void SetAggr(bool state)
+    {
+        IsAgressive = state;
+        aggressivenessTimer = 0;
+    }
+
     public void AggrActivate()
     {
-        EnemyGetHit = true;
-        aggressivenessTimer = 0;
+        SetAggr(true);
+    }
+
+    public void AggrDeactivate()
+    {
+        if (aggressivenessTimer < aggrMinDuration) return; // трешхолд минималка агрессии
+        SetAggr(false);
     }
 
     private void TryAbsorbEnemy()
@@ -183,7 +222,7 @@ public class Combat : MonoBehaviour
         if (!ReduceStamina(tryAbsorbPrice)) return;
         foreach (GameObject enemy in enemies)
         {
-            if (isHidden && !EnemyGetHit && IsLookingAtBack(gameObject, enemy) && IsBehind(gameObject, enemy))
+            if (isHidden && !IsAgressive && IsLookingAtBack(gameObject, enemy) && IsBehind(gameObject, enemy))
             {
                 GameObject particle = GameObject.Instantiate(absorbeParticle,
                 enemy.transform.position,
@@ -356,12 +395,20 @@ public class Combat : MonoBehaviour
             // Если тег Character то наносим урон
             foreach(Collider hitCollider in hitColliders)
             {
-                if(hitCollider.gameObject.CompareTag("Player"))
+                if (hitCollider.gameObject.CompareTag("Player"))
                 {
                     SwordAnimation();
                     yield return new WaitForSeconds(.3f);
                     Combat player = hitCollider.gameObject.GetComponent<Combat>();
-                    if (!player.isShieldActive)
+                    // Направление от игрока к NPC
+                    Vector3 directionToNpc = (transform.position - player.transform.position).normalized;
+                    // Направление взгляда игрока
+                    Vector3 playerDirection = player.transform.forward;
+
+                    // Рассчитываем угол между направлением взгляда игрока и направлением к NPC
+                    float angle = Vector3.Angle(playerDirection, directionToNpc);
+
+                    if (!player.isShieldActive || angle > 40)
                     {
                         player.PlayerTakeDamage(attackValue);
                     }
@@ -398,7 +445,9 @@ public class Combat : MonoBehaviour
 
     private IEnumerator JumpProcess(int direction)
     {
-        float jumpDistance = 12f; // Дистанция прыжка
+        CharacterController controller = GetComponent<CharacterController>();
+
+        float jumpDistance = 6f; // Дистанция прыжка
         float jumpDuration = 0.1f; // Продолжительность прыжка
         float jumpHeight = 0.5f; // Высота прыжка
 
@@ -424,31 +473,28 @@ public class Combat : MonoBehaviour
                 break;
         }
 
-        Vector3 jumpVector = jumpRotation * Vector3.forward;
-
-        Vector3 startPos = transform.position;
-        Vector3 endPos = startPos + jumpVector * jumpDistance;
+        Vector3 jumpVector = jumpRotation * Vector3.forward * jumpDistance;
 
         float startTime = Time.time;
 
         while (Time.time - startTime < jumpDuration)
         {
-            // Используйте параболическую траекторию для учёта высоты
             float normalizedTime = (Time.time - startTime) / jumpDuration;
             float yOffset = jumpHeight * 4f * (normalizedTime - normalizedTime * normalizedTime);
-            transform.position = Vector3.Lerp(startPos, endPos, normalizedTime) + new Vector3(0, yOffset, 0);
+
+            // Вычисляем вектор перемещения для текущего кадра
+            Vector3 frameMove = Vector3.Lerp(Vector3.zero, jumpVector, normalizedTime) - Vector3.Lerp(Vector3.zero, jumpVector, normalizedTime - Time.deltaTime / jumpDuration);
+            frameMove.y = yOffset - (jumpHeight * 4f * ((normalizedTime - Time.deltaTime / jumpDuration) - (normalizedTime - Time.deltaTime / jumpDuration) * (normalizedTime - Time.deltaTime / jumpDuration)));
+            controller.Move(frameMove);
 
             yield return null;
         }
-
-        // Убедитесь, что объект точно находится на конечной позиции
-        transform.position = endPos;
     }
 
     private void OnDoubleTap(int keyIndex)
     {
         int dir = keyIndex / 2;
-        if (!ReduceStamina(powerJumpPrice)) return;
+        if (!(playerController._verticalVelocity <= 0) || !ReduceStamina(powerJumpPrice)) return;
         StartCoroutine(JumpProcess(dir));
     }
 
@@ -503,9 +549,21 @@ public class Combat : MonoBehaviour
                 TryAbsorbEnemy();
             }
 
+            // Проверяем, начало удерживания ПКМ
             if (Input.GetMouseButtonDown(1))
             {
-                StartCoroutine(ShieldActivate());
+                // Начинаем активацию щита
+                if (!isShieldActive && ReduceStamina(shieldPrice))
+                {
+                    StartCoroutine(ShieldActivate());
+                }
+            }
+            // Проверяем, окончание удерживания ПКМ
+            else if (Input.GetMouseButtonUp(1))
+            {
+                // Останавливаем активацию щита
+                StopCoroutine(ShieldActivate());
+                StartCoroutine(ShieldDeactivate());
             }
 
             DoubleTapCheck();
@@ -519,13 +577,12 @@ public class Combat : MonoBehaviour
             Healing();
         }
 
-        if (gameObject.CompareTag("Enemy") && EnemyGetHit)
+        if (gameObject.CompareTag("Enemy") && IsAgressive)
         {
 
             if (aggressivenessTimer >= aggressivenessCooldown)
             {
-                EnemyGetHit = false;
-                aggressivenessTimer = 0;
+                AggrDeactivate();
             }
             else
             {
