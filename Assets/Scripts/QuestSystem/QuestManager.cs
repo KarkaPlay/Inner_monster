@@ -5,8 +5,22 @@ public class QuestManager : MonoBehaviour
 {
     // Статический экземпляр для доступа к менеджеру квестов
     public static QuestManager Instance { get; private set; }
+    public GameObject player;
 
     private List<Quest> quests = new List<Quest>();
+
+
+    public static Transform PlayerTransform
+    {
+        get
+        {
+            if (Instance != null && Instance.player.transform != null)
+                return Instance.player.transform;
+            else
+                return null;
+        }
+    }
+
 
     void Awake()
     {
