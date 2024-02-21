@@ -85,6 +85,8 @@ namespace StarterAssets
         //private float pitch = 0.0f;
         private Image crosshairObject;
 
+        private Combat cb;
+
         [Header("Sprint")]
         #region Sprint
 
@@ -126,7 +128,7 @@ namespace StarterAssets
         private float _animationBlend;
         private float _targetRotation = 0.0f;
         private float _rotationVelocity;
-        private float _verticalVelocity;
+        public float _verticalVelocity;
         private float _terminalVelocity = 53.0f;
 
         [Space(10)]
@@ -187,6 +189,7 @@ namespace StarterAssets
 
         private void Start ()
         {
+            cb = GetComponent<Combat>();
             map = GameObject.FindGameObjectWithTag("Map");
             map.SetActive(false);
 
@@ -287,8 +290,8 @@ namespace StarterAssets
                     // Drain sprint remaining while sprinting
                     if(!unlimitedSprint)
                     {
-                        sprintRemaining -= 1 * Time.deltaTime;
-                        if(sprintRemaining <= 0)
+                       // sprintRemaining -= 1 * Time.deltaTime;
+                        if(!cb.ReduceStamina(cb.runSecondPrice * Time.deltaTime))
                         {
                             isSprinting = false;
                             isSprintCooldown = true;
@@ -319,7 +322,7 @@ namespace StarterAssets
                 // Handles sprintBar 
                 if(useSprintBar && !unlimitedSprint)
                 {
-                    StaminaImage.fillAmount = sprintRemaining / sprintDuration;
+                   // StaminaImage.fillAmount = sprintRemaining / sprintDuration;
                 }
             }
         }
@@ -485,6 +488,12 @@ namespace StarterAssets
                 // Jump
                 if(_input.jump && _jumpTimeoutDelta <= 0.0f)
                 {
+                    if ((_verticalVelocity <= 0) && !cb.ReduceStamina(cb.jumpPrice))
+                    {
+                        _input.jump = false;
+                        return;
+                    }
+
                     // the square root of H * -2 * G = how much velocity needed to reach desired height
                     _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
 

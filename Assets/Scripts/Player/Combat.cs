@@ -60,7 +60,7 @@ public class Combat : MonoBehaviour
     private bool isPowerAttack = false;
     private bool isAttacking = false;
     private TextMeshPro EnemyHpText;
-    private StarterAssets.TmpThirdPersonController playerController;
+    private StarterAssets.ThirdPersonController playerController;
 
 
     private void Start()
@@ -82,7 +82,7 @@ public class Combat : MonoBehaviour
         lastAttackTime = Time.time - attackSeriesTheshold;
 
         lastKeyPressTime = new float[moveKeys.Length];
-        playerController = GetComponent<StarterAssets.TmpThirdPersonController>();
+        playerController = GetComponent<StarterAssets.ThirdPersonController>();
     }
 
     IEnumerator ShieldActivate()
