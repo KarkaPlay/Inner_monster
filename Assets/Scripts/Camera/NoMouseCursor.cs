@@ -2,6 +2,7 @@
 using System.Collections;
 
 public class NoMouseCursor : MonoBehaviour {
+	
 	bool isLocked;
 
 	void Start () {
@@ -15,7 +16,13 @@ public class NoMouseCursor : MonoBehaviour {
 	}
 
 	void Update () {
-		if (Input.GetKeyDown (KeyCode.E))
-			SetCursorLock (!isLocked);
+		if (Input.GetKeyDown(KeyCode.E)) { Cursor.visible = true;Cursor.lockState = CursorLockMode.None; }
+			//SetCursorLock (!isLocked);
+		if (Input.GetKeyDown(KeyCode.Escape)) { Cursor.visible = false; Cursor.lockState = CursorLockMode.Locked; }
+
 	}
+
+	
+
+
 }﻿

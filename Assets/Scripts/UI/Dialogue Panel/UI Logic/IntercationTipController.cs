@@ -4,6 +4,7 @@ using TMPro;
 
 public class IntercationTipController : MonoBehaviour
 {
+    
     [SerializeField]
     private InteractionFinder m_InteractionFinder;
     [SerializeField]
@@ -12,5 +13,10 @@ public class IntercationTipController : MonoBehaviour
     void Update()
     {
         m_Image.enabled = m_InteractionFinder.HasNearbyInteractables();
+        
+       
+        
+
     }
+    
 }

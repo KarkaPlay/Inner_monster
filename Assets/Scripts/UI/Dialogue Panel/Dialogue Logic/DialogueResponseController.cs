@@ -22,7 +22,7 @@ public class DialogueResponseController : MonoBehaviour
 
     private void Start()
     {
-        GetComponent<Button>().onClick.AddListener(OnClick);
+       GetComponent<Button>().onClick.AddListener(OnClick);
     }
 
     private void OnClick()

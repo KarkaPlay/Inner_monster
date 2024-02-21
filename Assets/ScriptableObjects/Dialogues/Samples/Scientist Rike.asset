@@ -21,3 +21,5 @@ MonoBehaviour:
     responses:
     - next: -1
       reply: "\u0421\u043F\u0430\u0441\u0438\u0431\u043E?!"
+    - next: -1
+      reply: "\u0414\u0430?!"

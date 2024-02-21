@@ -29,6 +29,7 @@ public class DialogueMenuController : MonoBehaviour
     private int NextMessageInd;
     private int ResponceInd;
     private int Trigger;
+    private bool hasTalked = false;
 
     private void Awake(){
         gameObject.SetActive(false);
@@ -40,13 +41,22 @@ public class DialogueMenuController : MonoBehaviour
 
     private void OnDialogueStarted(Dialogue dialogue)
     {
-        m_Npc = InteractionFinder.m_NearbyInteractables[0];
-        Trigger = m_Npc.Trigger;
-        gameObject.SetActive(true);
+        
+            
+            m_Npc = InteractionFinder.m_NearbyInteractables[0];
+            Trigger = m_Npc.Trigger;
+            gameObject.SetActive(true);           
 
-        CurrentDialogue = dialogue;
-        m_NpcName.text = CurrentDialogue.npcName;
-        DialogueContinue(CurrentDialogue, m_Npc.TriggerCheck(Trigger));
+            CurrentDialogue = dialogue;
+            m_NpcName.text = CurrentDialogue.npcName;
+        if (hasTalked == false) {           
+            DialogueContinue(CurrentDialogue, m_Npc.TriggerCheck(Trigger));
+            hasTalked = true;
+            }
+        
+
+      
+
     }
 
     // TEST //
@@ -63,14 +73,18 @@ public class DialogueMenuController : MonoBehaviour
     //
     
     private void DialogueContinue(Dialogue dialogue, int ResponseInd){
-        m_NpcDialogueText.text = CurrentDialogue.messages[ResponseInd].text;
-        m_Npc.Trigger = CurrentDialogue.messages[ResponseInd].trigger;
-        CurrentMessage = CurrentDialogue.messages[ResponseInd];
-        ResponseCheck();
+        
+            m_NpcDialogueText.text = CurrentDialogue.messages[ResponseInd].text;
+            m_Npc.Trigger = CurrentDialogue.messages[ResponseInd].trigger;
+            CurrentMessage = CurrentDialogue.messages[ResponseInd];
+            ResponseCheck();
+        
+
     }
 
     private void OnDialogueEnded()
     {
+        hasTalked = false;
         gameObject.SetActive(false);
     }
 
@@ -88,9 +102,13 @@ public class DialogueMenuController : MonoBehaviour
     }
 
     private void ResponseCheck(){
-        foreach (Response response in CurrentMessage.responses){
+            foreach (Response response in CurrentMessage.responses){
             DialogueResponseController newResponse = Instantiate(m_ResponseControllerPrefab, m_ResponsesBoxTransform);
             newResponse.Resp = response; 
+            
         }
+        
+
     }
+
 }
