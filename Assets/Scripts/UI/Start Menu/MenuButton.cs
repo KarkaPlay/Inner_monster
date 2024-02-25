@@ -1,49 +1,39 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class MenuButton : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler
+public class MenuButton : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IPointerUpHandler, IPointerDownHandler
 {
-    private RectTransform rectTransform;
-    public AudioSource audioSource;
     
-    void Start()
+    public AudioSource audioSource;
+    private Animator _animator;
+
+    private void Awake()
     {
-        rectTransform = GetComponent<RectTransform>();
+        _animator = GetComponent<Animator>();
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        StartCoroutine(ScaleUp());
         audioSource.Play();
+        _animator.SetFloat("Highlited", 1);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        StartCoroutine(ScaleDown());
+        _animator.SetFloat("Highlited", -1);
     }
     
-    // Корутина для анимации увеличения кнопки
-    IEnumerator ScaleUp()
+    public void OnPointerDown(PointerEventData eventData)
     {
-        StopCoroutine(ScaleDown());
-        while (rectTransform.localScale.x < 1.1f)
-        {
-            rectTransform.localScale += new Vector3(0.02f, 0.02f, 0.02f);
-            yield return new WaitForSeconds(0.01f);
-        }
+        _animator.SetFloat("Pressed", 1);
     }
-    
-    // Корутина для анимации уменьшения кнопки
-    IEnumerator ScaleDown()
+    public void OnPointerUp(PointerEventData eventData)
     {
-        StopCoroutine(ScaleUp());
-        while (rectTransform.localScale.x > 1f)
-        {
-            rectTransform.localScale -= new Vector3(0.02f, 0.02f, 0.02f);
-            yield return new WaitForSeconds(0.01f);
-        }
+        _animator.SetFloat("Pressed", -1);
     }
+   
 }
