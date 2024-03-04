@@ -28,6 +28,7 @@ public class JsonHandler : MonoBehaviour
     public class file
     {
         public string Name;
+        public string ImagePath;
         public List<Paragraph> LongText;
     }
 

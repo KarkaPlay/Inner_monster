@@ -50,6 +50,7 @@
 			"Files": [
 				{
 					"Name": "Ancient",
+					"ImagePath": "Assets/Images/UI/Diary/icons/ancient.jpg",
 					"LongText": [
 						{
 							"ParagraphID": 4,
