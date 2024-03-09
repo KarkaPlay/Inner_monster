@@ -15,6 +15,7 @@ TagManager:
   - ground
   - Enemy
   - Map
+  - MarkOnMinimap
   layers:
   - Default
   - TransparentFX
