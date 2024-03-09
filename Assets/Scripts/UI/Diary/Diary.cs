@@ -292,6 +292,15 @@ public class Diary : MonoBehaviour
         {
             pins.SetActive(!pins.activeSelf);
         }
+
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            page_right();
+        }
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            page_left();
+        }
     }
 
 }
