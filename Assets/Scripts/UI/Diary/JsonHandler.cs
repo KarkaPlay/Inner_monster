@@ -7,20 +7,13 @@ public class JsonHandler : MonoBehaviour
 {
     public TextAsset diaryJSON;
 
-    [System.Serializable]
-    public class shortText
-    {
-        public string Text;
-        public List<string> Points;
-    }
-
 
     [System.Serializable]
     public class Paragraph
     {
         public int ParagraphID;
         public string Text;
-        public shortText ShortText;
+        public string ShortText;
     }
 
 
@@ -86,7 +79,7 @@ public class JsonHandler : MonoBehaviour
     }
 
     //add a new paragraph to file in category / returns null if category or file don't exist
-    public static Diary add_paragraph(string text, int ID, shortText s_text, string CategoryName, string FileName)
+    public static Diary add_paragraph(string text, int ID, string s_text, string CategoryName, string FileName)
     {
         Paragraph new_paragraph = new Paragraph();
         new_paragraph.ParagraphID = ID;
@@ -128,24 +121,6 @@ public class JsonHandler : MonoBehaviour
         }
 
         return null;
-    }
-
-    //add point to shortText to file in category / returns null if category or file don't exist
-    public static Diary add_short_text_point(string point, string CategoryName, string FileName, int ParagraphID)
-    {
-        int CategoryNumber = get_category(CategoryName);
-        int FileNumber = get_file(CategoryNumber, FileName);
-        int ParagraphNumber = get_paragraph(CategoryNumber, FileNumber, ParagraphID);
-
-        if (FileNumber == -1 || CategoryNumber == -1 || ParagraphNumber == -1)
-        {
-            return null;
-        }
-
-        diary.Categories[CategoryNumber].Files[FileNumber].LongText[ParagraphNumber].ShortText.Points.Add(point);
-
-        save_diary();
-        return diary;
     }
 
     //returns a list of all files in category / returns null if category was not found
@@ -230,23 +205,6 @@ public class JsonHandler : MonoBehaviour
         }
 
         return false;
-    }
-
-    //returns short text as string
-    public static string construct_shortText(Paragraph InParagraph)
-    {
-        string text = InParagraph.ShortText.Text;
-        for (int s = 0; s < InParagraph.ShortText.Points.Count; s++)
-        {
-            text += InParagraph.ShortText.Points[s];
-        }
-
-        if (text.Length > 15)
-        {
-            return text.Substring(0, 15) + "...";
-        }
-
-        return text;
     }
 
     //loads diary from json file and returns it

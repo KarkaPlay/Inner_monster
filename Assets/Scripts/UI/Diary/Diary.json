@@ -9,21 +9,12 @@
 						{
 							"ParagraphID": 0,
 							"Text": "gori bolshie",
-							"ShortText": {
-								"Text": "oni visokie",
-								"Points": [
-									"100 km"
-								]
-							}
+							"ShortText": "oni visokie"
 						},
 						{
 							"ParagraphID": 1,
 							"Text": "tam slojno hodit",
-							"ShortText": {
-								"Text": "nado visoko prigat",
-								"Points": [
-								]
-							}
+							"ShortText": "nado visoko prigat"
 						}
 					]
 				},
@@ -33,13 +24,7 @@
 						{
 							"ParagraphID": 3,
 							"Text": "trava zdes zelyonaya",
-							"ShortText": {
-								"Text": "zdes rastut rastenya: ",
-								"Points": [
-									"romashki, ",
-									"roses"
-								]
-							}
+							"ShortText": "zdes rastut rastenya: "
 						}
 					]
 				}
@@ -54,23 +39,12 @@
 						{
 							"ParagraphID": 4,
 							"Text": "U nego est deti",
-							"ShortText": {
-								"Text": "u nego dvoe detei: ",
-								"Points": [
-									"rebyonok 1",
-									"rebyonok 2"
-								]
-							}
+							"ShortText": "u nego dvoe detei: "
 						},
 						{
 							"ParagraphID": 5,
 							"Text": "on ne pyot moloko",
-							"ShortText": {
-								"Text": "alergiya na: ",
-								"Points": [
-									"moloko"
-								]
-							}
+							"ShortText": "alergiya na: "
 						}
 					]
 				}
@@ -85,22 +59,12 @@
 						{
 							"ParagraphID": 6,
 							"Text": "ona vkusno pahnet",
-							"ShortText": {
-								"Text": "mojno podarit: ",
-								"Points": [
-									"korove"
-								]
-							}
+							"ShortText": "mojno podarit: "
 						},
                         {
 							"ParagraphID": 7,
 							"Text": "nahoditsa v polyah",
-							"ShortText": {
-								"Text": "mojno naiti v:",
-								"Points": [
-									"polyah"
-								]
-							}
+							"ShortText": "mojno naiti v:"
 						}
 					]
 				},
@@ -110,13 +74,7 @@
 						{
 							"ParagraphID": 8,
 							"Text": "prinosit udachu",
-							"ShortText": {
-								"Text": "mojno naiti v:",
-								"Points": [
-									"polyah",
-									"gorah"
-								]
-							}
+							"ShortText": "mojno naiti v:"
 						}
 					]
 				}
@@ -131,24 +89,12 @@
 						{
 							"ParagraphID": 9,
 							"Text": "drevniy portal, davno zabroshenniy",
-							"ShortText": {
-								"Text": "nado bi sprosit pro portal:",
-								"Points": [
-									"stareishnu",
-									"kuznetsa"
-								]
-							}
+							"ShortText": "nado bi sprosit pro portal:"
 						},
 						{
 							"ParagraphID": 10,
 							"Text": "stareishina chto-to pro nego znaet",
-							"ShortText": {
-								"Text": "nado bi sprosit pro portal:",
-								"Points": [
-									"stareishnu",
-									"kuznetsa"
-								]
-							}
+							"ShortText": "nado bi sprosit pro portal:"
 						}
 					]
 				}

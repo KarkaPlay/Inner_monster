@@ -16,7 +16,7 @@ public class Diary : MonoBehaviour
 
     //presets
     public GameObject ShortTextsList;
-
+    public GameObject DiaryShortTextList;
     public GameObject LargeImage;
     public GameObject itemInShortText;
     public GameObject diaryWindow;
@@ -31,7 +31,7 @@ public class Diary : MonoBehaviour
     private bool visible = false;                                                   //⣿⣿⡽⡄⠀⠀⠀⢿⣿⣆⣿⣧⢡⣾⣿⡇⣾⣿⡇⠀⠀⠀⠀⣿⡇⠃
     private List<GameObject> pagesOfDiary = new List<GameObject>();                 //⣿⣿⣷⣻⣆⢄⠀⠈⠉⠉⠛⠛⠘⠛⠛⠛⠙⠛⠁⠀⠀⠀⠀⣿⡇⢸
     private List<GameObject> allParagraphs = new List<GameObject>();                //⢞⣿⣿⣷⣝⣷⣝⠦⡀⠀⠀⠀⠀⠀⠀⠀⡀⢀⠀⠀⠀⠀⠀⠛⣿⠈
-                                                                                    //⣦⡑⠛⣟⢿⡿⣿⣷⣝⢧⡀⠀⠀⣶⣸⡇⣿⢸⣧⠀⠀⠀⠀⢸⡿⡆
+    private List<GameObject> ShortTextForSummary = new List<GameObject>();          //⣦⡑⠛⣟⢿⡿⣿⣷⣝⢧⡀⠀⠀⣶⣸⡇⣿⢸⣧⠀⠀⠀⠀⢸⡿⡆
                                                                                     //⣿⣿⣷⣮⣭⣍⡛⠻⢿⣷⠿⣶⣶⣬⣬⣁⣉⣀⣀⣁⡤⢴⣺⣾⣽⡇
     //pins related
     private int currentKeyIndex = 0;
@@ -47,10 +47,13 @@ public class Diary : MonoBehaviour
 
         //❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️
 
-        //load file data from button
+        //fill start page so it isn't empty
+
+        //get data for buttons
         List<JsonHandler.Paragraph> fileData = new List<JsonHandler.Paragraph>();
         int CategoryNumber = JsonHandler.get_category("Characters");
         int FileNumber = JsonHandler.get_file(CategoryNumber, "Ancient");
+        //copy "OnCategorySelected" behaviour
         for (int i = 0; i < diary.Categories[1].Files[FileNumber].LongText.Count; i++)
         {
             fileData.Add(diary.Categories[1].Files[FileNumber].LongText[i] );
@@ -64,8 +67,8 @@ public class Diary : MonoBehaviour
         }
 
 
-        List<JsonHandler.file> draw = JsonHandler.GetAllFiles("Characters"); //get list of new texts to draw
-
+        List<JsonHandler.file> draw = JsonHandler.GetAllFiles("Characters"); //get list of files
+        //copy "showFullText" behaviour
         for (int i = 0; i < draw.Count; i++) //draw new texts
         {
             GameObject tmp = Instantiate(NameCard, NamesList.transform);
@@ -244,12 +247,12 @@ public class Diary : MonoBehaviour
         for (int p = 0; p < paragraphs.Count; p++)
         {
             GameObject tmp = Instantiate(itemInShortText, ShortTextsList.transform);
-            tmp.transform.Find("textFromDiary").GetComponent<TextMeshProUGUI>().text = JsonHandler.construct_shortText(paragraphs[p]);
+            tmp.transform.Find("textFromDiary").GetComponent<TextMeshProUGUI>().text = paragraphs[p].ShortText;
             DisplayedPins.Add(tmp);
         }
     }
 
-
+    //display paragraphs of selected file
     private void showFullText()
     {
         int length = allParagraphs.Count;
@@ -258,24 +261,38 @@ public class Diary : MonoBehaviour
             Destroy(allParagraphs[0].gameObject);
             allParagraphs.RemoveAt(0);
         }
+
+        length = ShortTextForSummary.Count;
+        for (int i = 0; i < length; i++) {
+            Destroy(ShortTextForSummary[0].gameObject);
+            ShortTextForSummary.RemoveAt(0);
+        }
+        
         //load file data from button
         List<JsonHandler.Paragraph> fileData =
             EventSystem.current.currentSelectedGameObject.GetComponent<FileData>().paragraghs;
 
         diaryWindow.transform.Find("previewImage").GetComponent<Image>().sprite = Resources.Load<Sprite>(EventSystem.current.currentSelectedGameObject.GetComponent<FileData>().name);
 
-        //print all files from file data
+        //print all paragraphs from file data
         for (int i = 0; i < fileData.Count; i++)
         {
             GameObject paragraphObject = Instantiate(paragraphPrefab, paragraphParent.transform); //create a new prefab for paragraph
             allParagraphs.Add(paragraphObject); //add new paragraph to list, so we have a link to it
             paragraphObject.GetComponent<TextMeshProUGUI>().text = fileData[i].Text; //set new paragraph text
-            paragraphObject.transform.Find("pinParagraph").GetComponent<Button>().onClick.AddListener(() =>{pinNote(0, EventSystem.current.currentSelectedGameObject.GetComponent<FileData>().name);show_pin_page();});
+            paragraphObject.transform.Find("pinParagraph").GetComponent<Button>().onClick.AddListener(() =>{
+                pinNote(0, EventSystem.current.currentSelectedGameObject.GetComponent<FileData>().name);
+                show_pin_page();
+                });
             paragraphObject.transform.Find("pinParagraph").GetComponent<FileData>().paragraghs = new List<JsonHandler.Paragraph>();
-            //add file data to paragraph             
+            //add file data to paragraph
             paragraphObject.transform.Find("pinParagraph").GetComponent<FileData>().paragraghs.Add(fileData[i]);
-            //add single element to list, so we call it on button. slojno obyasnit ya hz             
+            //add single element to list, so we call it on button. slojno obyasnit ya hz
             paragraphObject.transform.Find("pinParagraph").GetComponent<FileData>().name = EventSystem.current.currentSelectedGameObject.GetComponent<FileData>().name;// мне стыдно
+            //add short text under big Image
+            GameObject ShortTextObject = Instantiate(itemInShortText, DiaryShortTextList.transform); //create a new prefab for paragraph
+            ShortTextForSummary.Add(ShortTextObject);//add short text to list
+            ShortTextObject.transform.Find("textFromDiary").GetComponent<TextMeshProUGUI>().text = fileData[i].ShortText; //set new paragraph text
         }
     }
 
