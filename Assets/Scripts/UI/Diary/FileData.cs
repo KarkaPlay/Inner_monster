@@ -5,6 +5,6 @@ using UnityEngine;
 public class FileData : MonoBehaviour
 {
 
-    public List<JsonHandler.Paragraph> paragraghs;
+    public List<JsonHandler.Paragraph> paragraphs;
     public string name;
 }

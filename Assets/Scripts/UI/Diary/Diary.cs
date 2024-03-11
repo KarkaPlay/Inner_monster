@@ -76,7 +76,7 @@ public class Diary : MonoBehaviour
             List<JsonHandler.Paragraph> newParagraph = draw[i].LongText;
             //fill pin component data and add listeners
             tmp.transform.Find("Avatar").GetComponent<Button>().onClick.AddListener(() => { showFullText(); });
-            tmp.transform.Find("Avatar").GetComponent<FileData>().paragraghs = newParagraph;
+            tmp.transform.Find("Avatar").GetComponent<FileData>().paragraphs = newParagraph;
             tmp.transform.Find("Avatar").GetComponent<FileData>().name = draw[i].Name;
             //Sprite sprite1 = new Sprite();
             Sprite sprite1 = Resources.Load<Sprite>(draw[i].Name);
@@ -84,14 +84,14 @@ public class Diary : MonoBehaviour
 
             tmp.transform.Find("PinBtn").GetComponent<Button>().onClick.AddListener(() =>
             {
-                for (int j = 0; j < EventSystem.current.currentSelectedGameObject.GetComponent<FileData>().paragraghs.Count; j++)
+                for (int j = 0; j < EventSystem.current.currentSelectedGameObject.GetComponent<FileData>().paragraphs.Count; j++)
                 {
                     //pin all paragraphs of file
                     pinNote(j, EventSystem.current.currentSelectedGameObject.GetComponent<FileData>().name);
                 }
                 show_pin_page();
             });
-            tmp.transform.Find("PinBtn").GetComponent<FileData>().paragraghs = newParagraph;
+            tmp.transform.Find("PinBtn").GetComponent<FileData>().paragraphs = newParagraph;
             tmp.transform.Find("PinBtn").GetComponent<FileData>().name = draw[i].Name;
 
             TextMeshProUGUI text = tmp.transform.Find("Name").GetComponent<TextMeshProUGUI>();
@@ -154,7 +154,7 @@ public class Diary : MonoBehaviour
             List<JsonHandler.Paragraph> newParagraph = draw[i].LongText;
             //fill pin component data and add listeners
             tmp.transform.Find("Avatar").GetComponent<Button>().onClick.AddListener(() => { showFullText(); });
-            tmp.transform.Find("Avatar").GetComponent<FileData>().paragraghs = newParagraph;
+            tmp.transform.Find("Avatar").GetComponent<FileData>().paragraphs = newParagraph;
             tmp.transform.Find("Avatar").GetComponent<FileData>().name = draw[i].Name;
             //Sprite sprite1 = new Sprite();
             Sprite sprite1 = Resources.Load<Sprite>(draw[i].Name);
@@ -162,14 +162,27 @@ public class Diary : MonoBehaviour
 
             tmp.transform.Find("PinBtn").GetComponent<Button>().onClick.AddListener(() =>
             {
-                for (int j = 0; j < EventSystem.current.currentSelectedGameObject.GetComponent<FileData>().paragraghs.Count; j++)
+                FileData fileData = EventSystem.current.currentSelectedGameObject.GetComponent<FileData>();
+                bool flag = true;
+                for (int j = 0; j < fileData.paragraphs.Count; j++)
                 {
                     //pin all paragraphs of file
-                    pinNote(j, EventSystem.current.currentSelectedGameObject.GetComponent<FileData>().name);
+                    if (!pinnedParagraphs.ContainsKey(fileData.name)){ //if this file is not pinned yet
+                        pinNote(j, fileData.name);//pin it
+                        flag = false;
+                    }else if (!pinnedParagraphs[fileData.name].Contains(fileData.paragraphs[j])){// if does not contain this paragraph
+                        pinNote(j, fileData.name);//pin it
+                        flag = false;
+                    }
+                }
+                if (flag){ //if no new paragraphs were added, unpin everything
+                    for (int j = 0; j < fileData.paragraphs.Count; j++){
+                        pinNote(j, fileData.name);
+                    }
                 }
                 show_pin_page();
             });
-            tmp.transform.Find("PinBtn").GetComponent<FileData>().paragraghs = newParagraph;
+            tmp.transform.Find("PinBtn").GetComponent<FileData>().paragraphs = newParagraph;
             tmp.transform.Find("PinBtn").GetComponent<FileData>().name = draw[i].Name;
 
             TextMeshProUGUI text = tmp.transform.Find("Name").GetComponent<TextMeshProUGUI>();
@@ -200,7 +213,7 @@ public class Diary : MonoBehaviour
     private void pinNote(int paragraphIndex, string fileName)
     {
         Debug.Log(paragraphIndex + " " + fileName);
-        JsonHandler.Paragraph paragraph_to_pin = EventSystem.current.currentSelectedGameObject.GetComponent<FileData>().paragraghs[paragraphIndex];
+        JsonHandler.Paragraph paragraph_to_pin = EventSystem.current.currentSelectedGameObject.GetComponent<FileData>().paragraphs[paragraphIndex];
 
         if (!pinnedParagraphs.ContainsKey(fileName))//is there a file with this name in pinnedParagraphs
         {
@@ -250,6 +263,7 @@ public class Diary : MonoBehaviour
             tmp.transform.Find("textFromDiary").GetComponent<TextMeshProUGUI>().text = paragraphs[p].ShortText;
             DisplayedPins.Add(tmp);
         }
+        pins.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = new List<String>(pinnedParagraphs.Keys)[currentKeyIndex];
     }
 
     //display paragraphs of selected file
@@ -267,10 +281,10 @@ public class Diary : MonoBehaviour
             Destroy(ShortTextForSummary[0].gameObject);
             ShortTextForSummary.RemoveAt(0);
         }
-        
+
         //load file data from button
         List<JsonHandler.Paragraph> fileData =
-            EventSystem.current.currentSelectedGameObject.GetComponent<FileData>().paragraghs;
+            EventSystem.current.currentSelectedGameObject.GetComponent<FileData>().paragraphs;
 
         diaryWindow.transform.Find("previewImage").GetComponent<Image>().sprite = Resources.Load<Sprite>(EventSystem.current.currentSelectedGameObject.GetComponent<FileData>().name);
 
@@ -284,9 +298,9 @@ public class Diary : MonoBehaviour
                 pinNote(0, EventSystem.current.currentSelectedGameObject.GetComponent<FileData>().name);
                 show_pin_page();
                 });
-            paragraphObject.transform.Find("pinParagraph").GetComponent<FileData>().paragraghs = new List<JsonHandler.Paragraph>();
+            paragraphObject.transform.Find("pinParagraph").GetComponent<FileData>().paragraphs = new List<JsonHandler.Paragraph>();
             //add file data to paragraph
-            paragraphObject.transform.Find("pinParagraph").GetComponent<FileData>().paragraghs.Add(fileData[i]);
+            paragraphObject.transform.Find("pinParagraph").GetComponent<FileData>().paragraphs.Add(fileData[i]);
             //add single element to list, so we call it on button. slojno obyasnit ya hz
             paragraphObject.transform.Find("pinParagraph").GetComponent<FileData>().name = EventSystem.current.currentSelectedGameObject.GetComponent<FileData>().name;// мне стыдно
             //add short text under big Image
