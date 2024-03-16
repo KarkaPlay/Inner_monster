@@ -7,7 +7,7 @@ public class FirstQuest : MonoBehaviour
     {
         Vector3 targetPosition = new Vector3(-93.26f, -0.25f, 92.65f);
         Quest reachPointQuest = new Quest("Подойдите к костру", "Встаньте вплотную к костру на локации", QuestIDs.GoToCampfire);
-        reachPointQuest.AddCondition(new ReachPointCondition(targetPosition, 5f, QuestManager.PlayerTransform));
+        reachPointQuest.AddCondition(new ReachPointCondition(targetPosition, 5f));
         QuestManager.Instance.AddQuest(reachPointQuest);
         reachPointQuest.StartQuest();
     }

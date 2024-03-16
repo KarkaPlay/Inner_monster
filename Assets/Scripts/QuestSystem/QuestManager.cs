@@ -64,6 +64,11 @@ public class QuestManager : MonoBehaviour
 
     void Update()
     {
+        if (!player)
+        {
+            player = GameObject.FindWithTag("Player");
+            if (!player) return;
+        }
         UpdateQuests();
     }
 }

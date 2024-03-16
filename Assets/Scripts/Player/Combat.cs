@@ -61,19 +61,24 @@ public class Combat : MonoBehaviour
     private bool isAttacking = false;
     private TextMeshPro EnemyHpText;
     private StarterAssets.ThirdPersonController playerController;
-
+    private float lastDashTime = 0f;
+    private bool isDashActive = false;
+    private MainMenuActivator mainMenuAct;
+    private bool isPlayer;
 
     private void Start()
     {
         CurHp = MaxHp;
         CurSt = MaxSt;
-        if (gameObject.CompareTag("Enemy"))
+        isPlayer = gameObject.CompareTag("Player") ? true : false;
+
+        if (!isPlayer)
         {
             EnemyHpText = transform.Find("Quad").Find("HealthBar").GetComponent<TextMeshPro>();
         }
 
         weapon = transform.Find("Goat_Armature").Find("Spine").Find("Leg.R").Find("Blade").gameObject;
-        if (gameObject.CompareTag("Player"))
+        if (isPlayer)
         {
             shield = transform.Find("Goat_Armature").Find("Spine").Find("Leg.L").Find("Shield").gameObject;
         }
@@ -83,6 +88,7 @@ public class Combat : MonoBehaviour
 
         lastKeyPressTime = new float[moveKeys.Length];
         playerController = GetComponent<StarterAssets.ThirdPersonController>();
+        mainMenuAct = FindObjectOfType<MainMenuActivator>();
     }
 
     IEnumerator ShieldActivate()
@@ -241,9 +247,10 @@ public class Combat : MonoBehaviour
     private void AttackEnemies ()
     {
         StartCoroutine(PlayerAttackCooldown(isPowerAttack?1f:0f));
+        if (!ReduceStamina(isPowerAttack ? strongAttackPrice : normalAttackPrice)) return;
+        SwordAnimation(lastAttackType);
         GameObject[] enemies = GetNearbyEnemies();
         if (enemies.Length == 0) return;
-        if (!ReduceStamina(isPowerAttack? strongAttackPrice : normalAttackPrice)) return;
 
         float curDamage = attackValue * (isPowerAttack ? 2 : 1);
         if (lastAttackTime + attackSeriesTheshold > Time.time)
@@ -254,8 +261,6 @@ public class Combat : MonoBehaviour
 
         lastAttackTime = Time.time;
 
-
-        SwordAnimation(lastAttackType);
         foreach (GameObject enemy in enemies)
         {
             Combat enemyCombat = enemy.GetComponent<Combat>();
@@ -408,7 +413,7 @@ public class Combat : MonoBehaviour
                     // Рассчитываем угол между направлением взгляда игрока и направлением к NPC
                     float angle = Vector3.Angle(playerDirection, directionToNpc);
 
-                    if (!player.isShieldActive || angle > 40)
+                    if ((!player.isShieldActive || angle > 40) && !isDashActive && (lastDashTime + 0.5f < Time.time))
                     {
                         player.PlayerTakeDamage(attackValue);
                     }
@@ -445,6 +450,7 @@ public class Combat : MonoBehaviour
 
     private IEnumerator JumpProcess(int direction)
     {
+        isDashActive = true;
         CharacterController controller = GetComponent<CharacterController>();
 
         float jumpDistance = 6f; // Дистанция прыжка
@@ -489,6 +495,8 @@ public class Combat : MonoBehaviour
 
             yield return null;
         }
+        lastDashTime = Time.time;
+        isDashActive = false;
     }
 
     private void OnDoubleTap(int keyIndex)
@@ -524,9 +532,10 @@ public class Combat : MonoBehaviour
 
     private void Update()
     {
-
-        if (gameObject.CompareTag("Player"))
+        
+        if (isPlayer)
         {
+            if (mainMenuAct.EscapeMenuOpen || playerController.isMapOpen) return;
 
             if (Input.GetMouseButtonDown(0))
             {
@@ -552,10 +561,13 @@ public class Combat : MonoBehaviour
             // Проверяем, начало удерживания ПКМ
             if (Input.GetMouseButtonDown(1))
             {
-                // Начинаем активацию щита
-                if (!isShieldActive && ReduceStamina(shieldPrice))
+                if (lastDashTime + 1f < Time.time)
                 {
-                    StartCoroutine(ShieldActivate());
+                    // Начинаем активацию щита
+                    if (!isShieldActive && ReduceStamina(shieldPrice))
+                    {
+                        StartCoroutine(ShieldActivate());
+                    }
                 }
             }
             // Проверяем, окончание удерживания ПКМ
@@ -577,7 +589,7 @@ public class Combat : MonoBehaviour
             Healing();
         }
 
-        if (gameObject.CompareTag("Enemy") && IsAgressive)
+        if (!isPlayer && IsAgressive)
         {
 
             if (aggressivenessTimer >= aggressivenessCooldown)

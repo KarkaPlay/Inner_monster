@@ -7,7 +7,7 @@ public class EnemyMovement : MonoBehaviour
     public float minDistance = 2f;
     public float visionAngle = 45f;
     public float visionRange = 20f;
-    public float aggrDeactivateTreshold = 3f; // время через которое нпс отагриться от игрока, если он вне поля зрения
+    public float aggrDeactivateTreshold = 3; // время через которое нпс отагриться от игрока, если он вне поля зрения
 
     private NavMeshAgent agent;
     private Combat combatObj;
@@ -15,6 +15,7 @@ public class EnemyMovement : MonoBehaviour
     private Quaternion startRot;
     private float timeSinceLastSeen = 0f; // Таймер для отслеживания времени, прошедшего с момента последнего "видения" игрока
     private bool playerInSightLastFrame = false; // Был ли игрок в поле зрения в последнем кадре
+    private float moveRandomTimer = 0f;
 
     void Start()
     {
@@ -50,10 +51,12 @@ public class EnemyMovement : MonoBehaviour
         float distance = Vector3.Distance(transform.position, player.position);
         bool canSeePlayerNow = (CanSeePlayer() || (distance < 15));
 
+        //print((int)timeSinceLastSeen);
         // Обновление таймера, если игрок вышел из поля зрения
         if (playerInSightLastFrame && !canSeePlayerNow)
         {
             timeSinceLastSeen += Time.deltaTime;
+            MoveRandomly();
         }
         else if (canSeePlayerNow)
         {
@@ -111,7 +114,7 @@ public class EnemyMovement : MonoBehaviour
         float angleBetweenPlayerAndNPC = Vector3.Angle(-playerForward, directionToPlayer);
         if (angleBetweenPlayerAndNPC > 90f) // Игрок стоит спиной к NPC
         {
-            distanceToPlayer += 1.5f; 
+            distanceToPlayer += 1.5f;
         }
 
         // Проверяем, находится ли NPC внутри буферной зоны
@@ -134,5 +137,29 @@ public class EnemyMovement : MonoBehaviour
         }
         Quaternion lookRotation = Quaternion.LookRotation(directionToPlayer);
         transform.rotation = Quaternion.Euler(0f, lookRotation.eulerAngles.y, 0f);
+    }
+
+    void MoveRandomly()
+    {
+        float MoveSetTime = 0.3f; // Время между изменениями направления
+        float MoveRadius = 3f;
+
+        moveRandomTimer += Time.deltaTime;
+        if (moveRandomTimer >= MoveSetTime)
+        {
+            // Генерируем случайную точку в заданном радиусе
+            Vector3 randomDirection = Random.insideUnitSphere * MoveRadius;
+            randomDirection += transform.position; // Добавляем текущую позицию, чтобы сместить точку
+
+            // Находим ближайшую доступную точку на NavMesh
+            NavMeshHit hit;
+            NavMesh.SamplePosition(randomDirection, out hit, MoveRadius, -1);
+
+            // Задаем найденную точку как новую цель для NavMeshAgent
+            agent.SetDestination(hit.position);
+
+            // Сбрасываем таймер
+            moveRandomTimer = 0f;
+        }
     }
 }

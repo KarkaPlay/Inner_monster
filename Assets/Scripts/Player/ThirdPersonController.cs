@@ -157,7 +157,7 @@ namespace StarterAssets
 
         //map
         private GameObject map;
-        private bool isMapOpen = false;
+        public bool isMapOpen = false;
 
         private bool IsCurrentDeviceMouse
         {
