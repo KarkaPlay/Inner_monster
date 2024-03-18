@@ -295,7 +295,7 @@ namespace StarterAssets
                     if(!unlimitedSprint)
                     {
                        // sprintRemaining -= 1 * Time.deltaTime;
-                        if(!cb.ReduceStamina(cb.runSecondPrice * Time.deltaTime))
+                        if(!cb.ReduceStamina(cb.runSecondPrice * Time.deltaTime) || objInteract.isHoldingObject)
                         {
                             isSprinting = false;
                             isSprintCooldown = true;
