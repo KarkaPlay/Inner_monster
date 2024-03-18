@@ -6,6 +6,7 @@ using System.IO;
 public class JsonHandler : MonoBehaviour
 {
     public TextAsset diaryJSON;
+    public TextAsset DiarySave;
 
 
     [System.Serializable]
@@ -208,9 +209,12 @@ public class JsonHandler : MonoBehaviour
     }
 
     //loads diary from json file and returns it
-    public Diary load_diary()
+    public Diary load_diary(bool reload = false)
     {
         diary = JsonUtility.FromJson<Diary>(diaryJSON.text);
+        if (reload){
+            diary = JsonUtility.FromJson<Diary>(DiarySave.text);
+        }
         return diary;
     }
 
@@ -225,7 +229,7 @@ public class JsonHandler : MonoBehaviour
 
     private void Start()
     {
-        load_diary();
+        load_diary(true);
     }
 }
 

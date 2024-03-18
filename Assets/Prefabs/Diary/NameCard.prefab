@@ -269,7 +269,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb1236cdc029fb34396d62d2eeff9b0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  paragraghs: []
+  paragraphs: []
   name: 
 --- !u!1 &6180800054985976322
 GameObject:
@@ -405,7 +405,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb1236cdc029fb34396d62d2eeff9b0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  paragraghs: []
+  paragraphs: []
   name: 
 --- !u!1 &7390813392079025037
 GameObject:

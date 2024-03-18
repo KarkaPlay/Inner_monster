@@ -1,0 +1,104 @@
+{
+	"Categories": [
+		{
+			"Name": "locations",
+			"Files": [
+				{
+					"Name": "Mountines",
+					"LongText": [
+						{
+							"ParagraphID": 0,
+							"Text": "gori bolshie",
+							"ShortText": "oni visokie"
+						},
+						{
+							"ParagraphID": 1,
+							"Text": "tam slojno hodit",
+							"ShortText": "nado visoko prigat"
+						}
+					]
+				},
+				{
+					"Name": "Fields",
+					"LongText": [
+						{
+							"ParagraphID": 3,
+							"Text": "trava zdes zelyonaya",
+							"ShortText": "zdes rastut rastenya: "
+						}
+					]
+				}
+			]
+		},
+		{
+			"Name": "Characters",
+			"Files": [
+				{
+					"Name": "Ancient",
+					"LongText": [
+						{
+							"ParagraphID": 4,
+							"Text": "U nego est deti",
+							"ShortText": "u nego dvoe detei: "
+						},
+						{
+							"ParagraphID": 5,
+							"Text": "on ne pyot moloko",
+							"ShortText": "alergiya na: "
+						}
+					]
+				}
+			]
+		},
+        {
+			"Name": "Ingridients",
+			"Files": [
+				{
+					"Name": "romashka",
+					"LongText": [
+						{
+							"ParagraphID": 6,
+							"Text": "ona vkusno pahnet",
+							"ShortText": "mojno podarit: "
+						},
+                        {
+							"ParagraphID": 7,
+							"Text": "nahoditsa v polyah",
+							"ShortText": "mojno naiti v:"
+						}
+					]
+				},
+				{
+					"Name": "clever",
+					"LongText": [
+						{
+							"ParagraphID": 8,
+							"Text": "prinosit udachu",
+							"ShortText": "mojno naiti v:"
+						}
+					]
+				}
+			]
+		},
+        {
+			"Name": "Mysteries",
+			"Files": [
+				{
+					"Name": "portal",
+					"LongText": [
+						{
+							"ParagraphID": 9,
+							"Text": "drevniy portal, davno zabroshenniy",
+							"ShortText": "nado bi sprosit pro portal:"
+						},
+						{
+							"ParagraphID": 10,
+							"Text": "stareishina chto-to pro nego znaet",
+							"ShortText": "nado bi sprosit pro portal:"
+						}
+					]
+				}
+			]
+		}
+	]
+}

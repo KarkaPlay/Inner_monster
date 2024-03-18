@@ -42,7 +42,7 @@ public class Diary : MonoBehaviour
 
     private void Start()
     {
-        diary = JsonHandler.instance.load_diary(); //load diary via JsonHandler
+        diary = JsonHandler.instance.load_diary(true); //load diary via JsonHandler
         diaryWindow.SetActive(false);
 
         //❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️
@@ -64,11 +64,15 @@ public class Diary : MonoBehaviour
             GameObject paragraphObject = Instantiate(paragraphPrefab, paragraphParent.transform); //create a new prefab for paragraph
             allParagraphs.Add(paragraphObject); //add new paragraph to list, so we have a link to it
             paragraphObject.GetComponent<TextMeshProUGUI>().text = fileData[i].Text; //set new paragraph text
+            //add short text under big Image
+            GameObject ShortTextObject = Instantiate(itemInShortText, DiaryShortTextList.transform); //create a new prefab for paragraph
+            ShortTextForSummary.Add(ShortTextObject);//add short text to list
+            ShortTextObject.transform.Find("textFromDiary").GetComponent<TextMeshProUGUI>().text = fileData[i].ShortText; //set new paragraph text
         }
 
 
         List<JsonHandler.file> draw = JsonHandler.GetAllFiles("Characters"); //get list of files
-        //copy "showFullText" behaviour
+        //copy "onCategorySelected" behaviour
         for (int i = 0; i < draw.Count; i++) //draw new texts
         {
             GameObject tmp = Instantiate(NameCard, NamesList.transform);
@@ -84,16 +88,31 @@ public class Diary : MonoBehaviour
 
             tmp.transform.Find("PinBtn").GetComponent<Button>().onClick.AddListener(() =>
             {
-                for (int j = 0; j < EventSystem.current.currentSelectedGameObject.GetComponent<FileData>().paragraphs.Count; j++)
+                FileData fileData = EventSystem.current.currentSelectedGameObject.GetComponent<FileData>();
+                bool flag = true;
+                for (int j = 0; j < fileData.paragraphs.Count; j++)
                 {
                     //pin all paragraphs of file
-                    pinNote(j, EventSystem.current.currentSelectedGameObject.GetComponent<FileData>().name);
+                    if (!pinnedParagraphs.ContainsKey(fileData.name)){ //if this file is not pinned yet
+                        pinNote(j, fileData.name);//pin it
+                        flag = false;
+                    }else if (!pinnedParagraphs[fileData.name].Contains(fileData.paragraphs[j])){// if does not contain this paragraph
+                        pinNote(j, fileData.name);//pin it
+                        flag = false;
+                    }
+                }
+                EventSystem.current.currentSelectedGameObject.GetComponent<Image>().color = new Color32(255,255,255,255);
+                if (flag){ //if no new paragraphs were added, unpin everything
+                    for (int j = 0; j < fileData.paragraphs.Count; j++){
+                        pinNote(j, fileData.name);
+                    }
+                    EventSystem.current.currentSelectedGameObject.GetComponent<Image>().color = new Color32(100,100,100,255);
                 }
                 show_pin_page();
             });
             tmp.transform.Find("PinBtn").GetComponent<FileData>().paragraphs = newParagraph;
             tmp.transform.Find("PinBtn").GetComponent<FileData>().name = draw[i].Name;
-
+            tmp.transform.Find("PinBtn").GetComponent<Image>().color = new Color32(100,100,100,255);
             TextMeshProUGUI text = tmp.transform.Find("Name").GetComponent<TextMeshProUGUI>();
 
             text.text = draw[i].Name;
@@ -144,6 +163,10 @@ public class Diary : MonoBehaviour
         }
 
         category = EventSystem.current.currentSelectedGameObject.name; //get name of pressed button
+        //if (cat != ""){
+            //category = cat;
+        //}
+        if (JsonHandler.get_category(category) == -1){return;}
 
         List<JsonHandler.file> draw = JsonHandler.GetAllFiles(category); //get list of new texts to draw
 
@@ -175,10 +198,12 @@ public class Diary : MonoBehaviour
                         flag = false;
                     }
                 }
+                EventSystem.current.currentSelectedGameObject.GetComponent<Image>().color = new Color32(255,255,255,255);
                 if (flag){ //if no new paragraphs were added, unpin everything
                     for (int j = 0; j < fileData.paragraphs.Count; j++){
                         pinNote(j, fileData.name);
                     }
+                    EventSystem.current.currentSelectedGameObject.GetComponent<Image>().color = new Color32(100,100,100,255);
                 }
                 show_pin_page();
             });
@@ -186,6 +211,13 @@ public class Diary : MonoBehaviour
             tmp.transform.Find("PinBtn").GetComponent<FileData>().name = draw[i].Name;
 
             TextMeshProUGUI text = tmp.transform.Find("Name").GetComponent<TextMeshProUGUI>();
+            //change star color
+            tmp.transform.Find("PinBtn").GetComponent<Image>().color = new Color32(100,100,100,255);
+            if (pinnedParagraphs.ContainsKey(draw[i].Name))
+            {
+                tmp.transform.Find("PinBtn").GetComponent<Image>().color = new Color32(255,255,255,255);
+            }
+
 
             text.text = draw[i].Name;
             allFiles.Add(tmp); //add object to list to have a link
@@ -220,6 +252,12 @@ public class Diary : MonoBehaviour
             List<JsonHandler.Paragraph> new_list = new List<JsonHandler.Paragraph>() {paragraph_to_pin};//create new list with one paragraph in it
             pinnedParagraphs.Add(fileName, new_list);
             pinnedFiles = new List<String>(pinnedParagraphs.Keys); //modify pinnedFiles
+            //color star white
+            //for (int i = 0; i < allFiles.Count; i++) {
+                //if (allFiles[i].transform.Find("PinBtn").GetComponent<FileData>().name == fileName){
+                    //allFiles[i].transform.Find("PinBtn").GetComponent<Image>().color = new Color32(255,255,255,255);
+                //}
+            //}
             return;
         }
         //is there a paragraph within this files pins
@@ -234,6 +272,12 @@ public class Diary : MonoBehaviour
             {
                 pinnedParagraphs.Remove(fileName); //if there are no more paragraphs with this fileName pinned, remove fileName
                 currentKeyIndex = Math.Max(0, currentKeyIndex - 1); //decrement currentKeyIndex without going below 0
+                //color star dark
+                //for (int i = 0; i < allFiles.Count; i++) {
+                    //if (allFiles[i].transform.Find("PinBtn").GetComponent<FileData>().name == fileName){
+                        //allFiles[i].transform.Find("PinBtn").GetComponent<Image>().color = new Color32(100,100,100,255);
+                    //}
+                //}
             }
             pinnedFiles = new List<String>(pinnedParagraphs.Keys);//modify pinnedFiles
             return; //return to prevent function from executing further
@@ -253,7 +297,10 @@ public class Diary : MonoBehaviour
             DisplayedPins.RemoveAt(0);
         }
 
-        if (pinnedFiles.Count == 0){return;} //if nothing is pinned, pass
+        if (pinnedFiles.Count == 0){
+            pins.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = "";
+            return;
+        } //if nothing is pinned, pass
 
         List<JsonHandler.Paragraph> paragraphs = pinnedParagraphs[pinnedFiles[currentKeyIndex]];
 
@@ -331,6 +378,14 @@ public class Diary : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             page_left();
+        }
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            JsonHandler.Paragraph paragraph = new JsonHandler.Paragraph();
+            paragraph.ParagraphID = 12;
+            paragraph.Text = "on est arbuzi";
+            paragraph.ShortText = "arbuzi lubit";
+            this.GetComponent<DiaryInterractor>().AddParagraph(paragraph, "Ancient", "Characters");
         }
     }
 
