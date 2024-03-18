@@ -6,10 +6,20 @@ public class ObjectsInteraction : MonoBehaviour
 {
     public float minDistanceToObj = 2f;
     public bool isHoldingObject = false; // Флаг, показывающий, держит ли игрок объект
-    private Transform objectInHand; // Трансформ объекта, который держится в руке
 
     public Transform handPosition; // Позиция руки, куда будет прикрепляться LootedObj
     public GameObject playerWeapon, playerShield;
+
+    private Transform objectInHand; // Трансформ объекта, который держится в руке
+    private StarterAssets.ThirdPersonController playerController;
+    private float defaultPlayerSpeed;
+    public float cameraSpeedDivider = 2f; // снижение скорости камеры когда игрок удерживает итем
+
+    private void Start()
+    {
+        playerController = GetComponent<StarterAssets.ThirdPersonController>();
+        defaultPlayerSpeed = playerController.MoveSpeed;
+    }
 
     void Update()
     {
@@ -54,6 +64,7 @@ public class ObjectsInteraction : MonoBehaviour
         playerShield.SetActive(false);
         Rigidbody lootedRb = hitCollider.GetComponent<Rigidbody>();
         lootedRb.isKinematic = true;
+        playerController.MoveSpeed /= looted.speedDivider;
     }
 
     void ReleaseObject()
@@ -66,5 +77,6 @@ public class ObjectsInteraction : MonoBehaviour
         objectInHand = null; // Сброс ссылки на объект
         playerWeapon.SetActive(true);
         playerShield.SetActive(true);
+        playerController.MoveSpeed = defaultPlayerSpeed;
     }
 }

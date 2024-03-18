@@ -86,6 +86,7 @@ namespace StarterAssets
         private Image crosshairObject;
 
         private Combat cb;
+        private ObjectsInteraction objInteract;
 
         [Header("Sprint")]
         #region Sprint
@@ -190,6 +191,7 @@ namespace StarterAssets
         private void Start ()
         {
             cb = GetComponent<Combat>();
+            objInteract = GetComponent<ObjectsInteraction>();
             map = GameObject.FindGameObjectWithTag("Map");
             map.SetActive(false);
 
@@ -365,7 +367,10 @@ namespace StarterAssets
             {
                 //Don't multiply mouse input by Time.deltaTime;
                 float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
-
+                if (objInteract.isHoldingObject) 
+                { 
+                    deltaTimeMultiplier /= objInteract.cameraSpeedDivider; 
+                }
                 _cinemachineTargetYaw += _input.look.x * deltaTimeMultiplier;
                 _cinemachineTargetPitch += _input.look.y * deltaTimeMultiplier;
             }
@@ -490,7 +495,7 @@ namespace StarterAssets
                 // Jump
                 if(_input.jump && _jumpTimeoutDelta <= 0.0f)
                 {
-                    if ((_verticalVelocity <= 0) && !cb.ReduceStamina(cb.jumpPrice))
+                    if ((_verticalVelocity <= 0) && !cb.ReduceStamina(cb.jumpPrice) || objInteract.isHoldingObject)
                     {
                         _input.jump = false;
                         return;
