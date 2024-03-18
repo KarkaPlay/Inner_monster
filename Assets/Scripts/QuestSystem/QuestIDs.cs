@@ -1,6 +1,6 @@
 public enum QuestIDs
 {
     GoToCampfire,
-    Quest2,
+    MoveRocksToBox,
     Quest3
 }

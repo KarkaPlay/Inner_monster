@@ -1,26 +1,27 @@
 using UnityEngine;
 
 
-public class ReachPointCondition : IQuestCondition
+public class ReachPointCondition : QuestConditionBase
 {
-    public string Description { get; private set; }
     private Vector3 targetPoint;
     private float radius;
+
+    public override string Description =>
+        $"Достигните точки {targetPoint} в радиусе {radius} метров";
 
     public ReachPointCondition(Vector3 targetPoint, float radius)
     {
         this.targetPoint = targetPoint;
         this.radius = radius;
-        Description = $"Достигните точки {targetPoint} в радиусе {this.radius}";
     }
 
-    public bool CheckCondition()
+    protected override bool Check()
     {
-        if(Vector3.Distance(QuestManager.PlayerTransform.position, targetPoint) <= radius)
-        {
-            Debug.Log("Условие выполнено.");
-            return true;
-        }
-        return false;
+        return Vector3.Distance(QuestManager.PlayerTransform.position, targetPoint) <= radius;
+    }
+
+    protected override void OnComplete()
+    {
+        Debug.Log("Условие выполнено.");
     }
 }

@@ -21,6 +21,18 @@ public class QuestManager : MonoBehaviour
         }
     }
 
+    public static bool IsPlayerHoldingObj
+    {
+        get
+        {
+            if (Instance != null)
+            {
+                ObjectsInteraction objInt = Instance.player.GetComponent<ObjectsInteraction>();
+                return objInt.isHoldingObject;
+            }
+            return false;
+        }
+    }
 
     void Awake()
     {
@@ -31,7 +43,7 @@ public class QuestManager : MonoBehaviour
         else
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // Не уничтожать при загрузке сцен
+          //  DontDestroyOnLoad(gameObject); // Не уничтожать при загрузке сцен
         }
     }
 
@@ -39,6 +51,20 @@ public class QuestManager : MonoBehaviour
     public void AddQuest(Quest newQuest)
     {
         quests.Add(newQuest);
+    }
+
+    private void RemoveQuest(Quest newQuest)
+    {
+       quests.Remove(newQuest);
+    }
+
+    public void RemoveQuestById(QuestIDs qID)
+    {
+        Quest curQuest = Instance.GetQuestById(qID);
+        if (curQuest != null)
+        {
+            RemoveQuest(curQuest);
+        }
     }
 
     // Метод для обновления квестов

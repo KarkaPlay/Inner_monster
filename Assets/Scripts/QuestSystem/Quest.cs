@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine; // Добавляем пространство имен для доступа к Debug.Log
+using System.Linq;
 
 // Определение состояний квеста
 public enum QuestStatus
@@ -48,15 +49,18 @@ public class Quest
         {
             foreach (var condition in Conditions)
             {
-                if (!condition.CheckCondition())
+                if (!condition.CheckCondition()) // Проверяем, выполнено ли условие
                 {
                     return; // Если какое-то условие не выполнено, выходим
                 }
             }
 
-            // Если все условия выполнены, квест считается завершенным
-            Status = QuestStatus.Completed;
-            Debug.Log($"Квест выполнен: {Title}");
+            // Проверяем, выполнены ли все условия
+            if (Conditions.All(c => c.IsCompleted))
+            {
+                Status = QuestStatus.Completed; // Если все условия выполнены, квест считается завершенным
+                Debug.Log($"Квест выполнен: {Title}");
+            }
         }
     }
 

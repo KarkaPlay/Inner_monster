@@ -65,6 +65,7 @@ public class Combat : MonoBehaviour
     private bool isDashActive = false;
     private MainMenuActivator mainMenuAct;
     private bool isPlayer;
+    private ObjectsInteraction objInt;
 
     private void Start()
     {
@@ -89,6 +90,7 @@ public class Combat : MonoBehaviour
         lastKeyPressTime = new float[moveKeys.Length];
         playerController = GetComponent<StarterAssets.ThirdPersonController>();
         mainMenuAct = FindObjectOfType<MainMenuActivator>();
+        objInt = GetComponent<ObjectsInteraction>();
     }
 
     IEnumerator ShieldActivate()
@@ -536,6 +538,7 @@ public class Combat : MonoBehaviour
         if (isPlayer)
         {
             if (mainMenuAct.EscapeMenuOpen || playerController.isMapOpen) return;
+            if (objInt.isHoldingObject) return;
 
             if (Input.GetMouseButtonDown(0))
             {
